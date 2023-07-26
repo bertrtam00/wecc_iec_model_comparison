@@ -1,23 +1,20 @@
 within Dynawo.NonElectrical.Blocks.Continuous;
 
-/*
-* Copyright (c) 2021, RTE (http://www.rte-france.com)
-* See AUTHORS.txt
-* All rights reserved.
-* This Source Code Form is subject to the terms of the Mozilla Public
-* License, v. 2.0. If a copy of the MPL was not distributed with this
-* file, you can obtain one at http://mozilla.org/MPL/2.0/.
-* SPDX-License-Identifier: MPL-2.0
-*
-* This file is part of Dynawo, an hybrid C++/Modelica open source suite of simulation tools for power systems.
-*/
-
 model LimPIDFreeze "PI controller with limited output, anti-windup compensation, setpoint weighting, optional feed-forward and optional freezing of the state"
+  /*
+  * Copyright (c) 2021, RTE (http://www.rte-france.com)
+  * See AUTHORS.txt
+  * All rights reserved.
+  * This Source Code Form is subject to the terms of the Mozilla Public
+  * License, v. 2.0. If a copy of the MPL was not distributed with this
+  * file, you can obtain one at http://mozilla.org/MPL/2.0/.
+  * SPDX-License-Identifier: MPL-2.0
+  *
+  * This file is part of Dynawo, an hybrid C++/Modelica open source suite of simulation tools for power systems.
+  */
   import Modelica.Blocks;
   import Dynawo.Types;
-
   extends Blocks.Interfaces.SVcontrol;
-
   parameter Real K = 1 "Gain of controller";
   parameter Types.Time Ti = 0.5 "Time constant of Integrator block";
   parameter Real Wp = 1 "Set-point weight for Proportional block (0..1)";
@@ -36,15 +33,12 @@ model LimPIDFreeze "PI controller with limited output, anti-windup compensation,
   constant Types.Time unitTime = 1 annotation(
     HideResult = true);
   parameter Real YMax(start = 1) "Upper limit of output";
-  parameter Real YMin = - YMax "Lower limit of output";
-
+  parameter Real YMin = -YMax "Lower limit of output";
   Blocks.Interfaces.RealInput uFF if WithFeedForward "Optional connector of feed-forward input signal" annotation(
     Placement(transformation(origin = {60, -120}, extent = {{20, -20}, {-20, 20}}, rotation = 270)));
   Blocks.Interfaces.BooleanInput freeze annotation(
     Placement(visible = true, transformation(origin = {-94, -124}, extent = {{-20, -20}, {20, 20}}, rotation = 90), iconTransformation(origin = {-68, -120}, extent = {{-20, -20}, {20, 20}}, rotation = 90)));
-
   output Real controlError = u_s - u_m "Control error (set point - measurement)";
-
   Blocks.Math.Add addP(k1 = Wp, k2 = -1) annotation(
     Placement(transformation(extent = {{-80, 40}, {-60, 60}})));
   Blocks.Math.Gain P(k = 1) annotation(
@@ -57,7 +51,7 @@ model LimPIDFreeze "PI controller with limited output, anti-windup compensation,
     Placement(transformation(extent = {{-80, -60}, {-60, -40}})));
   Blocks.Math.Add addSat(k1 = +1, k2 = -1) annotation(
     Placement(transformation(origin = {80, -50}, extent = {{-10, -10}, {10, 10}}, rotation = 270)));
-  Blocks.Math.Gain gainTrack(k = 1 / (K * Ni)) annotation(
+  Blocks.Math.Gain gainTrack(k = 1/(K*Ni)) annotation(
     Placement(transformation(extent = {{0, -80}, {-20, -60}})));
   Blocks.Nonlinear.Limiter limiter(strict = true, uMax = YMax, uMin = YMin) annotation(
     Placement(transformation(extent = {{70, -10}, {90, 10}})));
@@ -65,9 +59,8 @@ model LimPIDFreeze "PI controller with limited output, anti-windup compensation,
     Placement(transformation(extent = {{30, -35}, {40, -25}})));
   Blocks.Math.Add addFF(k1 = 1, k2 = Kff) annotation(
     Placement(transformation(extent = {{48, -6}, {60, 6}})));
-  IntegratorSetFreeze I(K = unitTime / Ti, UseFreeze = true, Y0 = Xi0) annotation(
+  IntegratorSetFreeze I(K = unitTime/Ti, UseFreeze = true, Y0 = Xi0) annotation(
     Placement(visible = true, transformation(origin = {-38, -50}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-
 equation
   connect(freeze, I.freeze) annotation(
     Line(points = {{-94, -124}, {-94, -95}, {-44, -95}, {-44, -62}}, color = {255, 0, 255}));
@@ -107,9 +100,9 @@ equation
     Line(points = {{-28, 50}, {-20, 50}, {-20, 6}, {-12, 6}}, color = {0, 0, 127}));
   connect(I.y, addPID.u2) annotation(
     Line(points = {{-26, -50}, {-20, -50}, {-20, -6}, {-12, -6}}, color = {0, 0, 127}));
-
   annotation(
-    defaultComponentName = "PID", preferredView = "diagram",
+    defaultComponentName = "PID",
+    preferredView = "diagram",
     Icon(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics = {Line(points = {{-80, 78}, {-80, -90}}, color = {192, 192, 192}), Polygon(points = {{-80, 90}, {-88, 68}, {-72, 68}, {-80, 90}}, lineColor = {192, 192, 192}, fillColor = {192, 192, 192}, fillPattern = FillPattern.Solid), Line(points = {{-90, -80}, {82, -80}}, color = {192, 192, 192}), Polygon(points = {{90, -80}, {68, -72}, {68, -88}, {90, -80}}, lineColor = {192, 192, 192}, fillColor = {192, 192, 192}, fillPattern = FillPattern.Solid), Line(points = {{-80, -80}, {-80, -20}, {30, 60}, {80, 60}}, color = {0, 0, 127}), Text(extent = {{-20, -20}, {80, -60}}, lineColor = {192, 192, 192}), Line(visible = Strict, points = {{30, 60}, {81, 60}}, color = {255, 0, 0})}),
     Diagram(graphics = {Text(lineColor = {0, 0, 255}, extent = {{79, -112}, {129, -102}}, textString = " (feed-forward)")}),
     Documentation(info = "<html>
