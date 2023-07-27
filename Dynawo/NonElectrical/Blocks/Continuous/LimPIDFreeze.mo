@@ -59,7 +59,7 @@ model LimPIDFreeze "PI controller with limited output, anti-windup compensation,
     Placement(transformation(extent = {{30, -35}, {40, -25}})));
   Blocks.Math.Add addFF(k1 = 1, k2 = Kff) annotation(
     Placement(transformation(extent = {{48, -6}, {60, 6}})));
-  IntegratorSetFreeze I(K = unitTime/Ti, UseFreeze = true, Y0 = Y0 / K) annotation(
+  IntegratorSetFreeze I(K = unitTime/Ti, UseFreeze = true, Y0 = Xi0) annotation(
     Placement(visible = true, transformation(origin = {-38, -50}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
 equation
   connect(freeze, I.freeze) annotation(
