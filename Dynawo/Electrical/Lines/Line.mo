@@ -44,6 +44,8 @@ model Line "AC power line - PI model"
   Types.ReactivePowerPu Q1Pu "Reactive power on side 1 in pu (base SnRef)";
   Types.ActivePowerPu P2Pu "Active power on side 2 in pu (base SnRef)";
   Types.ReactivePowerPu Q2Pu "Reactive power on side 2 in pu (base SnRef)";
+  Types.VoltageModulePu U1Pu "Voltage magnitude on side 1 in pu (base UNom)";
+  Types.VoltageModulePu U2Pu "Voltage magnitude on side 2 in pu (base UNom)";
 
 protected
   parameter Types.ComplexImpedancePu ZPu(re = RPu, im = XPu) "Line impedance";
@@ -62,6 +64,8 @@ equation
   Q1Pu = ComplexMath.imag(terminal1.V * ComplexMath.conj(terminal1.i));
   P2Pu = ComplexMath.real(terminal2.V * ComplexMath.conj(terminal2.i));
   Q2Pu = ComplexMath.imag(terminal2.V * ComplexMath.conj(terminal2.i));
+  U1Pu = ComplexMath.'abs'(terminal1.V);
+  U2Pu = ComplexMath.'abs'(terminal2.V);
 
   annotation(preferredView = "text",
     Documentation(info = "<html><head></head><body>
