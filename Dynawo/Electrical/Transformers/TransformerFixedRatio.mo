@@ -39,6 +39,9 @@ model TransformerFixedRatio "Two winding transformer with a fixed ratio"
 
   parameter Types.PerUnit rTfoPu "Transformation ratio in pu: U2/U1 in no load conditions";
 
+  Types.VoltageModulePu U1Pu "Voltage magnitude on side 1 in pu (base UNom1)";
+  Types.VoltageModulePu U2Pu "Voltage magnitude on side 2 in pu (base UNom2)";
+
 equation
 
   if (running.value) then
@@ -48,6 +51,9 @@ equation
     terminal1.i = Complex (0);
     terminal2.i = Complex (0);
   end if;
+  
+  U1Pu = Modelica.ComplexMath.'abs'(terminal1.V);
+  U2Pu = Modelica.ComplexMath.'abs'(terminal2.V);
 
 annotation(preferredView = "text",
       Documentation(info = "<html><head></head><body>The transformer has the following equivalent circuit and conventions:<div><br></div><div>
