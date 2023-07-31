@@ -45,9 +45,9 @@ equation
     vDipInjEndTime = -1;
   end when;
 
-  if (vDip == true) or (vDip == false and vDipInjEndTime >= 0 and HoldIq > 0 and time <= vDipInjEndTime) then // check for vDipInjEndTime >= 0 to see if there is a freeze state and time <= vDipInjEndTime for additional safety.
+  if (vDip == true) or (vDip == false and vDipInjEndTime >= 0 and HoldIq < 0 and time <= vDipInjEndTime) then // check for vDipInjEndTime >= 0 to see if there is a freeze state and time <= vDipInjEndTime for additional safety.
     iqInjPu = iqVPu;
-  elseif (vDip == false and vDipInjEndTime >= 0 and HoldIq < 0 and time <= vDipInjEndTime) then
+  elseif (vDip == false and vDipInjEndTime >= 0 and HoldIq > 0 and time <= vDipInjEndTime) then
     iqInjPu = IqFrzPu;
   else
     iqInjPu = 0;
