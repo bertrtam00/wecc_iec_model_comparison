@@ -21,7 +21,7 @@ model REGC_A "WECC PV Generator Control REGC"
   Modelica.Blocks.Interfaces.RealInput iqCmdPu(start = Iq0Pu) "iqCmdPu setpoint from electrical control in pu (base SNom, UNom)" annotation(
     Placement(visible = true, transformation(origin = {-230, 60}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {-110, -60}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Interfaces.RealInput UPu(start = UInj0Pu) "Inverter terminal voltage magnitude in pu (base UNom)" annotation(
-    Placement(visible = true, transformation(origin = {-230, 5}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {-60, -110}, extent = {{10, -10}, {-10, 10}}, rotation = -90)));
+    Placement(visible = true, transformation(origin = {-230, 5}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {0, -110}, extent = {{10, -10}, {-10, 10}}, rotation = 270)));
   Modelica.Blocks.Interfaces.RealOutput idRefPu(start = Id0Pu) "idRefPu setpoint to injector in pu (generator convention) (base SNom, UNom)" annotation(
     Placement(visible = true, transformation(origin = {290, -70}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {110, -60}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Interfaces.RealOutput iqRefPu(start = -Iq0Pu) "iqRefPu setpoint to injector in pu (generator convention) (base SNom, UNom)" annotation(
@@ -30,7 +30,7 @@ model REGC_A "WECC PV Generator Control REGC"
   parameter Types.CurrentModulePu Id0Pu "Start value of d-component current at injector terminal in pu (generator convention) (base SNom, UNom)";
   parameter Types.CurrentModulePu Iq0Pu "Start value of q-component current at injector terminal in pu (generator convention) (base SNom, UNom)";
   Modelica.Blocks.Interfaces.RealInput Qgen0(start = UInj0Pu) "Rective Power Setpoint in pu (base Iverter)" annotation(
-    Placement(visible = true, transformation(origin = {-130, 200}, extent = {{-10, -10}, {10, 10}}, rotation = -90), iconTransformation(origin = {-55, -105}, extent = {{10, -10}, {-10, 10}}, rotation = -90)));
+    Placement(visible = true, transformation(origin = {-130, 200}, extent = {{-10, -10}, {10, 10}}, rotation = -90), iconTransformation(origin = {-60, 109}, extent = {{10, 10}, {-10, -10}}, rotation = 90)));
   Modelica.Blocks.Logical.GreaterThreshold greaterThreshold annotation(
     Placement(visible = true, transformation(origin = {-96, 128}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Math.Gain gain1(k = -1) annotation(
@@ -56,7 +56,7 @@ model REGC_A "WECC PV Generator Control REGC"
   Dynawo.Electrical.Controls.WECC.HighVoltageIqManagement highVoltageIqManagement annotation(
     Placement(visible = true, transformation(origin = {195.5, 80.5}, extent = {{-15.5, 15.5}, {15.5, -15.5}}, rotation = 0)));
   Dynawo.NonElectrical.Blocks.NonLinear.VariableLimiter variableLimiter annotation(
-    Placement(visible = true, transformation(origin = {25, -85}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+    Placement(visible = true, transformation(origin = {25, -84}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Constant constant1(k = -9999) annotation(
     Placement(visible = true, transformation(origin = {-5.5, -113.5}, extent = {{-7.5, -7.5}, {7.5, 7.5}}, rotation = 0)));
   Modelica.Blocks.Logical.Switch switch1 annotation(
@@ -65,7 +65,7 @@ model REGC_A "WECC PV Generator Control REGC"
     Placement(visible = true, transformation(origin = {-49.5, -46.5}, extent = {{-7.5, -7.5}, {7.5, 7.5}}, rotation = 0)));
   Modelica.Blocks.Sources.BooleanConstant booleanConstant(k = Lvplsw) annotation(
     Placement(visible = true, transformation(origin = {-159, -44}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Blocks.Sources.Constant RrpwrNeg0(k = -Rrpwr) annotation(
+  Modelica.Blocks.Sources.Constant RrpwrNeg0(k = -9999) annotation(
     Placement(visible = true, transformation(origin = {-95, -105}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Dynawo.NonElectrical.Blocks.Continuous.RateLimFirstOrderFreeze rateLimFirstOrderFreeze1(T = tG, UseRateLim = true, Y0 = Id0Pu*UInj0Pu, k = 1) annotation(
     Placement(visible = true, transformation(origin = {-55, -85}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
@@ -105,7 +105,7 @@ equation
   connect(highVoltageIqManagement.Iq_out, iqRefPu) annotation(
     Line(points = {{214, 80.5}, {214, 80}, {290, 80}}, color = {0, 0, 127}));
   connect(constant1.y, variableLimiter.limit2) annotation(
-    Line(points = {{2.75, -113.5}, {2.75, -93}, {13, -93}}, color = {0, 0, 127}));
+    Line(points = {{2.75, -113.5}, {2.75, -92}, {13, -92}}, color = {0, 0, 127}));
   connect(Qgen0, greaterThreshold.u) annotation(
     Line(points = {{-130, 200}, {-130, 128}, {-108, 128}}, color = {0, 0, 127}));
   connect(booleanConstant.y, switch1.u2) annotation(
@@ -119,7 +119,7 @@ equation
   connect(UPu, highVoltageIqManagement.Vt) annotation(
     Line(points = {{-230, 5}, {166, 5}, {166, 71}, {177, 71}}, color = {0, 0, 127}));
   connect(switch1.y, variableLimiter.limit1) annotation(
-    Line(points = {{-3, -29}, {6, -29}, {6, -77}, {13, -77}}, color = {0, 0, 127}));
+    Line(points = {{-3, -29}, {6, -29}, {6, -76}, {13, -76}}, color = {0, 0, 127}));
   connect(constant2.y, switch1.u3) annotation(
     Line(points = {{-41, -46}, {-36, -46}, {-36, -37}, {-26, -37}}, color = {0, 0, 127}));
   connect(firstOrder.u, UPu) annotation(
@@ -129,9 +129,9 @@ equation
   connect(lowVoltagePowerLogic.LVPL, switch1.u1) annotation(
     Line(points = {{-95, -12}, {-50, -12}, {-50, -21}, {-26, -21}}, color = {0, 0, 127}));
   connect(rateLimFirstOrderFreeze1.y, variableLimiter.u) annotation(
-    Line(points = {{-44, -85}, {13, -85}}, color = {0, 0, 127}));
+    Line(points = {{-44, -85}, {-15.5, -85}, {-15.5, -84}, {13, -84}}, color = {0, 0, 127}));
   connect(variableLimiter.y, lowVoltageIpManagement.Ip_in) annotation(
-    Line(points = {{36, -85}, {56, -85}, {56, -61}, {183, -61}}, color = {0, 0, 127}));
+    Line(points = {{36, -84}, {56, -84}, {56, -61}, {183, -61}}, color = {0, 0, 127}));
   connect(UPu, lowVoltageIpManagement.Vt) annotation(
     Line(points = {{-230, 5}, {68, 5}, {68, -79}, {183, -79}}, color = {0, 0, 127}));
   annotation(
@@ -143,5 +143,5 @@ equation
 
 </ul> </p></html>"),
     Diagram(coordinateSystem(initialScale = 0.2, extent = {{-220, 190}, {280, -130}}, grid = {1, 1})),
-    Icon(graphics = {Rectangle(extent = {{-100, 100}, {100, -100}}), Text(origin = {-27, 20}, extent = {{-53, 60}, {107, -100}}, textString = "REGC_A"), Text(origin = {134, -42}, extent = {{-22, 16}, {36, -28}}, textString = "idRefPu"), Text(origin = {134, 62}, extent = {{-22, 16}, {36, -32}}, textString = "iqRefPu"), Text(origin = {-28, -117}, extent = {{-18, 15}, {6, -1}}, textString = "UPu"), Text(origin = {-138, 82}, extent = {{-22, 16}, {36, -28}}, textString = "idCmdPu"), Text(origin = {-138, -38}, extent = {{-22, 16}, {36, -28}}, textString = "iqCmdPu"), Text(origin = {-138, 28}, extent = {{-8, 6}, {36, -28}}, textString = "frtOn")}, coordinateSystem(initialScale = 0.1, extent = {{-100, -100}, {100, 100}})));
+    Icon(graphics = {Rectangle(extent = {{-100, 100}, {100, -100}}), Text(origin = {-25, 20}, extent = {{-53, 60}, {107, -100}}, textString = "REGC_A"), Text(origin = {134, -42}, extent = {{-22, 16}, {36, -28}}, textString = "idRefPu"), Text(origin = {134, 62}, extent = {{-22, 16}, {36, -32}}, textString = "iqRefPu"), Text(origin = {-138, 82}, extent = {{-22, 16}, {36, -28}}, textString = "idCmdPu"), Text(origin = {-138, -38}, extent = {{-22, 16}, {36, -28}}, textString = "iqCmdPu"), Text(origin = {-33, -108}, extent = {{25, 10}, {-25, -10}}, textString = "UPu"), Text(origin = {-5, 123}, extent = {{43, -9}, {-43, 9}}, textString = "Qgen0")}, coordinateSystem(initialScale = 0.1, extent = {{-100, -100}, {100, 100}})));
 end REGC_A;
