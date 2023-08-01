@@ -32,7 +32,7 @@ model REGC_A "WECC PV Generator Control REGC"
   Modelica.Blocks.Interfaces.RealInput Qgen0(start = UInj0Pu) "Rective Power Setpoint in pu (base Iverter)" annotation(
     Placement(visible = true, transformation(origin = {-130, 200}, extent = {{-10, -10}, {10, 10}}, rotation = -90), iconTransformation(origin = {-60, 109}, extent = {{10, 10}, {-10, -10}}, rotation = 90)));
   Modelica.Blocks.Logical.GreaterThreshold greaterThreshold annotation(
-    Placement(visible = true, transformation(origin = {-96, 128}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+    Placement(visible = true, transformation(origin = {-105, 128}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Math.Gain gain1(k = -1) annotation(
     Placement(visible = true, transformation(origin = {111, 89}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Constant constant3(k = -9999) annotation(
@@ -74,7 +74,8 @@ model REGC_A "WECC PV Generator Control REGC"
   Modelica.Blocks.Continuous.FirstOrder firstOrder(T = tFilterGC, k = 1, y(start = UInj0Pu), y_start = UInj0Pu) annotation(
     Placement(visible = true, transformation(origin = {-158, -12}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Dynawo.Electrical.Controls.WECC.LowVoltagePowerLogic lowVoltagePowerLogic annotation(
-    Placement(visible = true, transformation(origin = {-112, -12}, extent = {{-14, -14}, {14, 14}}, rotation = 0)));
+    Placement(visible = true, transformation(origin = {-99, -12}, extent = {{-14, -14}, {14, 14}}, rotation = 0)));
+  parameter Boolean Lvplsw(start=false) "Low voltage power logic switch: 1-enabled/0-disabled";
 equation
   connect(switch3.y, rateLimFirstOrderFreeze2.dyMin) annotation(
     Line(points = {{42, 49}, {45, 49}, {45, 83}, {60, 83}}, color = {0, 0, 127}));
@@ -91,11 +92,11 @@ equation
   connect(switch4.y, rateLimFirstOrderFreeze2.dyMax) annotation(
     Line(points = {{42, 129}, {45, 129}, {45, 96}, {60, 96}}, color = {0, 0, 127}));
   connect(greaterThreshold.y, switch4.u2) annotation(
-    Line(points = {{-85, 128}, {-37.5, 128}, {-37.5, 129}, {19, 129}}, color = {255, 0, 255}));
+    Line(points = {{-94, 128}, {-37.5, 128}, {-37.5, 129}, {19, 129}}, color = {255, 0, 255}));
   connect(not1.y, switch3.u2) annotation(
     Line(points = {{-54, 101}, {-54, 49}, {19, 49}}, color = {255, 0, 255}));
   connect(greaterThreshold.y, not1.u) annotation(
-    Line(points = {{-85, 128}, {-84, 128}, {-84, 101}, {-77, 101}}, color = {255, 0, 255}));
+    Line(points = {{-94, 128}, {-84, 128}, {-84, 101}, {-77, 101}}, color = {255, 0, 255}));
   connect(iqCmdPu, rateLimFirstOrderFreeze2.u) annotation(
     Line(points = {{-230, 60}, {-47, 60}, {-47, 90}, {59, 90}}, color = {0, 0, 127}));
   connect(gain1.y, highVoltageIqManagement.Iq_in) annotation(
@@ -107,7 +108,7 @@ equation
   connect(constant1.y, variableLimiter.limit2) annotation(
     Line(points = {{2.75, -113.5}, {2.75, -92}, {13, -92}}, color = {0, 0, 127}));
   connect(Qgen0, greaterThreshold.u) annotation(
-    Line(points = {{-130, 200}, {-130, 128}, {-108, 128}}, color = {0, 0, 127}));
+    Line(points = {{-130, 200}, {-130, 128}, {-117, 128}}, color = {0, 0, 127}));
   connect(booleanConstant.y, switch1.u2) annotation(
     Line(points = {{-148, -44}, {-75.5, -44}, {-75.5, -29}, {-26, -29}}, color = {255, 0, 255}));
   connect(RrpwrPos0.y, rateLimFirstOrderFreeze1.dyMax) annotation(
@@ -125,9 +126,9 @@ equation
   connect(firstOrder.u, UPu) annotation(
     Line(points = {{-170, -12}, {-185, -12}, {-185, 5}, {-230, 5}}, color = {0, 0, 127}));
   connect(firstOrder.y, lowVoltagePowerLogic.UPu) annotation(
-    Line(points = {{-147, -12}, {-129, -12}}, color = {0, 0, 127}));
+    Line(points = {{-147, -12}, {-116, -12}}, color = {0, 0, 127}));
   connect(lowVoltagePowerLogic.LVPL, switch1.u1) annotation(
-    Line(points = {{-95, -12}, {-50, -12}, {-50, -21}, {-26, -21}}, color = {0, 0, 127}));
+    Line(points = {{-82, -12}, {-50, -12}, {-50, -21}, {-26, -21}}, color = {0, 0, 127}));
   connect(rateLimFirstOrderFreeze1.y, variableLimiter.u) annotation(
     Line(points = {{-44, -85}, {-15.5, -85}, {-15.5, -84}, {13, -84}}, color = {0, 0, 127}));
   connect(variableLimiter.y, lowVoltageIpManagement.Ip_in) annotation(

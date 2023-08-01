@@ -1,6 +1,7 @@
 within Dynawo.Electrical.Controls.WECC;
 
 model LowVoltageIpManagement
+  import Modelica;
   Modelica.Blocks.Interfaces.RealInput Ip_in annotation(
     Placement(visible = true, transformation(origin = {-100, 40}, extent = {{-20, -20}, {20, 20}}, rotation = 0), iconTransformation(origin = {-120, 60}, extent = {{-20, -20}, {20, 20}}, rotation = 0)));
   Modelica.Blocks.Interfaces.RealInput Vt annotation(
