@@ -8,3 +8,6 @@ ElectricalControlWind
 GeneratorControl
 PlantControl
 REGC_A
+LowVoltageIpManagement
+HighVoltageIqManagement
+LowVoltagePowerLogic
