@@ -55,8 +55,6 @@ model WTG4BCurrentSource_noWP "WECC Wind Turbine model with a current source as 
     Placement(visible = true, transformation(origin = {120, -10}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
   Dynawo.Electrical.Controls.WECC.ElectricalControlWind wecc_reec(Id0Pu = Id0Pu, IMaxPu = IMaxPu, Iq0Pu = Iq0Pu, Iqh1Pu = Iqh1Pu, Iql1Pu = Iql1Pu, Kqi = Kqi, Kqp = Kqp, Kqv = Kqv, Kvi = Kvi, Kvp = Kvp, PF0 = PF0, PInj0Pu = PInj0Pu, PPriority = PPriority, PFlag = PFlag, PfFlag = PfFlag, PMaxPu = PMaxPu, PMinPu = PMinPu, QFlag = QFlag, QInj0Pu = QInj0Pu, QMaxPu = QMaxPu, QMinPu = QMinPu, Tiq = Tiq, tP = tP, tPord = tPord, tRv = tRv, HoldIpMax = HoldIpMax, HoldIq = HoldIq, UInj0Pu = UInj0Pu, VDLIp11 = VDLIp11, VDLIp12 = VDLIp12, VDLIp21 = VDLIp21, VDLIp22 = VDLIp22, VDLIp31 = VDLIp31, VDLIp32 = VDLIp32, VDLIp41 = VDLIp41, VDLIp42 = VDLIp42, VDLIq11 = VDLIq11, VDLIq12 = VDLIq12, VDLIq21 = VDLIq21, VDLIq22 = VDLIq22, VDLIq31 = VDLIq31, VDLIq32 = VDLIq32, VDLIq41 = VDLIq41, VDLIq42 = VDLIq42, UMaxPu = UMaxPu, UMinPu = UMinPu, VFlag = VFlag, VMaxPu = VMaxPu, VMinPu = VMinPu, VRef0Pu = VRef0Pu, VRef1Pu = VRef1Pu, DPMax = DPMax, DPMin = DPMin, Dbd1 = Dbd1, Dbd2 = Dbd2, IqFrzPu = IqFrzPu) annotation(
     Placement(visible = true, transformation(origin = {-5.13151, -18.1384}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Dynawo.Electrical.Controls.WECC.GeneratorControl wecc_regc(IqrMaxPu = IqrMaxPu, IqrMinPu = IqrMinPu, RateFlag = RateFlag, tFilterGC = tFilterGC, tG = tG, Rrpwr = Rrpwr, UInj0Pu = UInj0Pu, Id0Pu = Id0Pu, Iq0Pu = Iq0Pu) annotation(
-    Placement(visible = true, transformation(origin = {40, -18}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Dynawo.Electrical.Sources.InjectorIDQ injector(Id0Pu = Id0Pu, Iq0Pu = Iq0Pu, P0Pu = -PInj0Pu*(SNom/SystemBase.SnRef), Q0Pu = -QInj0Pu*(SNom/SystemBase.SnRef), SNom = SNom, U0Pu = UInj0Pu, UPhase0 = UPhaseInj0, i0Pu = i0Pu, s0Pu = s0Pu, u0Pu = uInj0Pu) annotation(
     Placement(visible = true, transformation(origin = {80, -18}, extent = {{10, -10}, {-10, 10}}, rotation = 180)));
   Modelica.Blocks.Sources.Constant omegaG(k = 1) annotation(
@@ -70,22 +68,12 @@ model WTG4BCurrentSource_noWP "WECC Wind Turbine model with a current source as 
   parameter Types.ComplexPerUnit iInj0Pu "Start value of complex current at injector in pu (base UNom, SNom) (generator convention)";
   parameter Types.ComplexPerUnit uInj0Pu "Start value of complex voltage at injector in pu (base UNom)";
   parameter Types.Angle UPhaseInj0 "Start value of voltage angle at injector";
+  Dynawo.Electrical.Controls.WECC.REGC_A regc_a annotation(
+    Placement(visible = true, transformation(origin = {39, -18}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
 equation
   line.switchOffSignal1.value = injector.switchOffSignal1.value;
   connect(line.terminal2, injector.terminal) annotation(
     Line(points = {{110, -10}, {91.5, -10}}, color = {0, 0, 255}));
-  connect(wecc_reec.iqCmdPu, wecc_regc.iqCmdPu) annotation(
-    Line(points = {{6, -24}, {29, -24}}, color = {0, 0, 127}));
-  connect(wecc_reec.frtOn, wecc_regc.frtOn) annotation(
-    Line(points = {{6, -18}, {29, -18}}, color = {255, 0, 255}));
-  connect(wecc_reec.idCmdPu, wecc_regc.idCmdPu) annotation(
-    Line(points = {{6, -12}, {29, -12}}, color = {0, 0, 127}));
-  connect(wecc_regc.idRefPu, injector.idPu) annotation(
-    Line(points = {{51, -24}, {68.5, -24}}, color = {0, 0, 127}));
-  connect(wecc_regc.iqRefPu, injector.iqPu) annotation(
-    Line(points = {{51, -14}, {68.5, -14}}, color = {0, 0, 127}));
-  connect(injector.UPu, wecc_regc.UPu) annotation(
-    Line(points = {{92, -26}, {97, -26}, {97, -34}, {34, -34}, {34, -29}, {34, -29}}, color = {0, 0, 127}));
   connect(injector.UPu, wecc_reec.UPu) annotation(
     Line(points = {{92, -26}, {97, -26}, {97, -34}, {1, -34}, {1, -29}}, color = {0, 0, 127}));
   connect(injector.PInjPuSn, wecc_reec.PInjPu) annotation(
@@ -96,10 +84,22 @@ equation
     Line(points = {{34.5, -45}, {-10, -45}, {-10, -29}}, color = {0, 0, 127}));
   connect(line.terminal1, terminal) annotation(
     Line(points = {{130, -10}, {180, -10}}, color = {0, 0, 255}));
-  connect(PRefPu, wecc_reec.PInjRefPu) annotation(
-    Line(points = {{-110, -20}, {-38, -20}, {-38, -12}, {-16, -12}}, color = {0, 0, 127}));
   connect(QRefPu, wecc_reec.QInjRefPu) annotation(
     Line(points = {{-110, -40}, {-35, -40}, {-35, -24}, {-16, -24}}, color = {0, 0, 127}));
+  connect(PRefPu, wecc_reec.PInjRefPu) annotation(
+    Line(points = {{-110, -20}, {-38, -20}, {-38, -12}, {-16, -12}}, color = {0, 0, 127}));
+  connect(wecc_reec.idCmdPu, regc_a.idCmdPu) annotation(
+    Line(points = {{6, -12}, {28, -12}}, color = {0, 0, 127}));
+  connect(wecc_reec.iqCmdPu, regc_a.iqCmdPu) annotation(
+    Line(points = {{6, -24}, {28, -24}}, color = {0, 0, 127}));
+  connect(regc_a.iqRefPu, injector.iqPu) annotation(
+    Line(points = {{50, -14}, {69, -14}}, color = {0, 0, 127}));
+  connect(regc_a.idRefPu, injector.idPu) annotation(
+    Line(points = {{50, -24}, {69, -24}}, color = {0, 0, 127}));
+  connect(injector.UPu, regc_a.UPu) annotation(
+    Line(points = {{92, -26}, {97, -26}, {97, -34}, {39, -34}, {39, -29}}, color = {0, 0, 127}));
+  connect(QRefPu, regc_a.Qgen0) annotation(
+    Line(points = {{-110, -40}, {-82, -40}, {-82, 5}, {33, 5}, {33, -7}}, color = {0, 0, 127}));
   annotation(
     Documentation(preferredView = "diagram", info = "<html>
 <p> This block contains the generic WECC WTG model according to (in case page cannot be found, copy link in browser): <br><a href=\"https://www.wecc.org/Reliability/WECC-Second-Generation-Wind-Turbine-Models-012314.pdf\">https://www.wecc.org/Reliability/WECC-Second-Generation-Wind-Turbine-Models-012314.pdf</a> </p>
