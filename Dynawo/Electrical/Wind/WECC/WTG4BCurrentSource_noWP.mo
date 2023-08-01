@@ -68,7 +68,7 @@ model WTG4BCurrentSource_noWP "WECC Wind Turbine model with a current source as 
   parameter Types.ComplexPerUnit iInj0Pu "Start value of complex current at injector in pu (base UNom, SNom) (generator convention)";
   parameter Types.ComplexPerUnit uInj0Pu "Start value of complex voltage at injector in pu (base UNom)";
   parameter Types.Angle UPhaseInj0 "Start value of voltage angle at injector";
-  Dynawo.Electrical.Controls.WECC.REGC_A regc_a annotation(
+  Dynawo.Electrical.Controls.WECC.REGC_A regc_a(IqrMaxPu = 999, IqrMinPu = -999, RateFlag = false, Rrpwr = 20,tFilterGC = tFilterGC, tG = tG)  annotation(
     Placement(visible = true, transformation(origin = {39, -18}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
 equation
   line.switchOffSignal1.value = injector.switchOffSignal1.value;
