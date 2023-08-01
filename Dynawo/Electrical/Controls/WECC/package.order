@@ -7,3 +7,4 @@ ElectricalControlPV
 ElectricalControlWind
 GeneratorControl
 PlantControl
+REGC_A
