@@ -8,6 +8,7 @@ model LowVoltagePowerLogic
   parameter Real zerox "LVPL zero crossing in p. u.";
   parameter Real brkpt "LVPL breakpoint in p. u.";
   parameter Real lvpl1 "LVPL gain breakpoint in p. u.";
+  Real mlvpl;
   
 initial equation
   
@@ -16,4 +17,6 @@ equation
   LVPL = if Upu < zerox then 0 else if Upu > brkpt then 9999 else mlvpl*(Upu - zerox);
   mlvpl = lvpl1/(brkpt-zerox);
   
+annotation(
+    Icon(graphics = {Text(origin = {4, 4}, extent = {{-54, 40}, {54, -40}}, textString = "LVPL"), Rectangle(extent = {{-100, 100}, {100, -100}})}));
 end LowVoltagePowerLogic;
