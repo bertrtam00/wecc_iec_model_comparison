@@ -51,10 +51,6 @@ model REGC_A "WECC PV Generator Control REGC"
     Placement(visible = true, transformation(origin = {31, 129}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Logical.Not not1 annotation(
     Placement(visible = true, transformation(origin = {-65, 101}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Dynawo.Electrical.Controls.WECC.LowVoltageIpManagement lowVoltageIpManagement annotation(
-    Placement(visible = true, transformation(origin = {201, -70}, extent = {{-15, -15}, {15, 15}}, rotation = 0)));
-  Dynawo.Electrical.Controls.WECC.HighVoltageIqManagement highVoltageIqManagement annotation(
-    Placement(visible = true, transformation(origin = {195.5, 80.5}, extent = {{-15.5, 15.5}, {15.5, -15.5}}, rotation = 0)));
   Dynawo.NonElectrical.Blocks.NonLinear.VariableLimiter variableLimiter annotation(
     Placement(visible = true, transformation(origin = {25, -84}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Constant constant1(k = -9999) annotation(
@@ -70,7 +66,7 @@ model REGC_A "WECC PV Generator Control REGC"
   Dynawo.NonElectrical.Blocks.Continuous.RateLimFirstOrderFreeze rateLimFirstOrderFreeze1(T = tG, UseRateLim = true, Y0 = Id0Pu*UInj0Pu, k = 1) annotation(
     Placement(visible = true, transformation(origin = {-55, -85}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Constant RrpwrPos0(k = Rrpwr) annotation(
-    Placement(visible = true, transformation(origin = {-95, -65}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+    Placement(visible = true, transformation(origin = {-96, -64}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Continuous.FirstOrder firstOrder(T = tFilterGC, k = 1, y(start = UInj0Pu), y_start = UInj0Pu) annotation(
     Placement(visible = true, transformation(origin = {-158, -12}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Dynawo.Electrical.Controls.WECC.LowVoltagePowerLogic lowVoltagePowerLogic annotation(
@@ -99,12 +95,6 @@ equation
     Line(points = {{-94, 128}, {-84, 128}, {-84, 101}, {-77, 101}}, color = {255, 0, 255}));
   connect(iqCmdPu, rateLimFirstOrderFreeze2.u) annotation(
     Line(points = {{-230, 60}, {-47, 60}, {-47, 90}, {59, 90}}, color = {0, 0, 127}));
-  connect(gain1.y, highVoltageIqManagement.Iq_in) annotation(
-    Line(points = {{122, 89}, {148.5, 89}, {148.5, 90}, {177, 90}}, color = {0, 0, 127}));
-  connect(lowVoltageIpManagement.Ip_out, idRefPu) annotation(
-    Line(points = {{219, -70}, {290, -70}}, color = {0, 0, 127}));
-  connect(highVoltageIqManagement.Iq_out, iqRefPu) annotation(
-    Line(points = {{214, 80.5}, {214, 80}, {290, 80}}, color = {0, 0, 127}));
   connect(constant1.y, variableLimiter.limit2) annotation(
     Line(points = {{2.75, -113.5}, {2.75, -92}, {13, -92}}, color = {0, 0, 127}));
   connect(Qgen0, greaterThreshold.u) annotation(
@@ -112,13 +102,11 @@ equation
   connect(booleanConstant.y, switch1.u2) annotation(
     Line(points = {{-148, -44}, {-75.5, -44}, {-75.5, -29}, {-26, -29}}, color = {255, 0, 255}));
   connect(RrpwrPos0.y, rateLimFirstOrderFreeze1.dyMax) annotation(
-    Line(points = {{-84, -65}, {-76, -65}, {-76, -78}, {-67, -78}}, color = {0, 0, 127}));
+    Line(points = {{-85, -64}, {-76, -64}, {-76, -78}, {-67, -78}}, color = {0, 0, 127}));
   connect(RrpwrNeg0.y, rateLimFirstOrderFreeze1.dyMin) annotation(
     Line(points = {{-84, -105}, {-74, -105}, {-74, -91}, {-67, -91}}, color = {0, 0, 127}));
   connect(idCmdPu, rateLimFirstOrderFreeze1.u) annotation(
     Line(points = {{-230, -85}, {-67, -85}}, color = {0, 0, 127}));
-  connect(UPu, highVoltageIqManagement.Vt) annotation(
-    Line(points = {{-230, 5}, {166, 5}, {166, 71}, {177, 71}}, color = {0, 0, 127}));
   connect(switch1.y, variableLimiter.limit1) annotation(
     Line(points = {{-3, -29}, {6, -29}, {6, -76}, {13, -76}}, color = {0, 0, 127}));
   connect(constant2.y, switch1.u3) annotation(
@@ -131,10 +119,10 @@ equation
     Line(points = {{-82, -12}, {-50, -12}, {-50, -21}, {-26, -21}}, color = {0, 0, 127}));
   connect(rateLimFirstOrderFreeze1.y, variableLimiter.u) annotation(
     Line(points = {{-44, -85}, {-15.5, -85}, {-15.5, -84}, {13, -84}}, color = {0, 0, 127}));
-  connect(variableLimiter.y, lowVoltageIpManagement.Ip_in) annotation(
-    Line(points = {{36, -84}, {56, -84}, {56, -61}, {183, -61}}, color = {0, 0, 127}));
-  connect(UPu, lowVoltageIpManagement.Vt) annotation(
-    Line(points = {{-230, 5}, {68, 5}, {68, -79}, {183, -79}}, color = {0, 0, 127}));
+  connect(gain1.y, iqRefPu) annotation(
+    Line(points = {{122, 89}, {254, 89}, {254, 80}, {290, 80}}, color = {0, 0, 127}));
+  connect(variableLimiter.y, idRefPu) annotation(
+    Line(points = {{36, -84}, {256, -84}, {256, -70}, {290, -70}}, color = {0, 0, 127}));
   annotation(
     preferredView = "diagram",
     Documentation(info = "<html>
@@ -143,6 +131,10 @@ equation
 
 
 </ul> </p></html>"),
-    Diagram(coordinateSystem(initialScale = 0.2, extent = {{-220, 190}, {280, -130}}, grid = {1, 1})),
+    Diagram(coordinateSystem(initialScale = 0.2, extent = {{-220, 190}, {280, -130}}, grid = {1, 1}), graphics = {Rectangle(origin = {200, 90}, extent = {{-31, 40}, {31, -40}}), Text(origin = {201, 87.5}, extent = {{-25, 23}, {25, -22}}, textString = "high voltage 
+reactive current
+management"), Rectangle(origin = {197, -70}, extent = {{-31, 40}, {31, -40}}), Text(origin = {201, -70.5}, extent = {{-25, 23}, {25, -22}}, textString = "low voltage 
+active current
+management")}),
     Icon(graphics = {Rectangle(extent = {{-100, 100}, {100, -100}}), Text(origin = {-25, 20}, extent = {{-53, 60}, {107, -100}}, textString = "REGC_A"), Text(origin = {134, -42}, extent = {{-22, 16}, {36, -28}}, textString = "idRefPu"), Text(origin = {134, 62}, extent = {{-22, 16}, {36, -32}}, textString = "iqRefPu"), Text(origin = {-138, 82}, extent = {{-22, 16}, {36, -28}}, textString = "idCmdPu"), Text(origin = {-138, -38}, extent = {{-22, 16}, {36, -28}}, textString = "iqCmdPu"), Text(origin = {-33, -108}, extent = {{25, 10}, {-25, -10}}, textString = "UPu"), Text(origin = {-5, 123}, extent = {{43, -9}, {-43, 9}}, textString = "Qgen0")}, coordinateSystem(initialScale = 0.1, extent = {{-100, -100}, {100, 100}})));
 end REGC_A;

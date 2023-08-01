@@ -5,11 +5,11 @@ model test_regc_a
     Placement(visible = true, transformation(origin = {-18, -40}, extent = {{10, -10}, {-10, 10}}, rotation = 180)));
   Dynawo.Electrical.Buses.InfiniteBusWithVariations bus_WECC(U0Pu = 1, UEvtPu = 1, UPhase = 0, omega0Pu = 1, omegaEvtPu = 1, tOmegaEvtEnd = 9, tOmegaEvtStart = 8, tUEvtEnd = 6, tUEvtStart = 5) annotation(
     Placement(visible = true, transformation(origin = {74, -32}, extent = {{-12, -12}, {12, 12}}, rotation = -90)));
-  Dynawo.Electrical.Controls.WECC.REGC_A regc_a(tFilterGC = 0.01, tG = 0.01)  annotation(
+  Dynawo.Electrical.Controls.WECC.REGC_A regc_a(IqrMaxPu = 999, IqrMinPu = -999, RateFlag = false, Rrpwr = 20,tFilterGC = 0.01, tG = 0.01)  annotation(
     Placement(visible = true, transformation(origin = {-56, -40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Blocks.Sources.Step step(height = 0.3, offset = 0.5)  annotation(
+  Modelica.Blocks.Sources.Step step(height = 0.3, offset = 0.5, startTime = 1)  annotation(
     Placement(visible = true, transformation(origin = {-105, -33}, extent = {{-5, -5}, {5, 5}}, rotation = 0)));
-  Modelica.Blocks.Sources.Step step1(height = 0.2, offset = 0) annotation(
+  Modelica.Blocks.Sources.Step step1(height = 0.2, offset = 0, startTime = 2) annotation(
     Placement(visible = true, transformation(origin = {-104, -70}, extent = {{-4, -4}, {4, 4}}, rotation = 0)));
   Modelica.Blocks.Sources.Constant RrpwrPos0(k = 0.1) annotation(
     Placement(visible = true, transformation(origin = {-83, -1}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
@@ -36,4 +36,7 @@ equation
   connect(injector.UPu, regc_a.UPu) annotation(
     Line(points = {{-6, -48}, {8, -48}, {8, -62}, {-56, -62}, {-56, -50}}, color = {0, 0, 127}));
   annotation(
-    uses(Dynawo(version = "1.0.1"), Modelica(version = "3.2.3")));end test_regc_a;
+    uses(Dynawo(version = "1.0.1"), Modelica(version = "3.2.3")),
+  experiment(StartTime = 0, StopTime = 3, Tolerance = 1e-6, Interval = 0.006),
+  __OpenModelica_commandLineOptions = "--matchingAlgorithm=PFPlusExt --indexReductionMethod=dynamicStateSelection -d=initialization,NLSanalyticJacobian",
+  __OpenModelica_simulationFlags(lv = "LOG_STATS", s = "dassl", variableFilter = ".*"));end test_regc_a;
