@@ -16,21 +16,23 @@ model REGC_A "WECC PV Generator Control REGC"
   import Dynawo;
   import Dynawo.Electrical.Controls.WECC.Parameters;
   extends Parameters.Params_GeneratorControl;
+  
+  parameter Types.VoltageModulePu UInj0Pu "Start value of voltage amplitude at injector terminal in pu (base UNom)";
+  parameter Types.CurrentModulePu Id0Pu "Start value of d-component current at injector terminal in pu (generator convention) (base SNom, UNom)";
+  parameter Types.CurrentModulePu Iq0Pu "Start value of q-component current at injector terminal in pu (generator convention) (base SNom, UNom)";
+  
   Modelica.Blocks.Interfaces.RealInput idCmdPu(start = Id0Pu) "idCmdPu setpoint from electrical control in pu (base SNom, UNom)" annotation(
     Placement(visible = true, transformation(origin = {-230, -85}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {-110, 60}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Interfaces.RealInput iqCmdPu(start = Iq0Pu) "iqCmdPu setpoint from electrical control in pu (base SNom, UNom)" annotation(
     Placement(visible = true, transformation(origin = {-230, 60}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {-110, -60}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Interfaces.RealInput UPu(start = UInj0Pu) "Inverter terminal voltage magnitude in pu (base UNom)" annotation(
     Placement(visible = true, transformation(origin = {-230, 5}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {0, -110}, extent = {{10, -10}, {-10, 10}}, rotation = 270)));
+  Modelica.Blocks.Interfaces.RealInput Qgen0(start = UInj0Pu) "Rective Power Setpoint in pu (base Iverter)" annotation(
+    Placement(visible = true, transformation(origin = {-130, 200}, extent = {{-10, -10}, {10, 10}}, rotation = -90), iconTransformation(origin = {-60, 109}, extent = {{10, 10}, {-10, -10}}, rotation = 90)));
   Modelica.Blocks.Interfaces.RealOutput idRefPu(start = Id0Pu) "idRefPu setpoint to injector in pu (generator convention) (base SNom, UNom)" annotation(
     Placement(visible = true, transformation(origin = {290, -70}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {110, -60}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Interfaces.RealOutput iqRefPu(start = -Iq0Pu) "iqRefPu setpoint to injector in pu (generator convention) (base SNom, UNom)" annotation(
     Placement(visible = true, transformation(origin = {290, 80}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {110, 40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  parameter Types.VoltageModulePu UInj0Pu "Start value of voltage amplitude at injector terminal in pu (base UNom)";
-  parameter Types.CurrentModulePu Id0Pu "Start value of d-component current at injector terminal in pu (generator convention) (base SNom, UNom)";
-  parameter Types.CurrentModulePu Iq0Pu "Start value of q-component current at injector terminal in pu (generator convention) (base SNom, UNom)";
-  Modelica.Blocks.Interfaces.RealInput Qgen0(start = UInj0Pu) "Rective Power Setpoint in pu (base Iverter)" annotation(
-    Placement(visible = true, transformation(origin = {-130, 200}, extent = {{-10, -10}, {10, 10}}, rotation = -90), iconTransformation(origin = {-60, 109}, extent = {{10, 10}, {-10, -10}}, rotation = 90)));
   Modelica.Blocks.Logical.GreaterThreshold greaterThreshold annotation(
     Placement(visible = true, transformation(origin = {-105, 128}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Math.Gain gain1(k = -1) annotation(
@@ -69,9 +71,8 @@ model REGC_A "WECC PV Generator Control REGC"
     Placement(visible = true, transformation(origin = {-96, -64}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Continuous.FirstOrder firstOrder(T = tFilterGC, k = 1, y(start = UInj0Pu), y_start = UInj0Pu) annotation(
     Placement(visible = true, transformation(origin = {-158, -12}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Dynawo.Electrical.Controls.WECC.LowVoltagePowerLogic lowVoltagePowerLogic annotation(
+  Dynawo.Electrical.Controls.WECC.LowVoltagePowerLogic lowVoltagePowerLogic(brkpt = brkpt, lvpl1 = lvpl1, zerox = zerox) annotation(
     Placement(visible = true, transformation(origin = {-99, -12}, extent = {{-14, -14}, {14, 14}}, rotation = 0)));
-  parameter Boolean Lvplsw(start=false) "Low voltage power logic switch: 1-enabled/0-disabled";
 equation
   connect(switch3.y, rateLimFirstOrderFreeze2.dyMin) annotation(
     Line(points = {{42, 49}, {45, 49}, {45, 83}, {60, 83}}, color = {0, 0, 127}));
