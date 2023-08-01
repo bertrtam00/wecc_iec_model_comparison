@@ -93,6 +93,10 @@ record Parameters "Parameters of the PV WECC model"
     parameter Types.PerUnit IqrMaxPu "Maximum rate-of-change of reactive current after fault in pu (base UNom, SNom) (typical: 1..999)" annotation(Dialog(tab="Generator Control"));
     parameter Types.PerUnit Rrpwr "Active power recovery time [pu/s] (typical: 1..20)" annotation(Dialog(tab="Generator Control"));
     parameter Boolean RateFlag "Active current (=false) or active power (=true) ramp (if unkown set to false)" annotation(Dialog(tab="Generator Control"));
+    parameter Boolean Lvplsw(start=false) "Low voltage power logic switch: 1-enabled/0-disabled" annotation(Dialog(tab="Generator Control"));
+    parameter Real zerox(start=0.0) "LVPL zero crossing in pu" annotation(Dialog(tab="Generator Control"));
+    parameter Real brkpt(start=1.0) "LVPL breakpoint in pu" annotation(Dialog(tab="Generator Control"));
+    parameter Real lvpl1(start=1.0) "LVPL gain breakpoint in pu" annotation(Dialog(tab="Generator Control"));
   annotation(preferredView = "text");
   end Params_GeneratorControl;
 
