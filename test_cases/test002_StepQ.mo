@@ -56,4 +56,4 @@ equation
     __OpenModelica_simulationFlags(lv = "LOG_STATS", s = "dassl", variableFilter = ".*"),
     Diagram(coordinateSystem(extent = {{-100, -100}, {100, 100}})),
     version = "");
-end test002_StepQ_newversion;
+end test002_StepQ;
