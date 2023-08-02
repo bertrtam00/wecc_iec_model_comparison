@@ -8,6 +8,7 @@ is the first test case with IEC and WECC running in parallel.
 - test001_StepP consists in a step on PRef at the turbine.
 - test002_StepQ consists in a step on QRef at the turbine.
 - test003_SolidFault consists in a solid fault (R = 0, X= 0.0001 pu) at the turbine terminal from t = 5 to t = 5.1 s
+- test004_StepU consists in a step on URef at the turbine.
 
 # Collection and elaboration of relevant differences
 ! Generator Converter Model yet to be included!
