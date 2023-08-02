@@ -5,7 +5,7 @@ model test002_StepQ
     Placement(visible = true, transformation(origin = {-10, 28}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Step pWTrefPu(height = 0, offset = 0.5, startTime = 0) annotation(
     Placement(visible = true, transformation(origin = {-128, 30}, extent = {{-6, -6}, {6, 6}}, rotation = 0)));
-  Modelica.Blocks.Sources.Step xWTrefPu(height = 0.1, offset = 0, startTime = 5) annotation(
+  Modelica.Blocks.Sources.Step xWTrefPu(height = 0.1, offset = 0, startTime = 1) annotation(
     Placement(visible = true, transformation(origin = {-126, -8}, extent = {{-6, -6}, {6, 6}}, rotation = 0)));
   Modelica.Blocks.Sources.Step omegaRefPu(height = 0, offset = 1, startTime = 0) annotation(
     Placement(visible = true, transformation(origin = {-126, 74}, extent = {{-6, -6}, {6, 6}}, rotation = 0)));
@@ -13,7 +13,7 @@ model test002_StepQ
     Placement(visible = true, transformation(origin = {-12, -26}, extent = {{-11, -11}, {11, 11}}, rotation = 0)));
   Modelica.Blocks.Sources.Constant tanPhi annotation(
     Placement(visible = true, transformation(origin = {-126, 54}, extent = {{-6, -6}, {6, 6}}, rotation = 0)));
-  Dynawo.Electrical.Wind.WECC.WTG4BCurrentSource_noWP WECC_WT4B(DDn = 20, DPMax = 100, DPMin = -100, DUp = 0, Dbd = 0.05, Dbd1 = -0.1, Dbd2 = 0.1, EMax = 0.01, EMin = -0.01, FDbd1 = 0.01, FDbd2 = 0.01, FEMax = 0.05, FEMin = -0.05, FreqFlag = false, HoldIpMax = 0, HoldIq = -0.1, IMaxPu = 1.3, Id0Pu = 0.5, Iq0Pu = 0, IqFrzPu = 0, Iqh1Pu = 1.1, Iql1Pu = -1.1, IqrMaxPu = 100, IqrMinPu = -100, Kc = 2, Ki = 1, Kig = 1, Kp = 1, Kpg = 1, Kqi = 2.25, Kqp = 1.1, Kqv = 2, Kvi = 10, Kvp = 2, Lvplsw = false, P0Pu = -0.5, PF0 = 1, PFlag = false, PInj0Pu = 0.5, PMaxPu = 1, PMinPu = 0, PPriority = true, PfFlag = false, Q0Pu = 0, QFlag = true, QInj0Pu = 0, QMaxPu = 1, QMinPu = -1, RPu = 0, RateFlag = false, RefFlag = false, Rrpwr = 1, SNom = 1, Tiq = 0.05, U0Pu = 1, UInj0Pu = 1, UMaxPu = 1.1, UMinPu = 0.9, UPhaseInj0 = 0, VCompFlag = false, VDLIp11 = 0.9, VDLIp12 = 1.1, VDLIp21 = 1.1, VDLIp22 = 1.1, VDLIp31 = 1.11, VDLIp32 = 1.1, VDLIp41 = 1.12, VDLIp42 = 1.1, VDLIq11 = 0.9, VDLIq12 = 1.1, VDLIq21 = 1.1, VDLIq22 = 1.1, VDLIq31 = 1.11, VDLIq32 = 1.1, VDLIq41 = 1.12, VDLIq42 = 1.1, VFlag = true, VFrz = 0.9, VMaxPu = 1.1, VMinPu = 0.9, VRef0Pu = 1, VRef1Pu = 0, XPu = 0.01, brkpt = 1, i0Pu = Complex(0.5, 0), iInj0Pu = Complex(0.5, 0), lvpl1 = 1, s0Pu = Complex(0.5, 0), tFilterGC = 0.01, tFilterPC = 0.01, tFt = 0.01, tFv = 0.01, tG = 0.01, tLag = 0.01, tP = 0.01, tPord = 0.1, tRv = 0.01, u0Pu = Complex(1, 0), uInj0Pu = Complex(1, 0), zerox = 0) annotation(
+  Dynawo.Electrical.Wind.WECC.WTG4BCurrentSource_noWP WECC_WT4B(DDn = 20, DPMax = 100, DPMin = -100, DUp = 0, Dbd = 0.05, Dbd1 = -0.1, Dbd2 = 0.1, EMax = 0.01, EMin = -0.01, FDbd1 = 0.01, FDbd2 = 0.01, FEMax = 0.05, FEMin = -0.05, FreqFlag = false, HoldIpMax(displayUnit = "ks") = 0, HoldIq = -0.1, IMaxPu = 1.3, Id0Pu = 0.5, Iq0Pu = 0, IqFrzPu = 0, Iqh1Pu = 1.1, Iql1Pu = -1.1, IqrMaxPu = 100, IqrMinPu = -100, Kc = 2, Ki = 1, Kig = 1, Kp = 1, Kpg = 1, Kqi = 2.25, Kqp = 1.1, Kqv = 2, Kvi = 10, Kvp = 2, Lvplsw = false, Ni = 0.9, P0Pu = -0.5, PF0 = 1, PFlag = false, PInj0Pu = 0.5, PMaxPu = 1, PMinPu = 0, PPriority = true, PfFlag = false, Q0Pu = 0, QFlag = true, QInj0Pu = 0, QMaxPu = 1, QMinPu = -1, RPu = 0, RateFlag = false, RefFlag = false, Rrpwr = 1, SNom = 1, Tiq = 0.05, U0Pu = 1, UInj0Pu = 1, UMaxPu = 1.1, UMinPu = 0.9, UPhaseInj0 = 0, VCompFlag = false, VDLIp11 = 0.9, VDLIp12 = 1.1, VDLIp21 = 1.1, VDLIp22 = 1.1, VDLIp31 = 1.11, VDLIp32 = 1.1, VDLIp41 = 1.12, VDLIp42 = 1.1, VDLIq11 = 0.9, VDLIq12 = 1.1, VDLIq21 = 1.1, VDLIq22 = 1.1, VDLIq31 = 1.11, VDLIq32 = 1.1, VDLIq41 = 1.12, VDLIq42 = 1.1, VFlag = true, VFrz = 0.9, VMaxPu = 1.1, VMinPu = 0.9, VRef0Pu = 1, VRef1Pu = 0, XPu = 0.01, brkpt = 1, i0Pu = Complex(0.5, 0), iInj0Pu = Complex(0.5, 0), lvpl1 = 1, s0Pu = Complex(0.5, 0), tFilterGC = 0.01, tFilterPC = 0.01, tFt = 0.01, tFv = 0.01, tG = 0.01, tLag = 0.01, tP = 0.01, tPord = 0.1, tRv = 0.01, u0Pu = Complex(1, 0), uInj0Pu = Complex(1, 0), zerox = 0) annotation(
     Placement(visible = true, transformation(origin = {-47, -27}, extent = {{-17, -17}, {17, 17}}, rotation = 0)));
   Dynawo.Electrical.Buses.InfiniteBus bus_IEC(UPhase = 0, UPu = 1)  annotation(
     Placement(visible = true, transformation(origin = {18, 28}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
@@ -51,7 +51,7 @@ equation
     Line(points = {{0, -26}, {18, -26}, {18, -24}, {18, -24}, {18, -26}, {18, -26}, {18, -26}, {18, -26}, {18, -26}, {18, -26}}, color = {0, 0, 255}));
   annotation(
     uses(Dynawo(version = "1.0.1"), Modelica(version = "3.2.3")),
-    experiment(StartTime = 0, StopTime = 10, Tolerance = 1e-06, Interval = 0.001),
+    experiment(StartTime = 0, StopTime = 4, Tolerance = 1e-06, Interval = 0.0004),
     __OpenModelica_commandLineOptions = "--matchingAlgorithm=PFPlusExt --indexReductionMethod=dynamicStateSelection -d=initialization,NLSanalyticJacobian",
     __OpenModelica_simulationFlags(lv = "LOG_STATS", s = "dassl", variableFilter = ".*"),
     Diagram(coordinateSystem(extent = {{-100, -100}, {100, 100}})),
