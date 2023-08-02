@@ -4,6 +4,11 @@ Comparison of generic electrical wind turbine models following WECC and IEC stan
 ## IEC_and_WECC_WT_SMIB.mo
 is the first test case with IEC and WECC running in parallel.
 
+## Available test cases
+test001_StepP consists in a step on PRef at the turbine.
+test002_StepQ consists in a step on QRef at the turbine.
+test003_SolidFault consists in a solid fault (R = 0, X= 0.0001 pu) at the turbine terminal from t = 5 to t = 5.1 s
+
 # Collection and elaboration of relevant differences
 ! Generator Converter Model yet to be included!
 
@@ -16,7 +21,7 @@ Relevance:
 
 ## Wind Turbine Q Control (WT_Q)
 
-| No. | Relevance | Description                                                                                                                                           | Comment |
+| No. | Relevance | Description                                                                                                                                           | Test case |
 | --- | --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
 | 1   |           | WECC: Qmax/min is a parameter; IEC: q_WTmax/min taken from Q lim block                                                                                |         |
 | 2   |           | WECC: has extra min limit for reactive current during FRT (iql1); IEC uses minimum limit from normal path                                             |         |
@@ -31,12 +36,12 @@ Relevance:
 | 11  |           | different delta u sign in fast current injection (!)                                                                                                  |         |
 | 12  |           | different calculation method of pre-fault voltage                                                                                                     |         |
 | 13  |           | WECC: Iql1, Iqh1 are fast-injected current limits; IEC: iqh1, iqmin are limits for total injected current during FRT.                                 |         |
-| 14  |           | IEC uses filtered voltage for FRT mode detecion; WECC not filtered                                                                                    |         |
+| 14  |           | IEC uses filtered voltage for FRT mode detecion; WECC not filtered                                                                                    |   003 by having tPost = 0      |
 | 15  |           | WECC: uses CLS value Iqmax, Iqmin in Voltage PI controller; IEC: uses constants                                                                       |         |
 
 ## Wind Turbine P Control (WT_P)
 
-| No. | Relevance | Description                                                                                                                | Comment |
+| No. | Relevance | Description                                                                                                                | Test case |
 | --- | --------- | -------------------------------------------------------------------------------------------------------------------------- | ------- |
 | 16  |           | IEC: PT1 not frozen during FRT (P scaling with different threshold u_pdip instead)                                         |         |
 | 17  |           | WECC additionally has Thld2, which holds current limit Ipmax at during-fault-value for Thld2 seconds after fault clearing. |         |
@@ -49,10 +54,11 @@ Relevance:
 | 24  |           | IEC has rate limiter after omega multiplication                                                                            |         |
 | 25  |           | WECC has lower limit Pmin                                                                                                  |         |
 | 26  |           | IEC uses CLS value ipmax in P control PT1 (WECC uses constants Pmax, Pmin)                                                 |         |
+| 27  |    1      | IEC divides the PRef by U (while WECC doesn't)  | 003 with a difference between IMax and IqMax (1.3 and 1.1 pu)        |        
 
 ## Current Limitation System (WT_CLS)
 
-| No. | Relevance | Description                                                                                                   | Comment |
+| No. | Relevance | Description                                                                                                   | Test case |
 | --- | --------- | ------------------------------------------------------------------------------------------------------------- | ------- |
 | 27  |           | WECC: Current Limiting System (CLS) acts on P and Q control scheme; IEC: CLS passes limits to generator model. Limits inside P,Q contrl schemes are additional parameters.|  |
 | 28  |           |  WECC: Voltage Dependent Limits have only 4 pairs of u / i                                                    |         |
@@ -64,20 +70,20 @@ Relevance:
 
 ## Reactive Power Limitation System (WT_QLS)
 
-| No. | Relevance | Description                  | Comment |
+| No. | Relevance | Description                  | Test case |
 | --- | --------- | ---------------------------- | ------- |
 | 34  |           | IEC: has Q limitation system |         |
 
 ## Wind Turbine Measurement (WT_meas)
 
-| No. | Relevance | Description                                                                       | Comment |
+| No. | Relevance | Description                                                                       | Test case |
 | --- | --------- | --------------------------------------------------------------------------------- | ------- |
 | 35  |           | IEC: measurement in separate model; WECC: measurement inside controller structure |         |
-| 36  | 1         | WECC: no measurement filter for q                                                 |         |
+| 36  | 1         | WECC: no measurement filter for q                                                 |   002/003 with tQFilt = 0.01 s and tQFilt = 0.000001 s|
 
 ## Wind Turbine Protection (not included in comparison)
 but added for completeness
 
-| No. | Relevance | Description                                                                                                                | Comment |
+| No. | Relevance | Description                                                                                                                | Test case |
 | --- | --------- | -------------------------------------------------------------------------------------------------------------------------- | ------- |
 | 37  |           | IEC has included protection module; WECC references external modules from commercial software. --> leave this out of scope |         |
