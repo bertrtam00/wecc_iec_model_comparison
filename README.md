@@ -5,9 +5,9 @@ Comparison of generic electrical wind turbine models following WECC and IEC stan
 is the first test case with IEC and WECC running in parallel.
 
 ## Available test cases
-test001_StepP consists in a step on PRef at the turbine.
-test002_StepQ consists in a step on QRef at the turbine.
-test003_SolidFault consists in a solid fault (R = 0, X= 0.0001 pu) at the turbine terminal from t = 5 to t = 5.1 s
+- test001_StepP consists in a step on PRef at the turbine.
+- test002_StepQ consists in a step on QRef at the turbine.
+- test003_SolidFault consists in a solid fault (R = 0, X= 0.0001 pu) at the turbine terminal from t = 5 to t = 5.1 s
 
 # Collection and elaboration of relevant differences
 ! Generator Converter Model yet to be included!
