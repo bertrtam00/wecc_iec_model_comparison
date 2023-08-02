@@ -51,7 +51,7 @@ equation
     Line(points = {{0, -26}, {18, -26}, {18, -24}, {18, -24}, {18, -26}, {18, -26}, {18, -26}, {18, -26}, {18, -26}, {18, -26}}, color = {0, 0, 255}));
   annotation(
     uses(Dynawo(version = "1.0.1"), Modelica(version = "3.2.3")),
-    experiment(StartTime = 0, StopTime = 4, Tolerance = 1e-06, Interval = 0.0004),
+    experiment(StartTime = 0, StopTime = 10, Tolerance = 1e-06, Interval = 0.001),
     __OpenModelica_commandLineOptions = "--matchingAlgorithm=PFPlusExt --indexReductionMethod=dynamicStateSelection -d=initialization,NLSanalyticJacobian",
     __OpenModelica_simulationFlags(lv = "LOG_STATS", s = "dassl", variableFilter = ".*"),
     Diagram(coordinateSystem(extent = {{-100, -100}, {100, 100}})),
