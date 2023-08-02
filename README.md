@@ -65,7 +65,7 @@ Relevance:
 | 28  |           |  WECC: Voltage Dependent Limits have only 4 pairs of u / i                                                    |         |
 | 29  |           | WECC: CLS same imax during FRT (IEC: diffrent parameter during FRT) ((5))                                     |         |
 | 30  |           | WECC CSL: makes sure that VDL is always <= imax (this check is not performed in IEC CLS) ((4))                |         |
-| 31  |           | WECC CLS: no K_pqu logic (fault-clearance overvoltage prevention) ((3))                                       |         |
+| 31  | 2         | WECC CLS: no K_pqu logic (over-voltage Q-rise-prevention) ((3))                                               | 004 w/ Kpqu=20 and uStep 1-->1.1 p.u. |
 | 32  |           | IEC CLS: Q-mode only active during FRT (WECC: also active outside FRT) ((2))                                  |         |
 | 33  |           | IEC CLS: when subtracting the prioritized quantity, explicitly makes sure that I_cmd doesn't exceed VDL ((1)) |         |
 
