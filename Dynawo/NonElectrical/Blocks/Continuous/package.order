@@ -21,3 +21,4 @@ RateLimFirstOrderFreeze
 SecondOrder
 VarLimPIDFreeze
 WeightedDifference
+AntiWindupIntegrator_arw
