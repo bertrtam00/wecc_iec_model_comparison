@@ -223,7 +223,7 @@ model QControl "Reactive power control module for wind turbines (IEC N°61400-27
     Dialog(tab = "Operating point"));
   parameter Types.PerUnit XWT0Pu "Initial reactive power or voltage reference at grid terminal in pu (base SNom or UNom) (generator convention)" annotation(
     Dialog(tab = "Operating point"));
-  Dynawo.NonElectrical.Blocks.Continuous.AntiWindupIntegrator_arw antiWindupIntegrator_arw annotation(
+  Dynawo.NonElectrical.Blocks.Continuous.AntiWindupIntegrator_arw antiWindupIntegrator_arw(DyMax = 999, Y0 = U0Pu, YMax = UMaxPu, YMin = UMinPu, tI = 1/Kiq)  annotation(
     Placement(visible = true, transformation(origin = {-130, 258}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
 equation
   connect(switch7.y, iqCmdPu) annotation(
