@@ -47,7 +47,7 @@ block AntiWindupIntegrator_arw "Integrator with absolute and rate limits, anti w
   parameter Types.PerUnit Y0 "Initial value of output";
   Modelica.Blocks.Math.Add addSat(k2 = -1)  annotation(
     Placement(visible = true, transformation(origin = {170, -46}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
-  Modelica.Blocks.Math.Gain gainTrack(k = 1/0.9) annotation(
+  Modelica.Blocks.Math.Gain gainTrack(k = 40) annotation(
     Placement(visible = true, transformation(origin = {140, -64}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
   Modelica.Blocks.Math.Add addArw annotation(
     Placement(visible = true, transformation(origin = {100, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
