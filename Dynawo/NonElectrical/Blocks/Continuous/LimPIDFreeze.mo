@@ -104,7 +104,7 @@ equation
     defaultComponentName = "PID",
     preferredView = "diagram",
     Icon(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics = {Line(points = {{-80, 78}, {-80, -90}}, color = {192, 192, 192}), Polygon(points = {{-80, 90}, {-88, 68}, {-72, 68}, {-80, 90}}, lineColor = {192, 192, 192}, fillColor = {192, 192, 192}, fillPattern = FillPattern.Solid), Line(points = {{-90, -80}, {82, -80}}, color = {192, 192, 192}), Polygon(points = {{90, -80}, {68, -72}, {68, -88}, {90, -80}}, lineColor = {192, 192, 192}, fillColor = {192, 192, 192}, fillPattern = FillPattern.Solid), Line(points = {{-80, -80}, {-80, -20}, {30, 60}, {80, 60}}, color = {0, 0, 127}), Text(extent = {{-20, -20}, {80, -60}}, lineColor = {192, 192, 192}), Line(visible = Strict, points = {{30, 60}, {81, 60}}, color = {255, 0, 0})}),
-    Diagram(graphics = {Text(lineColor = {0, 0, 255}, extent = {{79, -112}, {129, -102}}, textString = " (feed-forward)")}),
+    Diagram(graphics = {Text(textColor = {0, 0, 255}, extent = {{79, -112}, {129, -102}}, textString = " (feed-forward)")}, coordinateSystem(extent = {{-100, -100}, {100, 100}})),
     Documentation(info = "<html>
 The following features are present:
 </p>
