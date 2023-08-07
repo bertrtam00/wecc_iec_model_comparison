@@ -41,7 +41,7 @@ model REGC_A "WECC PV Generator Control REGC"
     Placement(visible = true, transformation(origin = {-9, 29}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Constant constant4(k = 9999) annotation(
     Placement(visible = true, transformation(origin = {-9, 109}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Dynawo.NonElectrical.Blocks.Continuous.RateLimFirstOrderFreeze rateLimFirstOrderFreeze2(T = 0.00001, UseRateLim = true, Y0 = Iq0Pu) annotation(
+  Dynawo.NonElectrical.Blocks.Continuous.RateLimFirstOrderFreeze rateLimFirstOrderFreeze2(T = tG, UseRateLim = true, Y0 = Iq0Pu) annotation(
     Placement(visible = true, transformation(origin = {70, 90}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Constant constant5(k = IqrMaxPu) annotation(
     Placement(visible = true, transformation(origin = {-9, 149}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));

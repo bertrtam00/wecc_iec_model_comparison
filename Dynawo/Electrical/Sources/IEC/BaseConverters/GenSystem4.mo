@@ -64,7 +64,7 @@ model GenSystem4 "Type 4 generator system module (IEC N°61400-27-1)"
     Placement(visible = true, transformation(origin = {1.58946e-07, -4.76837e-07}, extent = {{-20, -60}, {20, 60}}, rotation = 0)));
   Dynawo.NonElectrical.Blocks.Continuous.AbsLimRateLimFirstOrderAntiWindup absLimRateLimFirstOrderAntiWindup(DyMax = DipMaxPu, DyMin = -999, Kaw = Kipaw, UseLimits = true, Y0 = -P0Pu*SystemBase.SnRef/(SNom*U0Pu), YMax = 999, tI = tG) annotation(
     Placement(visible = true, transformation(origin = {-90, 60}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Dynawo.NonElectrical.Blocks.Continuous.AbsLimRateLimFirstOrderAntiWindup absLimRateLimFirstOrderAntiWindup1(DyMax = DiqMaxPu, DyMin = DiqMinPu, Kaw = Kiqaw, UseLimits = true, Y0 = Q0Pu*SystemBase.SnRef/(SNom*U0Pu), YMax = 999, tI = 0.00001) annotation(
+  Dynawo.NonElectrical.Blocks.Continuous.AbsLimRateLimFirstOrderAntiWindup absLimRateLimFirstOrderAntiWindup1(DyMax = DiqMaxPu, DyMin = DiqMinPu, Kaw = Kiqaw, UseLimits = true, Y0 = Q0Pu*SystemBase.SnRef/(SNom*U0Pu), YMax = 999, tI = tG) annotation(
     Placement(visible = true, transformation(origin = {-90, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Constant const(k = -999) annotation(
     Placement(visible = true, transformation(origin = {-145, 40}, extent = {{-5, -5}, {5, 5}}, rotation = 0)));
