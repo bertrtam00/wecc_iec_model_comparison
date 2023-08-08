@@ -213,6 +213,12 @@ model WT4ACurrentSource "Wind Turbine Type 4A model from IEC 61400-27-1 standard
     Dialog(tab = "Operating point"));
   parameter Types.PerUnit XWT0Pu "Initial reactive power or voltage reference at grid terminal in pu (base SNom or UNom) (generator convention)" annotation(
     Dialog(tab = "Operating point"));
+  Modelica.Blocks.Logical.Switch switch1 annotation(
+    Placement(visible = true, transformation(origin = {-50, -80}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Modelica.Blocks.Sources.BooleanConstant hasFeedback(k = false)  annotation(
+    Placement(visible = true, transformation(origin = {-182, -80}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Modelica.Blocks.Sources.Constant const(k = 0)  annotation(
+    Placement(visible = true, transformation(origin = {-80, -96}, extent = {{-6, -6}, {6, 6}}, rotation = 0)));
 equation
   connect(control4A.ipMaxPu, wT4Ainjector.ipMaxPu) annotation(
     Line(points = {{-38, -24}, {-2, -24}}, color = {0, 0, 127}));
@@ -256,8 +262,14 @@ equation
     Line(points = {{-110, -60}, {-92, -60}, {-92, -52}, {-82, -52}}, color = {0, 0, 127}));
   connect(tanPhi, control4A.tanPhi) annotation(
     Line(points = {{-110, -40}, {-82, -40}}, color = {0, 0, 127}));
-  connect(measurements.QFiltPu, control4A.QWTCFiltPu) annotation(
-    Line(points = {{-2, 92}, {-162, 92}, {-162, -58}, {-82, -58}}, color = {0, 0, 127}));
+  connect(measurements.QFiltPu, switch1.u1) annotation(
+    Line(points = {{-2, 92}, {-162, 92}, {-162, -72}, {-62, -72}}, color = {0, 0, 127}));
+  connect(hasFeedback.y, switch1.u2) annotation(
+    Line(points = {{-171, -80}, {-62, -80}}, color = {255, 0, 255}));
+  connect(const.y, switch1.u3) annotation(
+    Line(points = {{-73, -96}, {-62, -96}, {-62, -88}}, color = {0, 0, 127}));
+  connect(switch1.y, control4A.QWTCFiltPu) annotation(
+    Line(points = {{-38, -80}, {-28, -80}, {-28, -62}, {-88, -62}, {-88, -58}, {-82, -58}}, color = {0, 0, 127}));
   annotation(
     preferredView = "diagram",
     __OpenModelica_simulationFlags(initialStepSize = "0.001", lv = "LOG_STATS", nls = "kinsol", s = "ida", nlsLS = "klu", maxIntegrationOrder = "2", maxStepSize = "10", emit_protected = "()"),

@@ -70,8 +70,12 @@ model WTG4BCurrentSource_noWP "WECC Wind Turbine model with a current source as 
   parameter Types.Angle UPhaseInj0 "Start value of voltage angle at injector";
   Dynawo.Electrical.Controls.WECC.REGC_A regc_a(IqrMaxPu = IqrMaxPu, IqrMinPu = IqrMinPu, RateFlag = RateFlag, Rrpwr = Rrpwr, tFilterGC = tFilterGC, tG = tG, UInj0Pu = UInj0Pu, Id0Pu = Id0Pu, Iq0Pu = Iq0Pu) annotation(
     Placement(visible = true, transformation(origin = {39, -18}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Blocks.Sources.Constant const(k = 0) annotation(
-    Placement(visible = true, transformation(origin = {-126, -86}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Modelica.Blocks.Sources.Constant constant1(k = 0) annotation(
+    Placement(visible = true, transformation(origin = {-55, -83}, extent = {{-4, -4}, {4, 4}}, rotation = 0)));
+  Modelica.Blocks.Sources.BooleanConstant hasFeedback(k = false) annotation(
+    Placement(visible = true, transformation(origin = {-130, -61}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Modelica.Blocks.Logical.Switch switch1 annotation(
+    Placement(visible = true, transformation(origin = {-29, -61}, extent = {{-5, -5}, {5, 5}}, rotation = 0)));
 equation
   line.switchOffSignal1.value = injector.switchOffSignal1.value;
   connect(line.terminal2, injector.terminal) annotation(
@@ -100,8 +104,14 @@ equation
     Line(points = {{92, -26}, {97, -26}, {97, -34}, {39, -34}, {39, -29}}, color = {0, 0, 127}));
   connect(QRefPu, regc_a.Qgen0) annotation(
     Line(points = {{-110, -40}, {-82, -40}, {-82, 5}, {33, 5}, {33, -7}}, color = {0, 0, 127}));
-  connect(injector.QInjPuSn, wecc_reec.QInjPu) annotation(
-    Line(points = {{92, -18}, {107, -18}, {107, -58}, {-14, -58}, {-14, -29}}, color = {0, 0, 127}));
+  connect(hasFeedback.y, switch1.u2) annotation(
+    Line(points = {{-119, -61}, {-35, -61}}, color = {255, 0, 255}));
+  connect(constant1.y, switch1.u3) annotation(
+    Line(points = {{-51, -83}, {-51, -65}, {-35, -65}}, color = {0, 0, 127}));
+  connect(injector.QInjPuSn, switch1.u1) annotation(
+    Line(points = {{92, -18}, {121, -18}, {121, -109}, {-75, -109}, {-75, -57}, {-35, -57}}, color = {0, 0, 127}));
+  connect(switch1.y, wecc_reec.QInjPu) annotation(
+    Line(points = {{-23, -61}, {-14, -61}, {-14, -29}}, color = {0, 0, 127}));
   annotation(
     Documentation(preferredView = "diagram", info = "<html>
 <p> This block contains the generic WECC WTG model according to (in case page cannot be found, copy link in browser): <br><a href=\"https://www.wecc.org/Reliability/WECC-Second-Generation-Wind-Turbine-Models-012314.pdf\">https://www.wecc.org/Reliability/WECC-Second-Generation-Wind-Turbine-Models-012314.pdf</a> </p>

@@ -5,8 +5,6 @@ model test002_StepQ
     Placement(visible = true, transformation(origin = {-10, 28}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Step pWTrefPu(height = 0, offset = 0, startTime = 0) annotation(
     Placement(visible = true, transformation(origin = {-128, 30}, extent = {{-6, -6}, {6, 6}}, rotation = 0)));
-  Modelica.Blocks.Sources.Step xWTrefPu(height = 1, offset = 0, startTime = 1) annotation(
-    Placement(visible = true, transformation(origin = {-126, -8}, extent = {{-6, -6}, {6, 6}}, rotation = 0)));
   Modelica.Blocks.Sources.Step omegaRefPu(height = 0, offset = 1, startTime = 0) annotation(
     Placement(visible = true, transformation(origin = {-126, 74}, extent = {{-6, -6}, {6, 6}}, rotation = 0)));
   Dynawo.Electrical.Lines.Line line_WECC(BPu = 0, GPu = 0, RPu = 0, XPu = 0) annotation(
@@ -19,6 +17,12 @@ model test002_StepQ
     Placement(visible = true, transformation(origin = {18, 28}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
   Dynawo.Electrical.Buses.InfiniteBus bus_WECC(UPhase = 0, UPu = 1) annotation(
     Placement(visible = true, transformation(origin = {18, -26}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
+  Modelica.Blocks.Sources.Step xWTrefPu(height = 1, offset = 0, startTime = 1) annotation(
+    Placement(visible = true, transformation(origin = {-126, -8}, extent = {{-6, -6}, {6, 6}}, rotation = 0)));
+  Modelica.Blocks.Sources.Sine sine annotation(
+    Placement(visible = true, transformation(origin = {-176, -30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Modelica.Blocks.Sources.ExpSine expSine(amplitude = 1, damping = -0.2, freqHz = 0.5)  annotation(
+    Placement(visible = true, transformation(origin = {-144, -60}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
 equation
   line_IEC.switchOffSignal1.value = false;
   line_IEC.switchOffSignal2.value = false;
@@ -33,8 +37,6 @@ equation
     Line(points = {{-28, 28}, {-20, 28}}, color = {0, 0, 255}));
   connect(pWTrefPu.y, wT4ACurrentSource.PWTRefPu) annotation(
     Line(points = {{-121, 30}, {-81.15, 30}, {-81.15, 31}, {-64, 31}}, color = {0, 0, 127}));
-  connect(xWTrefPu.y, wT4ACurrentSource.xWTRefPu) annotation(
-    Line(points = {{-119, -8}, {-80.9, -8}, {-80.9, 25}, {-64, 25}}, color = {0, 0, 127}));
   connect(omegaRefPu.y, wT4ACurrentSource.omegaRefPu) annotation(
     Line(points = {{-119.4, 74}, {-75.9, 74}, {-75.9, 18}, {-64, 18}}, color = {0, 0, 127}));
   connect(tanPhi.y, wT4ACurrentSource.tanPhi) annotation(
@@ -43,12 +45,14 @@ equation
     Line(points = {{-30, -30}, {-23, -27}, {-23, -26}}, color = {0, 0, 255}));
   connect(WECC_WT4B.PRefPu, pWTrefPu.y) annotation(
     Line(points = {{-66, -17}, {-88, -17}, {-88, 30}, {-121, 30}}, color = {0, 0, 127}));
-  connect(WECC_WT4B.QRefPu, xWTrefPu.y) annotation(
-    Line(points = {{-66, -27}, {-92, -27}, {-92, -8}, {-119, -8}}, color = {0, 0, 127}));
   connect(line_IEC.terminal2, bus_IEC.terminal) annotation(
     Line(points = {{0, 28}, {18, 28}, {18, 28}, {18, 28}, {18, 28}, {18, 28}, {18, 30}, {18, 30}, {18, 28}, {18, 28}, {18, 28}}, color = {0, 0, 255}));
   connect(line_WECC.terminal2, bus_WECC.terminal) annotation(
     Line(points = {{0, -26}, {18, -26}, {18, -24}, {18, -24}, {18, -26}, {18, -26}, {18, -26}, {18, -26}, {18, -26}, {18, -26}}, color = {0, 0, 255}));
+  connect(expSine.y, wT4ACurrentSource.xWTRefPu) annotation(
+    Line(points = {{-132, -60}, {-102, -60}, {-102, 24}, {-64, 24}}, color = {0, 0, 127}));
+  connect(expSine.y, WECC_WT4B.QRefPu) annotation(
+    Line(points = {{-132, -60}, {-88, -60}, {-88, -26}, {-66, -26}}, color = {0, 0, 127}));
   annotation(
     uses(Dynawo(version = "1.0.1"), Modelica(version = "3.2.3")),
     experiment(StartTime = 0, StopTime = 10, Tolerance = 1e-06, Interval = 0.001),
