@@ -37,7 +37,7 @@ Relevance:
 | 11  |           | different delta u sign in fast current injection (!)                                                                                                  |         |
 | 12  |           | different calculation method of pre-fault voltage                                                                                                     |         |
 | 13  |           | WECC: Iql1, Iqh1 are fast-injected current limits; IEC: iqh1, iqmin are limits for total injected current during FRT.                                 |         |
-| 14  |           | IEC uses filtered voltage for FRT mode detecion; WECC not filtered                                                                                    |   003 by having tPost = 0      |
+| 14  | 1         | IEC uses filtered voltage for FRT mode detecion; WECC not filtered                                                                                    |   003 iqCmdPu, see #29 |
 | 15  |           | WECC: uses CLS value Iqmax, Iqmin in Voltage PI controller; IEC: uses constants                                                                       |         |
 | 38  |           | IEC: U PI Controller during FRT uses K_puFRT and no limiter after it                                                                                  |         |
 
