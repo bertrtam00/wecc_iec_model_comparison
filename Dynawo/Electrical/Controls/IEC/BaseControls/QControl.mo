@@ -20,6 +20,8 @@ model QControl "Reactive power control module for wind turbines (IEC N°61400-27
   parameter Types.ApparentPowerModule SNom "Nominal converter apparent power in MVA";
   parameter Types.Time tS "Integration time step in s";
   //QControl parameters
+  parameter Real Ni = 0.9 "TODO is that correct? Ni*Ti is time constant of anti-windup compensation" annotation(
+    Dialog(tab = "QControl"));
   parameter Types.PerUnit DUdb1Pu "Voltage change dead band lower limit (typically negative) in pu (base UNom)" annotation(
     Dialog(tab = "QControl"));
   parameter Types.PerUnit DUdb2Pu "Voltage change dead band upper limit (typically positive) in pu (base UNom)" annotation(
@@ -221,10 +223,10 @@ model QControl "Reactive power control module for wind turbines (IEC N°61400-27
     Dialog(tab = "Operating point"));
   parameter Types.PerUnit XWT0Pu "Initial reactive power or voltage reference at grid terminal in pu (base SNom or UNom) (generator convention)" annotation(
     Dialog(tab = "Operating point"));
-  Dynawo.NonElectrical.Blocks.Continuous.AntiWindupIntegrator_arw antiWindupIntegrator_arw(DyMax = 999, K_arw = 40, Y0 = U0Pu, YMax = UMaxPu, YMin = UMinPu, tI = 1/Kiq)  annotation(
-    Placement(visible = true, transformation(origin = {-130, 258}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Dynawo.NonElectrical.Blocks.Continuous.AntiWindupIntegrator_arw antiWindupIntegrator_arw1(DyMax = 999, K_arw = 40, Y0 = -Q0Pu*SystemBase.SnRef/(SNom*U0Pu), YMax = IqMaxPu, YMin = IqMinPu, tI = 1/Kiu)  annotation(
-    Placement(visible = true, transformation(origin = {150, 246}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  NonElectrical.Blocks.Continuous.AntiWindupIntegrator_arw antiWindupIntegrator_arw1(DyMax = 999, K = Kpu, Ni = Ni, Y0 = -Q0Pu*SystemBase.SnRef/(SNom*U0Pu), YMax = IqMaxPu, YMin = IqMinPu, tI = 1/Kiu)  annotation(
+    Placement(visible = true, transformation(origin = {158, 244}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Dynawo.NonElectrical.Blocks.Continuous.AntiWindupIntegrator_arw antiWindupIntegrator_arw(DyMax = 999, K = Kpq, Ni = Ni, Y0 = U0Pu, YMax = UMaxPu, YMin = UMinPu, tI = 1/Kiq)  annotation(
+    Placement(visible = true, transformation(origin = {-126, 250}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
 equation
   connect(switch7.y, iqCmdPu) annotation(
     Line(points = {{262, -200}, {310, -200}}, color = {0, 0, 127}));
@@ -434,22 +436,22 @@ equation
     Line(points = {{-118, -120}, {-100, -120}, {-100, -100}, {-22, -100}}, color = {255, 0, 255}));
   connect(timer.y, greaterThreshold1.u) annotation(
     Line(points = {{-199, -120}, {-182, -120}}, color = {0, 0, 127}));
-  connect(feedback.y, antiWindupIntegrator_arw.u) annotation(
-    Line(points = {{-170, 240}, {-160, 240}, {-160, 258}, {-142, 258}}, color = {0, 0, 127}));
-  connect(antiWindupIntegrator_arw.y, add.u1) annotation(
-    Line(points = {{-118, 258}, {-106, 258}, {-106, 246}, {-82, 246}}, color = {0, 0, 127}));
-  connect(greaterEqualThreshold.y, antiWindupIntegrator_arw.fMin) annotation(
-    Line(points = {{120, 22}, {120, 60}, {-110, 60}, {-110, 236}, {-126, 236}, {-126, 246}}, color = {255, 0, 255}));
-  connect(greaterEqualThreshold.y, antiWindupIntegrator_arw.fMax) annotation(
-    Line(points = {{120, 22}, {120, 60}, {-110, 60}, {-110, 236}, {-122, 236}, {-122, 246}}, color = {255, 0, 255}));
   connect(antiWindupIntegrator_arw1.u, feedback1.y) annotation(
-    Line(points = {{138, 246}, {104, 246}, {104, 240}, {70, 240}}, color = {0, 0, 127}));
+    Line(points = {{146, 244}, {88, 244}, {88, 240}, {70, 240}}, color = {0, 0, 127}));
   connect(antiWindupIntegrator_arw1.y, add1.u1) annotation(
-    Line(points = {{161, 246}, {218, 246}}, color = {0, 0, 127}));
+    Line(points = {{170, 244}, {194, 244}, {194, 246}, {218, 246}}, color = {0, 0, 127}));
   connect(greaterEqualThreshold.y, antiWindupIntegrator_arw1.fMax) annotation(
-    Line(points = {{120, 22}, {120, 130}, {150, 130}, {150, 180}, {166, 180}, {166, 228}, {158, 228}, {158, 234}}, color = {255, 0, 255}));
+    Line(points = {{120, 22}, {120, 130}, {150, 130}, {150, 180}, {166, 180}, {166, 232}}, color = {255, 0, 255}));
   connect(greaterEqualThreshold.y, antiWindupIntegrator_arw1.fMin) annotation(
-    Line(points = {{120, 22}, {120, 130}, {150, 130}, {150, 180}, {166, 180}, {166, 228}, {150, 228}, {150, 234}}, color = {255, 0, 255}));
+    Line(points = {{120, 22}, {120, 130}, {150, 130}, {150, 180}, {166, 180}, {166, 222}, {158, 222}, {158, 232}}, color = {255, 0, 255}));
+  connect(feedback.y, antiWindupIntegrator_arw.u) annotation(
+    Line(points = {{-170, 240}, {-160, 240}, {-160, 250}, {-138, 250}}, color = {0, 0, 127}));
+  connect(antiWindupIntegrator_arw.y, add.u1) annotation(
+    Line(points = {{-114, 250}, {-94, 250}, {-94, 246}, {-82, 246}}, color = {0, 0, 127}));
+  connect(greaterEqualThreshold.y, antiWindupIntegrator_arw.fMax) annotation(
+    Line(points = {{120, 22}, {120, 60}, {-110, 60}, {-110, 232}, {-118, 232}, {-118, 238}}, color = {255, 0, 255}));
+  connect(greaterEqualThreshold.y, antiWindupIntegrator_arw.fMin) annotation(
+    Line(points = {{120, 22}, {120, 60}, {-110, 60}, {-110, 232}, {-126, 232}, {-126, 238}}, color = {255, 0, 255}));
   annotation(
     preferredView = "diagram",
     Diagram(coordinateSystem(extent = {{-300, -300}, {300, 300}})),

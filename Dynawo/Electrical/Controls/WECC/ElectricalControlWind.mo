@@ -15,7 +15,7 @@ model ElectricalControlWind "WECC Wind Electrical Control REEC"
   import Modelica;
   import Dynawo;
   import Dynawo.Types;
-  extends Dynawo.Electrical.Controls.WECC.BaseControls.ElectricalControlCommon(varLimPIDFreeze.Ni = Ni, limPIDFreeze.Ni = Ni);
+  extends Dynawo.Electrical.Controls.WECC.BaseControls.ElectricalControlCommon(varLimPIDFreeze.Ni = Ni, limPIDFreeze.Ni = Ni, limPIDFreeze.Xi0 = UInj0Pu, varLimPIDFreeze.Xi0 = QInj0Pu/UInj0Pu);
   parameter Types.VoltageComponent VDLIp11;
   parameter Types.VoltageComponent VDLIp12;
   parameter Types.VoltageComponent VDLIp21;

@@ -38,75 +38,81 @@ model VarLimPIDFreeze "PI controller with limited output (with adjustable limits
   Blocks.Interfaces.RealInput yMin annotation(
     Placement(visible = true, transformation(origin = {-120, -62}, extent = {{20, -20}, {-20, 20}}, rotation = 180), iconTransformation(origin = {-120, -62}, extent = {{20, -20}, {-20, 20}}, rotation = 180)));
   Blocks.Interfaces.RealInput yMax annotation(
-    Placement(visible = true, transformation(origin = {-120, 64}, extent = {{20, -20}, {-20, 20}}, rotation = 180), iconTransformation(origin = {-120, 64}, extent = {{20, -20}, {-20, 20}}, rotation = 180)));
+    Placement(visible = true, transformation(origin = {-120, 92}, extent = {{20, -20}, {-20, 20}}, rotation = 180), iconTransformation(origin = {-120, 64}, extent = {{20, -20}, {-20, 20}}, rotation = 180)));
   Blocks.Interfaces.BooleanInput freeze annotation(
     Placement(visible = true, transformation(origin = {-94, -124}, extent = {{-20, -20}, {20, 20}}, rotation = 90), iconTransformation(origin = {-68, -120}, extent = {{-20, -20}, {20, 20}}, rotation = 90)));
   output Real controlError = u_s - u_m "Control error (set point - measurement)";
-  Blocks.Math.Add addP(k1 = Wp, k2 = -1) annotation(
-    Placement(transformation(extent = {{-80, 40}, {-60, 60}})));
-  Blocks.Math.Gain P(k = 1) annotation(
-    Placement(transformation(extent = {{-50, 40}, {-30, 60}})));
-  Blocks.Math.Gain gainPID(k = K) annotation(
-    Placement(transformation(extent = {{20, -10}, {40, 10}})));
+  Blocks.Math.Add feedback(k1 = 1, k2 = -1) annotation(
+    Placement(visible = true, transformation(origin = {0, 24}, extent = {{-80, 40}, {-60, 60}}, rotation = 0)));
   Blocks.Math.Add addPID annotation(
-    Placement(transformation(extent = {{-10, -10}, {10, 10}})));
-  Blocks.Math.Add3 addI(k2 = -1) annotation(
-    Placement(transformation(extent = {{-80, -60}, {-60, -40}})));
+    Placement(visible = true, transformation(origin = {44, 68}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Blocks.Math.Add addSat(k1 = +1, k2 = -1) annotation(
-    Placement(transformation(origin = {80, -50}, extent = {{-10, -10}, {10, 10}}, rotation = 270)));
-  Blocks.Math.Gain gainTrack(k = 1/(K*Ni)) annotation(
-    Placement(transformation(extent = {{0, -80}, {-20, -60}})));
+    Placement(visible = true, transformation(origin = {4, -22}, extent = {{-10, -10}, {10, 10}}, rotation = 270)));
+  Blocks.Math.Gain gainTrack(k = Ni) annotation(
+    Placement(visible = true, transformation(origin = {-58, 48}, extent = {{0, -80}, {-20, -60}}, rotation = 0)));
   Blocks.Nonlinear.VariableLimiter limiter annotation(
-    Placement(transformation(extent = {{70, -10}, {90, 10}})));
+    Placement(visible = true, transformation(origin = {12, 84}, extent = {{70, -10}, {90, 10}}, rotation = 0)));
   Blocks.Sources.Constant FFzero(k = 0) if not WithFeedForward annotation(
     Placement(transformation(extent = {{30, -35}, {40, -25}})));
   Blocks.Math.Add addFF(k1 = 1, k2 = Kff) annotation(
-    Placement(transformation(extent = {{48, -6}, {60, 6}})));
-  IntegratorSetFreeze I(K = unitTime/Ti, UseFreeze = true, Y0 = Xi0) annotation(
-    Placement(visible = true, transformation(origin = {-38, -50}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+    Placement(visible = true, transformation(origin = {0, 44}, extent = {{48, -6}, {60, 6}}, rotation = 0)));
+  IntegratorSetFreeze I(K = unitTime, UseFreeze = true, Y0 = Xi0) annotation(
+    Placement(visible = true, transformation(origin = {-34, 12}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Blocks.Math.Gain gainP(k = K) annotation(
+    Placement(visible = true, transformation(origin = {-38, 74}, extent = {{20, -10}, {40, 10}}, rotation = 0)));
+  Blocks.Math.Gain gainI(k = K/Ti) annotation(
+    Placement(visible = true, transformation(origin = {-102, 44}, extent = {{20, -10}, {40, 10}}, rotation = 0)));
+  Blocks.Nonlinear.VariableLimiter variableLimiter annotation(
+    Placement(visible = true, transformation(origin = {-76, 12}, extent = {{70, -10}, {90, 10}}, rotation = 0)));
+  Blocks.Math.Add addArw(k1 = 1, k2 = 1) annotation(
+    Placement(visible = true, transformation(origin = {2, -38}, extent = {{-80, 40}, {-60, 60}}, rotation = 0)));
 equation
   connect(yMin, limiter.limit2) annotation(
-    Line(points = {{-120, -62}, {-98, -62}, {-98, -88}, {68, -88}, {68, -8}, {68, -8}}, color = {0, 0, 127}));
+    Line(points = {{-120, -62}, {-98, -62}, {-98, -88}, {80, -88}, {80, 76}}, color = {0, 0, 127}));
   connect(yMax, limiter.limit1) annotation(
-    Line(points = {{-120, 64}, {66, 64}, {66, 8}, {68, 8}, {68, 8}}, color = {0, 0, 127}));
+    Line(points = {{-120, 92}, {80, 92}}, color = {0, 0, 127}));
   connect(freeze, I.freeze) annotation(
-    Line(points = {{-94, -124}, {-94, -95}, {-44, -95}, {-44, -62}}, color = {255, 0, 255}));
-  connect(addI.y, I.u) annotation(
-    Line(points = {{-58, -50}, {-52, -50}, {-52, -50}, {-50, -50}}, color = {0, 0, 127}));
-  connect(u_s, addP.u1) annotation(
-    Line(points = {{-120, 0}, {-96, 0}, {-96, 56}, {-82, 56}}, color = {0, 0, 127}));
-  connect(u_s, addI.u1) annotation(
-    Line(points = {{-120, 0}, {-96, 0}, {-96, -42}, {-82, -42}}, color = {0, 0, 127}));
-  connect(addP.y, P.u) annotation(
-    Line(points = {{-59, 50}, {-52, 50}}, color = {0, 0, 127}));
-  connect(limiter.y, addSat.u1) annotation(
-    Line(points = {{91, 0}, {94, 0}, {94, -20}, {86, -20}, {86, -38}}, color = {0, 0, 127}));
+    Line(points = {{-94, -124}, {-94, -95}, {-40, -95}, {-40, 0}}, color = {255, 0, 255}));
+  connect(u_s, feedback.u1) annotation(
+    Line(points = {{-120, 0}, {-96, 0}, {-96, 80}, {-82, 80}}, color = {0, 0, 127}));
   connect(limiter.y, y) annotation(
-    Line(points = {{91, 0}, {110, 0}}, color = {0, 0, 127}));
-  connect(addSat.y, gainTrack.u) annotation(
-    Line(points = {{80, -61}, {80, -70}, {2, -70}}, color = {0, 0, 127}));
-  connect(gainTrack.y, addI.u3) annotation(
-    Line(points = {{-21, -70}, {-88, -70}, {-88, -58}, {-82, -58}}, color = {0, 0, 127}));
-  connect(u_m, addP.u2) annotation(
-    Line(points = {{0, -120}, {0, -92}, {-92, -92}, {-92, 44}, {-82, 44}}, color = {0, 0, 127}, thickness = 0.5));
-  connect(u_m, addI.u2) annotation(
-    Line(points = {{0, -120}, {0, -92}, {-92, -92}, {-92, -50}, {-82, -50}}, color = {0, 0, 127}, thickness = 0.5));
-  connect(addPID.y, gainPID.u) annotation(
-    Line(points = {{11, 0}, {18, 0}}, color = {0, 0, 127}));
+    Line(points = {{103, 84}, {100.5, 84}, {100.5, 0}, {110, 0}}, color = {0, 0, 127}));
+  connect(u_m, feedback.u2) annotation(
+    Line(points = {{0, -120}, {0, -92}, {-92, -92}, {-92, 68}, {-82, 68}}, color = {0, 0, 127}, thickness = 0.5));
   connect(addFF.y, limiter.u) annotation(
-    Line(points = {{60.6, 0}, {68, 0}}, color = {0, 0, 127}));
-  connect(gainPID.y, addFF.u1) annotation(
-    Line(points = {{41, 0}, {44, 0}, {44, 3.6}, {46.8, 3.6}}, color = {0, 0, 127}));
+    Line(points = {{61, 44}, {64.5, 44}, {64.5, 84}, {80, 84}}, color = {0, 0, 127}));
   connect(FFzero.y, addFF.u2) annotation(
-    Line(points = {{40.5, -30}, {44, -30}, {44, -3.6}, {46.8, -3.6}}, color = {0, 0, 127}));
+    Line(points = {{40.5, -30}, {44, -30}, {44, 40}, {47, 40}}, color = {0, 0, 127}));
   connect(addFF.u2, uFF) annotation(
-    Line(points = {{46.8, -3.6}, {44, -3.6}, {44, -92}, {60, -92}, {60, -120}}, color = {0, 0, 127}));
-  connect(addFF.y, addSat.u2) annotation(
-    Line(points = {{60.6, 0}, {64, 0}, {64, -20}, {74, -20}, {74, -38}}, color = {0, 0, 127}));
-  connect(P.y, addPID.u1) annotation(
-    Line(points = {{-28, 50}, {-20, 50}, {-20, 6}, {-12, 6}}, color = {0, 0, 127}));
-  connect(I.y, addPID.u2) annotation(
-    Line(points = {{-26, -50}, {-20, -50}, {-20, -6}, {-12, -6}}, color = {0, 0, 127}));
+    Line(points = {{47, 40}, {44, 40}, {44, -92}, {60, -92}, {60, -120}}, color = {0, 0, 127}));
+  connect(feedback.y, gainP.u) annotation(
+    Line(points = {{-59, 74}, {-20, 74}}, color = {0, 0, 127}));
+  connect(gainP.y, addPID.u1) annotation(
+    Line(points = {{4, 74}, {32, 74}}, color = {0, 0, 127}));
+  connect(addPID.y, addFF.u1) annotation(
+    Line(points = {{56, 68}, {60, 68}, {60, 54}, {40, 54}, {40, 48}, {46, 48}}, color = {0, 0, 127}));
+  connect(variableLimiter.limit1, yMax) annotation(
+    Line(points = {{-8, 20}, {-19, 20}, {-19, 50}, {-30, 50}, {-30, 92}, {-120, 92}}, color = {0, 0, 127}));
+  connect(feedback.y, gainI.u) annotation(
+    Line(points = {{-58, 74}, {-52, 74}, {-52, 58}, {-90, 58}, {-90, 44}, {-84, 44}}, color = {0, 0, 127}));
+  connect(addArw.y, I.u) annotation(
+    Line(points = {{-56, 12}, {-46, 12}}, color = {0, 0, 127}));
+  connect(gainI.y, addArw.u1) annotation(
+    Line(points = {{-60, 44}, {-52, 44}, {-52, 28}, {-88, 28}, {-88, 18}, {-80, 18}}, color = {0, 0, 127}));
+  connect(gainTrack.y, addArw.u2) annotation(
+    Line(points = {{-79, -22}, {-86, -22}, {-86, 6}, {-80, 6}}, color = {0, 0, 127}));
+  connect(I.y, variableLimiter.u) annotation(
+    Line(points = {{-23, 12}, {-8, 12}}, color = {0, 0, 127}));
+  connect(yMin, variableLimiter.limit2) annotation(
+    Line(points = {{-120, -62}, {-98, -62}, {-98, -88}, {-12, -88}, {-12, 4}, {-8, 4}}, color = {0, 0, 127}));
+  connect(addSat.u2, I.y) annotation(
+    Line(points = {{-2, -10}, {-2, -4}, {-18, -4}, {-18, 12}, {-22, 12}}, color = {0, 0, 127}));
+  connect(addSat.u1, variableLimiter.y) annotation(
+    Line(points = {{10, -10}, {10, 0}, {20, 0}, {20, 12}, {16, 12}}, color = {0, 0, 127}));
+  connect(variableLimiter.y, addPID.u2) annotation(
+    Line(points = {{16, 12}, {26, 12}, {26, 62}, {32, 62}}, color = {0, 0, 127}));
+  connect(addSat.y, gainTrack.u) annotation(
+    Line(points = {{4, -32}, {4, -40}, {-48, -40}, {-48, -22}, {-56, -22}}, color = {0, 0, 127}));
   annotation(
     defaultComponentName = "PI",
     Icon(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics = {Line(points = {{-80, 78}, {-80, -90}}, color = {192, 192, 192}), Polygon(points = {{-80, 90}, {-88, 68}, {-72, 68}, {-80, 90}}, lineColor = {192, 192, 192}, fillColor = {192, 192, 192}, fillPattern = FillPattern.Solid), Line(points = {{-90, -80}, {82, -80}}, color = {192, 192, 192}), Polygon(points = {{90, -80}, {68, -72}, {68, -88}, {90, -80}}, lineColor = {192, 192, 192}, fillColor = {192, 192, 192}, fillPattern = FillPattern.Solid), Line(points = {{-80, -80}, {-80, -20}, {30, 60}, {80, 60}}, color = {0, 0, 127}), Text(extent = {{-20, -20}, {80, -60}}, lineColor = {192, 192, 192}), Line(visible = Strict, points = {{30, 60}, {81, 60}}, color = {255, 0, 0})}),
