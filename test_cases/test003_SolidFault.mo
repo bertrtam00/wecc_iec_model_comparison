@@ -31,7 +31,6 @@ equation
   WECC_WT4B.injector.switchOffSignal1.value = false;
   WECC_WT4B.injector.switchOffSignal2.value = false;
   WECC_WT4B.injector.switchOffSignal3.value = false;
-  WECC_WT4B.line.switchOffSignal2.value = WECC_WT4B.line.switchOffSignal1.value;
 /* line.switchOffSignal1 is defined inside WECC model */
   connect(wT4ACurrentSource.terminal, line_IEC.terminal1) annotation(
     Line(points = {{-30.4, 28}, {-22, 28}}, color = {0, 0, 255}));
