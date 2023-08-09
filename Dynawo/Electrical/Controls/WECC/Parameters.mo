@@ -78,7 +78,7 @@ record Parameters "Parameters of the PV WECC model"
     parameter Types.PerUnit DPMin "Active power lower rate limit" annotation(Dialog(tab="Electrical Control"));
     parameter Types.PerUnit IMaxPu "Maximal apparent current magnitude in pu (base UNom, SNom)" annotation(Dialog(tab="Electrical Control"));
     
-    parameter Types.PerUnit Ni(start=0.9) "inverse gain of Q PI Controller anti-windup path (set to 1e12 to disable anti-windup)" annotation(Dialog(tab="Electrical Control"));
+    parameter Types.PerUnit Ni(start=20) "Gains of PI Controller anti-windup paths (set to 0 to disable anti-windup)" annotation(Dialog(tab="Electrical Control"));
   
     
     parameter Types.ActivePowerPu PInj0Pu "Start value of active power at injector terminal in pu (generator convention) (base SNom)";

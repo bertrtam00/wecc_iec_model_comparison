@@ -92,7 +92,7 @@ model WT4ACurrentSource "Wind Turbine Type 4A model from IEC 61400-27-1 standard
   parameter Types.VoltageModulePu UpquMaxPu "WT voltage in the operation point where zero reactive power can be delivered, in pu (base UNom)" annotation(
     Dialog(tab = "CurrentLimiter"));
   //QControl parameters
-  parameter Real Ni = 0.9 "1/(Ni*Ti) is gain of anti-windup compensation" annotation(
+  parameter Real Ni = 20 "Gain of anti-windup compensations" annotation(
     Dialog(tab = "QControl"));
   parameter Types.PerUnit DUdb1Pu "Voltage change dead band lower limit (typically negative) in pu (base UNom)" annotation(
     Dialog(tab = "QControl"));

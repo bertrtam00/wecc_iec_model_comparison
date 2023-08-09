@@ -68,6 +68,8 @@ model WTG4BCurrentSource_noWP "WECC Wind Turbine model with a current source as 
   parameter Types.Angle UPhaseInj0 "Start value of voltage angle at injector";
   Dynawo.Electrical.Controls.WECC.REGC_A regc_a(IqrMaxPu = IqrMaxPu, IqrMinPu = IqrMinPu, RateFlag = RateFlag, Rrpwr = Rrpwr, tFilterGC = tFilterGC, tG = tG, UInj0Pu = UInj0Pu, Id0Pu = Id0Pu, Iq0Pu = Iq0Pu) annotation(
     Placement(visible = true, transformation(origin = {39, -18}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Modelica.Blocks.Sources.Constant constant1(k = 0) annotation(
+    Placement(visible = true, transformation(origin = {-55, -83}, extent = {{-4, -4}, {4, 4}}, rotation = 0)));
 equation
   connect(injector.UPu, wecc_reec.UPu) annotation(
     Line(points = {{92, -26}, {97, -26}, {97, -34}, {1, -34}, {1, -29}}, color = {0, 0, 127}));
