@@ -19,10 +19,6 @@ model test002_StepQ
     Placement(visible = true, transformation(origin = {18, -26}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
   Modelica.Blocks.Sources.Step xWTrefPu(height = 1, offset = 0, startTime = 1) annotation(
     Placement(visible = true, transformation(origin = {-126, -8}, extent = {{-6, -6}, {6, 6}}, rotation = 0)));
-  Modelica.Blocks.Sources.Sine sine annotation(
-    Placement(visible = true, transformation(origin = {-176, -30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Blocks.Sources.ExpSine expSine(amplitude = 1, damping = -0.2, freqHz = 0.5)  annotation(
-    Placement(visible = true, transformation(origin = {-144, -60}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
 equation
   line_IEC.switchOffSignal1.value = false;
   line_IEC.switchOffSignal2.value = false;
@@ -46,12 +42,12 @@ equation
     Line(points = {{0, 28}, {18, 28}, {18, 28}, {18, 28}, {18, 28}, {18, 28}, {18, 30}, {18, 30}, {18, 28}, {18, 28}, {18, 28}}, color = {0, 0, 255}));
   connect(line_WECC.terminal2, bus_WECC.terminal) annotation(
     Line(points = {{0, -26}, {18, -26}, {18, -24}, {18, -24}, {18, -26}, {18, -26}, {18, -26}, {18, -26}, {18, -26}, {18, -26}}, color = {0, 0, 255}));
-  connect(expSine.y, wT4ACurrentSource.xWTRefPu) annotation(
-    Line(points = {{-132, -60}, {-102, -60}, {-102, 24}, {-64, 24}}, color = {0, 0, 127}));
-  connect(expSine.y, WECC_WT4B.QRefPu) annotation(
-    Line(points = {{-132, -60}, {-88, -60}, {-88, -26}, {-66, -26}}, color = {0, 0, 127}));
   connect(WECC_WT4B.terminal, line_WECC.terminal1) annotation(
     Line(points = {{-30, -26}, {-22, -26}}, color = {0, 0, 255}));
+  connect(xWTrefPu.y, wT4ACurrentSource.xWTRefPu) annotation(
+    Line(points = {{-120, -8}, {-70, -8}, {-70, 24}, {-64, 24}}, color = {0, 0, 127}));
+  connect(WECC_WT4B.QRefPu, xWTrefPu.y) annotation(
+    Line(points = {{-66, -26}, {-70, -26}, {-70, -8}, {-120, -8}}, color = {0, 0, 127}));
   annotation(
     uses(Dynawo(version = "1.0.1"), Modelica(version = "3.2.3")),
     experiment(StartTime = 0, StopTime = 10, Tolerance = 1e-06, Interval = 0.001),
