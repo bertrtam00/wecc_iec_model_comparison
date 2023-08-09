@@ -47,8 +47,6 @@ model LimPIDFreeze "PI controller with limited output, anti-windup compensation,
     Placement(visible = true, transformation(origin = {38, -50}, extent = {{-10, -10}, {10, 10}}, rotation = 270)));
   Blocks.Math.Gain gainTrack(k = Ni) annotation(
     Placement(visible = true, transformation(origin = {-42, 24}, extent = {{0, -80}, {-20, -60}}, rotation = 0)));
-  Blocks.Nonlinear.Limiter limiterPI(strict = true, uMax = YMax, uMin = YMin) annotation(
-    Placement(visible = true, transformation(origin = {6, 40}, extent = {{70, -10}, {90, 10}}, rotation = 0)));
   Blocks.Sources.Constant FFzero(k = 0) if not WithFeedForward annotation(
     Placement(visible = true, transformation(origin = {0, 48}, extent = {{30, -35}, {40, -25}}, rotation = 0)));
   Blocks.Math.Add addFF(k1 = 1, k2 = Kff) annotation(
@@ -68,12 +66,8 @@ equation
     Line(points = {{-94, -124}, {-94, -95}, {-20, -95}, {-20, -26}}, color = {255, 0, 255}));
   connect(u_s, feedback.u1) annotation(
     Line(points = {{-120, 0}, {-96, 0}, {-96, 56}, {-66, 56}}, color = {0, 0, 127}));
-  connect(limiterPI.y, y) annotation(
-    Line(points = {{97, 40}, {100.5, 40}, {100.5, 0}, {110, 0}}, color = {0, 0, 127}));
   connect(u_m, feedback.u2) annotation(
     Line(points = {{0, -120}, {0, -92}, {-92, -92}, {-92, 44}, {-66, 44}}, color = {0, 0, 127}, thickness = 0.5));
-  connect(addFF.y, limiterPI.u) annotation(
-    Line(points = {{69, 40}, {74, 40}}, color = {0, 0, 127}));
   connect(FFzero.y, addFF.u2) annotation(
     Line(points = {{40.5, 18}, {48, 18}, {48, 36}, {55, 36}}, color = {0, 0, 127}));
   connect(addFF.u2, uFF) annotation(
@@ -102,6 +96,8 @@ equation
     Line(points = {{-42, 50}, {-40, 50}, {-40, 26}, {-88, 26}, {-88, -4}, {-86, -4}, {-86, -8}}, color = {0, 0, 127}));
   connect(limiterI.y, addPID.u2) annotation(
     Line(points = {{32, -14}, {44, -14}, {44, 4}, {14, 4}, {14, 38}, {22, 38}}, color = {0, 0, 127}));
+  connect(addFF.y, y) annotation(
+    Line(points = {{68, 40}, {80, 40}, {80, 0}, {110, 0}}, color = {0, 0, 127}));
   annotation(
     defaultComponentName = "PID",
     preferredView = "diagram",

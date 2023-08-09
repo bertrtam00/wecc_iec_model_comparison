@@ -50,8 +50,6 @@ model VarLimPIDFreeze "PI controller with limited output (with adjustable limits
     Placement(visible = true, transformation(origin = {4, -22}, extent = {{-10, -10}, {10, 10}}, rotation = 270)));
   Blocks.Math.Gain gainTrack(k = Ni) annotation(
     Placement(visible = true, transformation(origin = {-58, 48}, extent = {{0, -80}, {-20, -60}}, rotation = 0)));
-  Blocks.Nonlinear.VariableLimiter limiter annotation(
-    Placement(visible = true, transformation(origin = {12, 84}, extent = {{70, -10}, {90, 10}}, rotation = 0)));
   Blocks.Sources.Constant FFzero(k = 0) if not WithFeedForward annotation(
     Placement(transformation(extent = {{30, -35}, {40, -25}})));
   Blocks.Math.Add addFF(k1 = 1, k2 = Kff) annotation(
@@ -67,20 +65,12 @@ model VarLimPIDFreeze "PI controller with limited output (with adjustable limits
   Blocks.Math.Add addArw(k1 = 1, k2 = 1) annotation(
     Placement(visible = true, transformation(origin = {2, -38}, extent = {{-80, 40}, {-60, 60}}, rotation = 0)));
 equation
-  connect(yMin, limiter.limit2) annotation(
-    Line(points = {{-120, -62}, {-98, -62}, {-98, -88}, {80, -88}, {80, 76}}, color = {0, 0, 127}));
-  connect(yMax, limiter.limit1) annotation(
-    Line(points = {{-120, 92}, {80, 92}}, color = {0, 0, 127}));
   connect(freeze, I.freeze) annotation(
     Line(points = {{-94, -124}, {-94, -95}, {-40, -95}, {-40, 0}}, color = {255, 0, 255}));
   connect(u_s, feedback.u1) annotation(
     Line(points = {{-120, 0}, {-96, 0}, {-96, 80}, {-82, 80}}, color = {0, 0, 127}));
-  connect(limiter.y, y) annotation(
-    Line(points = {{103, 84}, {100.5, 84}, {100.5, 0}, {110, 0}}, color = {0, 0, 127}));
   connect(u_m, feedback.u2) annotation(
     Line(points = {{0, -120}, {0, -92}, {-92, -92}, {-92, 68}, {-82, 68}}, color = {0, 0, 127}, thickness = 0.5));
-  connect(addFF.y, limiter.u) annotation(
-    Line(points = {{61, 44}, {64.5, 44}, {64.5, 84}, {80, 84}}, color = {0, 0, 127}));
   connect(FFzero.y, addFF.u2) annotation(
     Line(points = {{40.5, -30}, {44, -30}, {44, 40}, {47, 40}}, color = {0, 0, 127}));
   connect(addFF.u2, uFF) annotation(
@@ -113,6 +103,8 @@ equation
     Line(points = {{16, 12}, {26, 12}, {26, 62}, {32, 62}}, color = {0, 0, 127}));
   connect(addSat.y, gainTrack.u) annotation(
     Line(points = {{4, -32}, {4, -40}, {-48, -40}, {-48, -22}, {-56, -22}}, color = {0, 0, 127}));
+  connect(addFF.y, y) annotation(
+    Line(points = {{60, 44}, {78, 44}, {78, 0}, {110, 0}}, color = {0, 0, 127}));
   annotation(
     defaultComponentName = "PI",
     Icon(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics = {Line(points = {{-80, 78}, {-80, -90}}, color = {192, 192, 192}), Polygon(points = {{-80, 90}, {-88, 68}, {-72, 68}, {-80, 90}}, lineColor = {192, 192, 192}, fillColor = {192, 192, 192}, fillPattern = FillPattern.Solid), Line(points = {{-90, -80}, {82, -80}}, color = {192, 192, 192}), Polygon(points = {{90, -80}, {68, -72}, {68, -88}, {90, -80}}, lineColor = {192, 192, 192}, fillColor = {192, 192, 192}, fillPattern = FillPattern.Solid), Line(points = {{-80, -80}, {-80, -20}, {30, 60}, {80, 60}}, color = {0, 0, 127}), Text(extent = {{-20, -20}, {80, -60}}, lineColor = {192, 192, 192}), Line(visible = Strict, points = {{30, 60}, {81, 60}}, color = {255, 0, 0})}),

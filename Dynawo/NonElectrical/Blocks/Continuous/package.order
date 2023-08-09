@@ -8,7 +8,6 @@ PIFreeze
 PIAntiWindupVariableLimits
 PIAntiWindup
 LimitedPI
-LimPIDFreeze_statelimit
 LimPIDFreeze
 LeadMOrderLag
 IntegratorWithReset
