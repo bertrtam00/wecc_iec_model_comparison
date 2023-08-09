@@ -42,7 +42,7 @@ model REGC_A "WECC PV Generator Control REGC"
   Modelica.Blocks.Sources.Constant constant4(k = 9999) annotation(
     Placement(visible = true, transformation(origin = {-9, 109}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Dynawo.NonElectrical.Blocks.Continuous.RateLimFirstOrderFreeze rateLimFirstOrderFreeze2(T = tG, UseRateLim = true, Y0 = Iq0Pu) annotation(
-    Placement(visible = true, transformation(origin = {71, 90}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+    Placement(visible = true, transformation(origin = {70, 90}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Constant constant5(k = IqrMaxPu) annotation(
     Placement(visible = true, transformation(origin = {-9, 149}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Constant constant6(k = IqrMinPu) annotation(
@@ -75,7 +75,7 @@ model REGC_A "WECC PV Generator Control REGC"
     Placement(visible = true, transformation(origin = {-99, -12}, extent = {{-14, -14}, {14, 14}}, rotation = 0)));
 equation
   connect(switch3.y, rateLimFirstOrderFreeze2.dyMin) annotation(
-    Line(points = {{42, 49}, {45, 49}, {45, 83}, {60, 83}}, color = {0, 0, 127}));
+    Line(points = {{42, 49}, {45, 49}, {45, 84}, {58, 84}}, color = {0, 0, 127}));
   connect(constant6.y, switch3.u1) annotation(
     Line(points = {{2, 69}, {11, 69}, {11, 57}, {19, 57}}, color = {0, 0, 127}));
   connect(constant5.y, switch4.u1) annotation(
@@ -83,11 +83,11 @@ equation
   connect(constant4.y, switch4.u3) annotation(
     Line(points = {{2, 109}, {11, 109}, {11, 121}, {19, 121}}, color = {0, 0, 127}));
   connect(rateLimFirstOrderFreeze2.y, gain1.u) annotation(
-    Line(points = {{82, 89}, {99, 89}}, color = {0, 0, 127}));
+    Line(points = {{81, 90}, {90.5, 90}, {90.5, 89}, {99, 89}}, color = {0, 0, 127}));
   connect(constant3.y, switch3.u3) annotation(
     Line(points = {{2, 29}, {11, 29}, {11, 41}, {19, 41}, {19, 41}}, color = {0, 0, 127}));
   connect(switch4.y, rateLimFirstOrderFreeze2.dyMax) annotation(
-    Line(points = {{42, 129}, {45, 129}, {45, 96}, {60, 96}}, color = {0, 0, 127}));
+    Line(points = {{42, 129}, {45, 129}, {45, 97}, {58, 97}}, color = {0, 0, 127}));
   connect(greaterThreshold.y, switch4.u2) annotation(
     Line(points = {{-94, 128}, {-37.5, 128}, {-37.5, 129}, {19, 129}}, color = {255, 0, 255}));
   connect(not1.y, switch3.u2) annotation(
@@ -95,7 +95,7 @@ equation
   connect(greaterThreshold.y, not1.u) annotation(
     Line(points = {{-94, 128}, {-84, 128}, {-84, 101}, {-77, 101}}, color = {255, 0, 255}));
   connect(iqCmdPu, rateLimFirstOrderFreeze2.u) annotation(
-    Line(points = {{-230, 60}, {-47, 60}, {-47, 90}, {59, 90}}, color = {0, 0, 127}));
+    Line(points = {{-230, 60}, {-47, 60}, {-47, 90}, {58, 90}}, color = {0, 0, 127}));
   connect(constant1.y, variableLimiter.limit2) annotation(
     Line(points = {{2.75, -113.5}, {2.75, -92}, {13, -92}}, color = {0, 0, 127}));
   connect(Qgen0, greaterThreshold.u) annotation(

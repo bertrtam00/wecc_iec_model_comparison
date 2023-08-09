@@ -1,28 +1,27 @@
 within Dynawo.Electrical.Controls.IEC.BaseControls;
 
-/*
-* Copyright (c) 2022, RTE (http://www.rte-france.com)
-* See AUTHORS.txt
-* All rights reserved.
-* This Source Code Form is subject to the terms of the Mozilla Public
-* License, v. 2.0. If a copy of the MPL was not distributed with this
-* file, you can obtain one at http://mozilla.org/MPL/2.0/.
-* SPDX-License-Identifier: MPL-2.0
-*
-* This file is part of Dynawo, an hybrid C++/Modelica open source suite of simulation tools for power systems.
-*/
-
 model QControl "Reactive power control module for wind turbines (IEC N°61400-27-1)"
+  /*
+  * Copyright (c) 2022, RTE (http://www.rte-france.com)
+  * See AUTHORS.txt
+  * All rights reserved.
+  * This Source Code Form is subject to the terms of the Mozilla Public
+  * License, v. 2.0. If a copy of the MPL was not distributed with this
+  * file, you can obtain one at http://mozilla.org/MPL/2.0/.
+  * SPDX-License-Identifier: MPL-2.0
+  *
+  * This file is part of Dynawo, an hybrid C++/Modelica open source suite of simulation tools for power systems.
+  */
   import Modelica;
   import Dynawo;
   import Dynawo.Types;
   import Dynawo.Electrical.SystemBase;
-
   //Nominal parameter
   parameter Types.ApparentPowerModule SNom "Nominal converter apparent power in MVA";
   parameter Types.Time tS "Integration time step in s";
-
   //QControl parameters
+  parameter Real Ni = 0.9 "TODO is that correct? Ni*Ti is time constant of anti-windup compensation" annotation(
+    Dialog(tab = "QControl"));
   parameter Types.PerUnit DUdb1Pu "Voltage change dead band lower limit (typically negative) in pu (base UNom)" annotation(
     Dialog(tab = "QControl"));
   parameter Types.PerUnit DUdb2Pu "Voltage change dead band upper limit (typically positive) in pu (base UNom)" annotation(
@@ -71,37 +70,34 @@ model QControl "Reactive power control module for wind turbines (IEC N°61400-27
     Dialog(tab = "QControl"));
   parameter Types.PerUnit XDropPu "Inductive component of voltage drop impedance in pu (base UNom, SNom)" annotation(
     Dialog(tab = "QControl"));
-
   //Input variables
   Modelica.Blocks.Interfaces.RealInput idfHookPu(start = 0) "User-defined fault current injection in pu (base UNom, SNom) (generator convention)" annotation(
     Placement(visible = true, transformation(origin = {-320, -220}, extent = {{-20, -20}, {20, 20}}, rotation = 0), iconTransformation(origin = {0, 110.5}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
   Modelica.Blocks.Interfaces.RealInput ipfHookPu(start = 0) "User-defined post-fault current injection in pu (base UNom, SNom) (generator convention)" annotation(
     Placement(visible = true, transformation(origin = {-320, -280}, extent = {{-20, -20}, {20, 20}}, rotation = 0), iconTransformation(origin = {50, 110.5}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
-  Modelica.Blocks.Interfaces.RealInput PWTCFiltPu(start = -P0Pu * SystemBase.SnRef / SNom) "Filtered active power at grid terminal in pu (base SNom) (generator convention)" annotation(
+  Modelica.Blocks.Interfaces.RealInput PWTCFiltPu(start = -P0Pu*SystemBase.SnRef/SNom) "Filtered active power at grid terminal in pu (base SNom) (generator convention)" annotation(
     Placement(visible = true, transformation(origin = {-320, 0}, extent = {{-20, -20}, {20, 20}}, rotation = 0), iconTransformation(origin = {-110, -20}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Blocks.Interfaces.RealInput QWTCFiltPu(start = -Q0Pu * SystemBase.SnRef / SNom) "Filtered reactive power at grid terminal in pu (base SNom) (generator convention)" annotation(
+  Modelica.Blocks.Interfaces.RealInput QWTCFiltPu(start = -Q0Pu*SystemBase.SnRef/SNom) "Filtered reactive power at grid terminal in pu (base SNom) (generator convention)" annotation(
     Placement(visible = true, transformation(origin = {-320, 280}, extent = {{-20, -20}, {20, 20}}, rotation = 0), iconTransformation(origin = {-110, -79.5}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Interfaces.RealInput QWTMaxPu(start = QMax0Pu) "Maximum reactive power at grid terminal in pu (base SNom) (generator convention)" annotation(
     Placement(visible = true, transformation(origin = {-320, 240}, extent = {{-20, -20}, {20, 20}}, rotation = 0), iconTransformation(origin = {-110, 80}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Interfaces.RealInput QWTMinPu(start = QMin0Pu) "Minimum reactive power at grid terminal in pu (base SNom) (generator convention)" annotation(
     Placement(visible = true, transformation(origin = {-320, 140}, extent = {{-20, -20}, {20, 20}}, rotation = 0), iconTransformation(origin = {-110, 49.5}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Blocks.Interfaces.RealInput tanPhi(start = Q0Pu / P0Pu) "Tangent phi (can be figured as QPu / PPu (base SNom))" annotation(
+  Modelica.Blocks.Interfaces.RealInput tanPhi(start = Q0Pu/P0Pu) "Tangent phi (can be figured as QPu / PPu (base SNom))" annotation(
     Placement(visible = true, transformation(origin = {-100, 20}, extent = {{20, -20}, {-20, 20}}, rotation = 0), iconTransformation(origin = {-49, 110}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
   Modelica.Blocks.Interfaces.RealInput UWTCFiltPu(start = U0Pu) "Filtered voltage amplitude at grid terminal in pu (base UNom)" annotation(
     Placement(visible = true, transformation(origin = {-320, -60}, extent = {{-20, -20}, {20, 20}}, rotation = 0), iconTransformation(origin = {-110, 20.5}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Interfaces.RealInput xWTRefPu(start = XWT0Pu) "Reactive power loop reference : reactive power or voltage reference depending on the Q control mode (MqG), in pu (base SNom or UNom) (generator convention)" annotation(
     Placement(visible = true, transformation(origin = {-320, 80}, extent = {{-20, -20}, {20, 20}}, rotation = 0), iconTransformation(origin = {-110, -49.5}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-
   //Output variables
   Modelica.Blocks.Interfaces.IntegerOutput fFrt(start = 0) "Fault status (0: Normal operation, 1: During fault, 2: Post-fault)" annotation(
     Placement(visible = true, transformation(origin = {310, -100}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {110, 20}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Blocks.Interfaces.RealOutput iqBaseHookPu(start = Q0Pu * SystemBase.SnRef / (SNom * U0Pu)) "Reactive current commmand in normal operation at converter terminal in pu (base UNom, SNom) (generator convention)" annotation(
+  Modelica.Blocks.Interfaces.RealOutput iqBaseHookPu(start = Q0Pu*SystemBase.SnRef/(SNom*U0Pu)) "Reactive current commmand in normal operation at converter terminal in pu (base UNom, SNom) (generator convention)" annotation(
     Placement(visible = true, transformation(origin = {310, 100}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {110, 80}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Blocks.Interfaces.RealOutput iqCmdPu(start = Q0Pu * SystemBase.SnRef / (SNom * U0Pu)) "Reactive current command at converter terminal in pu (base UNom, SNom) (generator convention)" annotation(
+  Modelica.Blocks.Interfaces.RealOutput iqCmdPu(start = Q0Pu*SystemBase.SnRef/(SNom*U0Pu)) "Reactive current command at converter terminal in pu (base UNom, SNom) (generator convention)" annotation(
     Placement(visible = true, transformation(origin = {310, -200}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {110, -20}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Interfaces.RealOutput iqvHookPu(start = 0) "Output of the fault current injection function in pu (base UNom, SNom) (generator convention)" annotation(
     Placement(visible = true, transformation(origin = {310, -140}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {110, -80}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-
   Modelica.Blocks.Sources.IntegerConstant integerConstant1(k = MqG) annotation(
     Placement(visible = true, transformation(origin = {-270, 120}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Dynawo.NonElectrical.Blocks.NonLinear.MultiSwitch switch2(nu = 5) annotation(
@@ -136,7 +132,7 @@ model QControl "Reactive power control module for wind turbines (IEC N°61400-27
     Placement(visible = true, transformation(origin = {50, 140}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Math.Division division annotation(
     Placement(visible = true, transformation(origin = {50, 180}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Dynawo.Electrical.Controls.IEC.BaseClasses.VDrop vDrop(P0Pu = P0Pu * SystemBase.SnRef / SNom, Q0Pu = Q0Pu * SystemBase.SnRef / SNom, RDropPu = RDropPu, U0Pu = U0Pu, XDropPu = XDropPu) annotation(
+  Dynawo.Electrical.Controls.IEC.BaseClasses.VDrop vDrop(P0Pu = P0Pu*SystemBase.SnRef/SNom, Q0Pu = Q0Pu*SystemBase.SnRef/SNom, RDropPu = RDropPu, U0Pu = U0Pu, XDropPu = XDropPu) annotation(
     Placement(visible = true, transformation(origin = {-160, -20}, extent = {{-20, -20}, {20, 20}}, rotation = 0)));
   Modelica.Blocks.Math.Division division2 annotation(
     Placement(visible = true, transformation(origin = {50, 100}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
@@ -174,17 +170,13 @@ model QControl "Reactive power control module for wind turbines (IEC N°61400-27
     Placement(visible = true, transformation(origin = {120, -30}, extent = {{10, -10}, {-10, 10}}, rotation = -90)));
   Modelica.Blocks.Math.Product product annotation(
     Placement(visible = true, transformation(origin = {-280, 50}, extent = {{-10, 10}, {10, -10}}, rotation = 90)));
-  Dynawo.NonElectrical.Blocks.Continuous.AntiWindupIntegrator antiWindupIntegrator(DyMax = 999, Y0 = U0Pu, YMax = UMaxPu, YMin = UMinPu, tI = 1 / Kiq) annotation(
-    Placement(visible = true, transformation(origin = {-130, 260}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Dynawo.NonElectrical.Blocks.Continuous.AntiWindupIntegrator antiWindupIntegrator1(DyMax = 999, Y0 = -Q0Pu * SystemBase.SnRef / (SNom * U0Pu), YMax = IqMaxPu, YMin = IqMinPu, tI = 1 / Kiu) annotation(
-    Placement(visible = true, transformation(origin = {150, 260}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Continuous.Derivative derivative(T = tUss, k = tUss, x_start = U0Pu) annotation(
     Placement(visible = true, transformation(origin = {-210, -180}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Constant const5(k = 0.01) annotation(
     Placement(visible = true, transformation(origin = {-70, -60}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Math.Max max annotation(
     Placement(visible = true, transformation(origin = {-10, -40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Dynawo.NonElectrical.Blocks.Continuous.AbsLimRateLimFirstOrderFreeze absLimRateLimFirstOrderFreeze(DyMax = 999, UseLimits = true, Y0 = XWT0Pu, YMax = 999, tI = 1 / tQord) annotation(
+  Dynawo.NonElectrical.Blocks.Continuous.AbsLimRateLimFirstOrderFreeze absLimRateLimFirstOrderFreeze(DyMax = 999, UseLimits = true, Y0 = XWT0Pu, YMax = 999, tI = 1/tQord) annotation(
     Placement(visible = true, transformation(origin = {-170, 80}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Constant const(k = 0) annotation(
     Placement(visible = true, transformation(origin = {-70, 280}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
@@ -194,7 +186,7 @@ model QControl "Reactive power control module for wind turbines (IEC N°61400-27
     Placement(visible = true, transformation(origin = {290, 280}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Constant const1(k = URef0Pu) annotation(
     Placement(visible = true, transformation(origin = {-130, 160}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Dynawo.NonElectrical.Blocks.Continuous.AbsLimRateLimFeedthroughFreeze absLimRateLimFeedthroughFreeze(DyMax = 999, Y0 = -Q0Pu * SystemBase.SnRef / (SNom * U0Pu), YMax = IqMaxPu, YMin = IqMinPu, tS = tS) annotation(
+  Dynawo.NonElectrical.Blocks.Continuous.AbsLimRateLimFeedthroughFreeze absLimRateLimFeedthroughFreeze(DyMax = 999, Y0 = -Q0Pu*SystemBase.SnRef/(SNom*U0Pu), YMax = IqMaxPu, YMin = IqMinPu, tS = tS) annotation(
     Placement(visible = true, transformation(origin = {170, 100}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Math.Gain gain3(k = -1) annotation(
     Placement(visible = true, transformation(origin = {250, 150}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
@@ -218,7 +210,6 @@ model QControl "Reactive power control module for wind turbines (IEC N°61400-27
     Placement(visible = true, transformation(origin = {-210, -120}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Logical.GreaterThreshold greaterThreshold1(threshold = 0.1) annotation(
     Placement(visible = true, transformation(origin = {-170, -120}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-
   //Initial parameters
   parameter Types.ReactivePowerPu QMax0Pu "Initial maximum reactive power at grid terminal in pu (base SNom) (generator convention)" annotation(
     Dialog(group = "Initialization"));
@@ -232,7 +223,10 @@ model QControl "Reactive power control module for wind turbines (IEC N°61400-27
     Dialog(tab = "Operating point"));
   parameter Types.PerUnit XWT0Pu "Initial reactive power or voltage reference at grid terminal in pu (base SNom or UNom) (generator convention)" annotation(
     Dialog(tab = "Operating point"));
-
+  NonElectrical.Blocks.Continuous.AntiWindupIntegrator_arw antiWindupIntegrator_arw1(DyMax = 999, K = Kpu, Ni = Ni, Y0 = -Q0Pu*SystemBase.SnRef/(SNom*U0Pu), YMax = IqMaxPu, YMin = IqMinPu, tI = 1/Kiu)  annotation(
+    Placement(visible = true, transformation(origin = {158, 244}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Dynawo.NonElectrical.Blocks.Continuous.AntiWindupIntegrator_arw antiWindupIntegrator_arw(DyMax = 999, K = Kpq, Ni = Ni, Y0 = U0Pu, YMax = UMaxPu, YMin = UMinPu, tI = 1/Kiq)  annotation(
+    Placement(visible = true, transformation(origin = {-126, 250}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
 equation
   connect(switch7.y, iqCmdPu) annotation(
     Line(points = {{262, -200}, {310, -200}}, color = {0, 0, 127}));
@@ -310,8 +304,6 @@ equation
     Line(points = {{-198, 240}, {-188, 240}}, color = {0, 0, 127}));
   connect(QWTCFiltPu, feedback.u2) annotation(
     Line(points = {{-320, 280}, {-180, 280}, {-180, 248}}, color = {0, 0, 127}));
-  connect(antiWindupIntegrator.y, add.u1) annotation(
-    Line(points = {{-119, 260}, {-100, 260}, {-100, 246}, {-82, 246}}, color = {0, 0, 127}));
   connect(gain.y, add.u2) annotation(
     Line(points = {{-119, 220}, {-100, 220}, {-100, 234}, {-82, 234}}, color = {0, 0, 127}));
   connect(switch2.y, add2.u1) annotation(
@@ -330,10 +322,6 @@ equation
     Line(points = {{2, -100}, {250, -100}, {250, -188}}, color = {255, 127, 0}));
   connect(integerConstant.y, switch4.f) annotation(
     Line(points = {{280, 280}, {270, 280}, {270, 112}}, color = {255, 127, 0}));
-  connect(antiWindupIntegrator1.y, add1.u1) annotation(
-    Line(points = {{161, 260}, {200, 260}, {200, 246}, {218, 246}}, color = {0, 0, 127}));
-  connect(feedback.y, antiWindupIntegrator.u) annotation(
-    Line(points = {{-170, 240}, {-160, 240}, {-160, 260}, {-142, 260}}, color = {0, 0, 127}));
   connect(feedback.y, gain.u) annotation(
     Line(points = {{-170, 240}, {-160, 240}, {-160, 220}, {-142, 220}}, color = {0, 0, 127}));
   connect(add2.y, switch.u[1]) annotation(
@@ -346,8 +334,6 @@ equation
     Line(points = {{-58, 240}, {-40, 240}, {-40, 244}, {-20, 244}}, color = {0, 0, 127}));
   connect(const.y, switch.u[5]) annotation(
     Line(points = {{-58, 280}, {-30, 280}, {-30, 246}, {-20, 246}}, color = {0, 0, 127}));
-  connect(feedback1.y, antiWindupIntegrator1.u) annotation(
-    Line(points = {{70, 240}, {80, 240}, {80, 260}, {138, 260}}, color = {0, 0, 127}));
   connect(switch1.y, add1.u2) annotation(
     Line(points = {{202, 180}, {210, 180}, {210, 234}, {218, 234}}, color = {0, 0, 127}));
   connect(variableLimiter1.y, switch1.u3) annotation(
@@ -376,12 +362,8 @@ equation
     Line(points = {{2, -100}, {120, -100}, {120, -42}}, color = {255, 127, 0}));
   connect(greaterEqualThreshold.y, absLimRateLimFirstOrderFreeze.freeze) annotation(
     Line(points = {{120, 22}, {120, 60}, {-110, 60}, {-110, 100}, {-170, 100}, {-170, 92}}, color = {255, 0, 255}));
-  connect(greaterEqualThreshold.y, antiWindupIntegrator.fMax) annotation(
-    Line(points = {{120, 22}, {120, 60}, {-110, 60}, {-110, 240}, {-122, 240}, {-122, 248}}, color = {255, 0, 255}));
   connect(greaterEqualThreshold.y, switch1.u2) annotation(
     Line(points = {{120, 22}, {120, 130}, {150, 130}, {150, 180}, {178, 180}}, color = {255, 0, 255}));
-  connect(greaterEqualThreshold.y, antiWindupIntegrator1.fMax) annotation(
-    Line(points = {{120, 22}, {120, 130}, {150, 130}, {150, 180}, {166, 180}, {166, 240}, {158, 240}, {158, 248}}, color = {255, 0, 255}));
   connect(QWTMaxPu, division.u1) annotation(
     Line(points = {{-320, 240}, {-280, 240}, {-280, 200}, {20, 200}, {20, 186}, {38, 186}}, color = {0, 0, 127}));
   connect(QWTMinPu, division1.u1) annotation(
@@ -432,10 +414,6 @@ equation
     Line(points = {{-320, 0}, {-286, 0}, {-286, 6}}, color = {0, 0, 127}));
   connect(abs.y, product.u2) annotation(
     Line(points = {{-286, 20}, {-286, 38}}, color = {0, 0, 127}));
-  connect(greaterEqualThreshold.y, antiWindupIntegrator1.fMin) annotation(
-    Line(points = {{120, 22}, {120, 130}, {150, 130}, {150, 180}, {166, 180}, {166, 240}, {154, 240}, {154, 248}}, color = {255, 0, 255}));
-  connect(greaterEqualThreshold.y, antiWindupIntegrator.fMin) annotation(
-    Line(points = {{120, 22}, {120, 60}, {-110, 60}, {-110, 240}, {-126, 240}, {-126, 248}}, color = {255, 0, 255}));
   connect(lessThreshold.y, delayFlag.fI) annotation(
     Line(points = {{-199, -80}, {-142, -80}}, color = {255, 0, 255}));
   connect(UWTCFiltPu, lessThreshold.u) annotation(
@@ -458,9 +436,24 @@ equation
     Line(points = {{-118, -120}, {-100, -120}, {-100, -100}, {-22, -100}}, color = {255, 0, 255}));
   connect(timer.y, greaterThreshold1.u) annotation(
     Line(points = {{-199, -120}, {-182, -120}}, color = {0, 0, 127}));
-
+  connect(antiWindupIntegrator_arw1.u, feedback1.y) annotation(
+    Line(points = {{146, 244}, {88, 244}, {88, 240}, {70, 240}}, color = {0, 0, 127}));
+  connect(antiWindupIntegrator_arw1.y, add1.u1) annotation(
+    Line(points = {{170, 244}, {194, 244}, {194, 246}, {218, 246}}, color = {0, 0, 127}));
+  connect(greaterEqualThreshold.y, antiWindupIntegrator_arw1.fMax) annotation(
+    Line(points = {{120, 22}, {120, 130}, {150, 130}, {150, 180}, {166, 180}, {166, 232}}, color = {255, 0, 255}));
+  connect(greaterEqualThreshold.y, antiWindupIntegrator_arw1.fMin) annotation(
+    Line(points = {{120, 22}, {120, 130}, {150, 130}, {150, 180}, {166, 180}, {166, 222}, {158, 222}, {158, 232}}, color = {255, 0, 255}));
+  connect(feedback.y, antiWindupIntegrator_arw.u) annotation(
+    Line(points = {{-170, 240}, {-160, 240}, {-160, 250}, {-138, 250}}, color = {0, 0, 127}));
+  connect(antiWindupIntegrator_arw.y, add.u1) annotation(
+    Line(points = {{-114, 250}, {-94, 250}, {-94, 246}, {-82, 246}}, color = {0, 0, 127}));
+  connect(greaterEqualThreshold.y, antiWindupIntegrator_arw.fMax) annotation(
+    Line(points = {{120, 22}, {120, 60}, {-110, 60}, {-110, 232}, {-118, 232}, {-118, 238}}, color = {255, 0, 255}));
+  connect(greaterEqualThreshold.y, antiWindupIntegrator_arw.fMin) annotation(
+    Line(points = {{120, 22}, {120, 60}, {-110, 60}, {-110, 232}, {-126, 232}, {-126, 238}}, color = {255, 0, 255}));
   annotation(
     preferredView = "diagram",
     Diagram(coordinateSystem(extent = {{-300, -300}, {300, 300}})),
-    Icon(coordinateSystem(grid = {1, 1}, initialScale = 0.1), graphics = {Rectangle( fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, extent = {{-100, -100}, {100, 100}}), Text(origin = {-7, 35}, extent = {{-88, -25}, {100, 30}}, textString = "IEC WT"), Text(origin = {-6, -41}, extent = {{-85, -24}, {100, 30}}, textString = "QControl")}));
+    Icon(coordinateSystem(grid = {1, 1}, initialScale = 0.1, extent = {{-100, -100}, {100, 100}}), graphics = {Rectangle(fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, extent = {{-100, -100}, {100, 100}}), Text(origin = {-7, 35}, extent = {{-88, -25}, {100, 30}}, textString = "IEC WT"), Text(origin = {-6, -41}, extent = {{-85, -24}, {100, 30}}, textString = "QControl")}));
 end QControl;
