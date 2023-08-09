@@ -51,8 +51,6 @@ model WTG4BCurrentSource_noWP "WECC Wind Turbine model with a current source as 
     Placement(visible = true, transformation(origin = {-110, -20}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {-110, 60}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Interfaces.RealInput QRefPu(start = -Q0Pu*SystemBase.SnRef/SNom) "Reactive power reference in pu (generator convention) (base SNom)" annotation(
     Placement(visible = true, transformation(origin = {-110, -40}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {-110, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Dynawo.Electrical.Lines.Line line(RPu = RPu, XPu = XPu, BPu = 0, GPu = 0) annotation(
-    Placement(visible = true, transformation(origin = {120, -10}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
   Dynawo.Electrical.Controls.WECC.ElectricalControlWind wecc_reec(DPMax = DPMax, DPMin = DPMin, Dbd1 = Dbd1, Dbd2 = Dbd2, HoldIpMax = HoldIpMax, HoldIq = HoldIq, IMaxPu = IMaxPu, Id0Pu = Id0Pu, Iq0Pu = Iq0Pu, IqFrzPu = IqFrzPu, Iqh1Pu = Iqh1Pu, Iql1Pu = Iql1Pu, Kqi = Kqi, Kqp = Kqp, Kqv = Kqv, Kvi = Kvi, Kvp = Kvp, Ni = Ni, PF0 = PF0, PFlag = PFlag, PInj0Pu = PInj0Pu, PMaxPu = PMaxPu, PMinPu = PMinPu, PPriority = PPriority, PfFlag = PfFlag, QFlag = QFlag, QInj0Pu = QInj0Pu, QMaxPu = QMaxPu, QMinPu = QMinPu, Tiq = Tiq, UInj0Pu = UInj0Pu, UMaxPu = UMaxPu, UMinPu = UMinPu, VDLIp11 = VDLIp11, VDLIp12 = VDLIp12, VDLIp21 = VDLIp21, VDLIp22 = VDLIp22, VDLIp31 = VDLIp31, VDLIp32 = VDLIp32, VDLIp41 = VDLIp41, VDLIp42 = VDLIp42, VDLIq11 = VDLIq11, VDLIq12 = VDLIq12, VDLIq21 = VDLIq21, VDLIq22 = VDLIq22, VDLIq31 = VDLIq31, VDLIq32 = VDLIq32, VDLIq41 = VDLIq41, VDLIq42 = VDLIq42, VFlag = VFlag, VMaxPu = VMaxPu, VMinPu = VMinPu, VRef0Pu = VRef0Pu, VRef1Pu = VRef1Pu, tP = tP, tPord = tPord, tRv = tRv) annotation(
     Placement(visible = true, transformation(origin = {-5.13151, -18.1384}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Dynawo.Electrical.Sources.InjectorIDQ injector(Id0Pu = Id0Pu, Iq0Pu = Iq0Pu, P0Pu = -PInj0Pu*(SNom/SystemBase.SnRef), Q0Pu = -QInj0Pu*(SNom/SystemBase.SnRef), SNom = SNom, U0Pu = UInj0Pu, UPhase0 = UPhaseInj0, i0Pu = i0Pu, s0Pu = s0Pu, u0Pu = uInj0Pu) annotation(
@@ -77,17 +75,12 @@ model WTG4BCurrentSource_noWP "WECC Wind Turbine model with a current source as 
   Modelica.Blocks.Logical.Switch switch1 annotation(
     Placement(visible = true, transformation(origin = {-29, -61}, extent = {{-5, -5}, {5, 5}}, rotation = 0)));
 equation
-  line.switchOffSignal1.value = injector.switchOffSignal1.value;
-  connect(line.terminal2, injector.terminal) annotation(
-    Line(points = {{110, -10}, {91.5, -10}}, color = {0, 0, 255}));
   connect(injector.UPu, wecc_reec.UPu) annotation(
     Line(points = {{92, -26}, {97, -26}, {97, -34}, {1, -34}, {1, -29}}, color = {0, 0, 127}));
   connect(injector.PInjPuSn, wecc_reec.PInjPu) annotation(
     Line(points = {{92, -22}, {99, -22}, {99, -36}, {-5, -36}, {-5, -29}}, color = {0, 0, 127}));
   connect(omegaG.y, wecc_reec.omegaGPu) annotation(
     Line(points = {{34.5, -45}, {-10, -45}, {-10, -29}}, color = {0, 0, 127}));
-  connect(line.terminal1, terminal) annotation(
-    Line(points = {{130, -10}, {180, -10}}, color = {0, 0, 255}));
   connect(QRefPu, wecc_reec.QInjRefPu) annotation(
     Line(points = {{-110, -40}, {-35, -40}, {-35, -24}, {-16, -24}}, color = {0, 0, 127}));
   connect(PRefPu, wecc_reec.PInjRefPu) annotation(
@@ -112,6 +105,8 @@ equation
     Line(points = {{92, -18}, {121, -18}, {121, -109}, {-75, -109}, {-75, -57}, {-35, -57}}, color = {0, 0, 127}));
   connect(switch1.y, wecc_reec.QInjPu) annotation(
     Line(points = {{-23, -61}, {-14, -61}, {-14, -29}}, color = {0, 0, 127}));
+  connect(injector.terminal, terminal) annotation(
+    Line(points = {{92, -10}, {180, -10}}, color = {0, 0, 255}));
   annotation(
     Documentation(preferredView = "diagram", info = "<html>
 <p> This block contains the generic WECC WTG model according to (in case page cannot be found, copy link in browser): <br><a href=\"https://www.wecc.org/Reliability/WECC-Second-Generation-Wind-Turbine-Models-012314.pdf\">https://www.wecc.org/Reliability/WECC-Second-Generation-Wind-Turbine-Models-012314.pdf</a> </p>
