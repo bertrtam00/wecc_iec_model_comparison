@@ -49,14 +49,14 @@ Relevance:
 | 17  |           | WECC additionally has Thld2, which holds current limit Ipmax at during-fault-value for Thld2 seconds after fault clearing. |         |
 | 18  |           | WECC: no additional PT1 (T_pWTrefA)                                                                                        |         |
 | 19  |           | WECC: no additional positive ramp rate limit in PT1                                                                        |         |
-| 20  |           | WECC: constants Pmax, Pmin instead of calculation from signal                                                              |         |
+| 20  | 1         | WECC: constants Pmax, Pmin instead of calculation from signal                                                              | 003     |
 | 21  |           | IEC: no negative limit in second PT1                                                                                       |         |
 | 22  |           | IEC has p_aero output                                                                                                      |         |
 | 23  |           | IEC has option to reduce pref by voltage-p.u. during fault                                                                 |         |
 | 24  |           | IEC has rate limiter after omega multiplication                                                                            |         |
 | 25  |           | WECC has lower limit Pmin                                                                                                  |         |
 | 26  |           | IEC uses CLS value ipmax in P control PT1 (WECC uses constants Pmax, Pmin)                                                 |         |
-| 27  |    1      | IEC divides the PRef by U (while WECC doesn't) and UFiltered is compared to a min value of 0.01  | 003 with a difference between IMax and IqMax (1.3 and 1.1 pu)        |        
+| 27  | 1         | IEC divides the PRef by U (while WECC doesn't) and UFiltered is compared to a min value of 0.01  | 003 with a difference between IMax and IqMax (1.3 and 1.1 pu)        |        
 
 ## Current Limitation System (WT_CLS)
 
