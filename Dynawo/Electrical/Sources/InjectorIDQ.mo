@@ -58,8 +58,10 @@ model InjectorIDQ "Injector controlled by d and q current components idPu and iq
   parameter Types.ComplexCurrentPu i0Pu "Start value of complex current at injector terminal in pu (base UNom, SnRef) (receptor convention)";
   parameter Types.CurrentModulePu Id0Pu "Start value of idPu in pu (base SNom, UNom)";
   parameter Types.CurrentModulePu Iq0Pu "Start value of iqPu in pu (base SNom, UNom)";
-
+  
+  Real iAbsPu;
 equation
+  iAbsPu = sqrt(idPu^2 + iqPu^2);
   UPhase = ComplexMath.arg(terminal.V);
   UPu = ComplexMath.'abs'(terminal.V);
   uPu = terminal.V;

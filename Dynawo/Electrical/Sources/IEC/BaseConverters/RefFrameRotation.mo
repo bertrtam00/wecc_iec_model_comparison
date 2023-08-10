@@ -47,8 +47,11 @@ model RefFrameRotation "Reference frame rotation module (IEC N°61400-27-1)"
     Dialog(tab = "Operating point"));
   parameter Types.ReactivePowerPu Q0Pu "Initial reactive power at grid terminal in pu (base SnRef) (receptor convention)" annotation(
     Dialog(tab = "Operating point"));
+  Real iAbsCmdPu;
 
 equation
+  iAbsCmdPu = sqrt(ipCmdPu^2 + iqCmdPu^2);
+
   [iGsRePu; iGsImPu] = [cos(theta), -sin(theta); sin(theta), cos(theta)] * [ipCmdPu; iqCmdPu];
 
   annotation(
