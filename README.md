@@ -48,7 +48,7 @@ Relevance:
 | 17  |           | WECC additionally has Thld2, which holds current limit Ipmax at during-fault-value for Thld2 seconds after fault clearing. |                                                               |
 | 18  |           | WECC: no additional PT1 (T_pWTrefA)                                                                                        |                                                               |
 | 19  |           | WECC: no additional positive ramp rate limit in PT1                                                                        |                                                               |
-| 20  | 1         | IEC: scaling of ipmax limit (from CLS) with uWTC; WECC: constants Pmax, Pmin instead                                       | 003                                                           |
+| 20  | 1         | IEC: scaling of ipmax limit (from CLS) with uWTC; WECC: constants Pmax, Pmin instead; connected to difference 18 and to pos. ramp limits and lags                                        | 003                                                           |
 | 21  |           | IEC: no negative limit in second PT1                                                                                       |                                                               |
 | 22  |           | IEC has p_aero output                                                                                                      |                                                               |
 | 23  |           | IEC has option to reduce pref by voltage-p.u. during fault                                                                 |                                                               |
