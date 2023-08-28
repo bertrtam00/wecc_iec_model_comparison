@@ -90,11 +90,12 @@ Relevance:
 | 38  |           | WECC: if iq ramprate limit depends on sign(Qref)                                              |           |
 | 39  |           | WECC: has Low Voltage Power Limit (LVPL) ((comparable to low voltage P reduction in P path?)) |           |
 | 40  |           | WECC: Has high voltage reactive power management and low voltage active power management (for numerical reasons and different in different simulation tools. --> not sensible to include in comparison) |           |
+| 41  |           | IEC: reference frame rotation with first order lag model of PLL                               |           | 
 
 ## Wind Turbine Protection (not included in comparison)
 but added for completeness
 
 | No. | Relevance | Description                                                                                                                | Test case |
 | --- | --------- | -------------------------------------------------------------------------------------------------------------------------- | --------- |
-| 41  |           | IEC has included protection module; WECC references external modules from commercial software. --> leave this out of scope |           |
+| 42  |           | IEC has included protection module; WECC references external modules from commercial software. --> leave this out of scope |           |
 
