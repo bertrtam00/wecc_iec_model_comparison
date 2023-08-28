@@ -54,7 +54,7 @@ Relevance:
 | 24  |           | IEC has rate limiter after omega multiplication                                                                            |                                                               |
 | 25  |           | WECC has lower limit Pmin                                                                                                  |                                                               |
 | 26  |           | IEC uses CLS value ipmax in P control PT1 (WECC uses constants Pmax, Pmin)                                                 |                                                               |
-| 27  | 1         | IEC divides the PRef by U (while WECC doesn't) and UFiltered is compared to a min value of 0.01                            | 003 with a difference between IMax and IqMax (1.3 and 1.1 pu) |
+| 27  | 1         | IEC divides the PRef by U (while WECC doesn't) and UFiltered is compared to a min value of 0.01 [I think this was supposed to mean the same as difference 20]                            | 003 with a difference between IMax and IqMax (1.3 and 1.1 pu) |
 
 ## Current Limitation System (WT_CLS)
 
