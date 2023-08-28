@@ -45,7 +45,6 @@ Relevance:
 | No. | Relevance | Description                                                                                                                | Test case                                                     |
 | --- | --------- | -------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
 | 16  |           | IEC: PT1 not frozen during FRT (P scaling with different threshold u_pdip instead)                                         |                                                               |
-| 17  |           | WECC additionally has Thld2, which holds current limit Ipmax at during-fault-value for Thld2 seconds after fault clearing. |                                                               |
 | 18  |           | WECC: no additional PT1 (T_pWTrefA)                                                                                        |                                                               |
 | 19  |           | WECC: no additional positive ramp rate limit in PT1                                                                        |                                                               |
 | 20  | 1         | IEC: scaling of ipmax limit (from CLS) with uWTC; WECC: constants Pmax, Pmin instead; connected to difference 18 and to pos. ramp limits and lags                                        | 003                                                           |
@@ -67,7 +66,8 @@ Relevance:
 | 30  |           | WECC CSL: makes sure that VDL is always <= imax (this check is not performed in IEC CLS) ((4))                                                                             |                                       |
 | 31  | 2         | WECC CLS: no K_pqu logic (over-voltage Q-rise-prevention) ((3))                                                                                                            | 004 w/ Kpqu=20 and uStep 1-->1.1 p.u. |
 | 32  |           | IEC CLS: Q-mode only active during FRT (WECC: also active outside FRT) ((2))                                                                                               |                                       |
-| 33  |           | IEC CLS: when subtracting the prioritized quantity, explicitly makes sure that I_cmd doesn't exceed VDL ((1))                                                              |                                       |
+| 33  |           | IEC CLS: when subtracting the prioritized quantity, explicitly makes sure that I_cmd doesn't exceed VDL ((1))                                                              |         | 17  |           | WECC additionally has Thld2, which holds current limit Ipmax at during-fault-value for Thld2 seconds after fault clearing. |                                                               |
+                              |
 
 ## Reactive Power Limitation System (WT_QLS)
 
