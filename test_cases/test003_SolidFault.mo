@@ -1,7 +1,7 @@
 model test003_SolidFault
   Dynawo.Electrical.Wind.IEC.WT4ACurrentSource wT4ACurrentSource(BesPu = 0, DPMaxP4APu = 1, DPRefMax4APu = 100, DPRefMin4APu = -100, DUdb1Pu = -0.1, DUdb2Pu = 0.1, DfMaxPu = 1, DipMaxPu = 1, DiqMaxPu = 100, DiqMinPu = -100, GesPu = 0, IGsIm0Pu = 0, IGsRe0Pu = 0.5, IMaxDipPu = 1.1, IMaxPu = 1.1, IpMax0Pu = 1.2, IqH1Pu = 1.1, IqMax0Pu = 0.4, IqMaxPu = 1.1, IqMin0Pu = -0.4, IqMinPu = -1.1, IqPostPu = 0, Kipaw = 100, Kiq = 2.25, Kiqaw = 100, Kiu = 10, Kpaw = 1000, Kpq = 1.1, Kpqu = 20, Kpu = 2, Kpufrt = 2, Kqv = 2, MdfsLim = false, MpUScale = false, MqG = 1, Mqfrt = 1, Mqpri = true, P0Pu = -0.005, PaG0Pu = 0.5, Q0Pu = 0, QMax0Pu = 0.4, QMaxPu = 0.8, QMin0Pu = -0.4, QMinPu = -0.8, QlConst = true, RDropPu = 0, ResPu = 0, SNom = 1, U0Pu = 1, UGsIm0Pu = 1e-3, UGsRe0Pu = 1, UMaxPu = 1.1, UMinPu = 0.9, UOverPu = 999, UPhase0 = 0, UPll1Pu = 999, UPll2Pu = 0.13, URef0Pu = 0, UUnderPu = 1e-3, UpDipPu = 0, UpquMaxPu = 1.1, UqDipPu = 0.9, UqRisePu = 1.1, XDropPu = 0, XWT0Pu = 0, XesPu = 0.01, fOverPu = 999, fUnderPu = 1e-3, i0Pu = Complex(0.5, 0), tG = 0.01, tIFilt = 0.01, tPFilt = 0.01, tPOrdP4A = 0.1, tPWTRef4A = 0.01, tPll = 0.01, tPost = 0.1, tQFilt = 0.000001, tQord = 0.05, tS = 0.001, tUFilt = 0.01, tUss = 30, tfFilt = 0.01, u0Pu = Complex(1, 0)) annotation(
     Placement(visible = true, transformation(origin = {-48, 28}, extent = {{-16, -16}, {16, 16}}, rotation = 0)));
-  Dynawo.Electrical.Lines.Line line_IEC(BPu = 0, GPu = 0, RPu = 0, XPu = 1) annotation(
+  Dynawo.Electrical.Lines.Line line_IEC(BPu = 0, GPu = 0, RPu = 0, XPu = 0.01) annotation(
     Placement(visible = true, transformation(origin = {-12, 28}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Step pWTrefPu(height = 0, offset = 0.5, startTime = 0) annotation(
     Placement(visible = true, transformation(origin = {-106, 36}, extent = {{-6, -6}, {6, 6}}, rotation = 0)));
@@ -9,7 +9,7 @@ model test003_SolidFault
     Placement(visible = true, transformation(origin = {-106, 16}, extent = {{-6, -6}, {6, 6}}, rotation = 0)));
   Modelica.Blocks.Sources.Step omegaRefPu(height = 0, offset = 1, startTime = 0) annotation(
     Placement(visible = true, transformation(origin = {-126, 74}, extent = {{-6, -6}, {6, 6}}, rotation = 0)));
-  Dynawo.Electrical.Lines.Line line_WECC(BPu = 0, GPu = 0, RPu = 0, XPu = 1) annotation(
+  Dynawo.Electrical.Lines.Line line_WECC(BPu = 0, GPu = 0, RPu = 0, XPu = 0.01) annotation(
     Placement(visible = true, transformation(origin = {-16, -26}, extent = {{-11, -11}, {11, 11}}, rotation = 0)));
   Modelica.Blocks.Sources.Constant tanPhi annotation(
     Placement(visible = true, transformation(origin = {-126, 54}, extent = {{-6, -6}, {6, 6}}, rotation = 0)));
