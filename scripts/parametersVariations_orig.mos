@@ -1,16 +1,15 @@
-project_home := "D:/User/mfranke/documents/projects/RTE/modelica"; // To be adapted! Please keep in mind that even in Windows, you should have the path fwritten in a Linux fashion, using / and not \
+project_home := ""; // To be adapted! Please keep in mind that even in Windows, you should have the path written in a Linux fashion, using / and not \
 
-//loadModel(Modelica); getErrorString();
-loadFile(project_home + "/Dynawo/package.mo"); getErrorString();
+//loadModel(Modelica);
+loadFile(project_home + "Dynawo/package.mo");
 
-loadFile(project_home + "/test_cases/test002_StepQ.mo"); getErrorString();
+loadFile(project_home + "test_cases/test002_StepQ.mo"); getErrorString();
 setCommandLineOptions("--matchingAlgorithm=PFPlusExt --indexReductionMethod=dynamicStateSelection -d=initialization,NLSanalyticJacobian,newInst -d=initialization"); getErrorString();
 buildModel(test002_StepQ, outputFormat="csv", variableFilter=".*iqCmdPu", stopTime=10); getErrorString();
-/*  
+
 for i in 0:5 loop
   value := 0.00001 * (10) ^ (i);
   system("test002_StepQ.exe -noEventEmit -override=wT4ACurrentSource.tQFilt="+String(value)+" -r=StepQ_tQFilt" + String(i) + "_res.csv");
 end for;
-*/
 
-// system("del *.o *.c *.log *.h *.exe *.libs *.makefile *.json *.xml *.intdata *.realdata");
+system("del *.o *.c *.log *.h *.exe *.libs *.makefile *.json *.xml *.intdata *.realdata");
