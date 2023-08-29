@@ -65,7 +65,7 @@ Relevance:
 | 29  |           | WECC: CLS same imax during FRT (IEC: diffrent parameter during FRT) ((5))                                                                                                  |                                       |
 | 30  |           | WECC CSL: makes sure that VDL is always <= imax (this check is not performed in IEC CLS) ((4))                                                                             |                                       |
 | 31  | 2         | WECC CLS: no K_pqu logic (over-voltage Q-rise-prevention) ((3))                                                                                                            | 004 w/ Kpqu=20 and uStep 1-->1.1 p.u. |
-| 32  |           | IEC CLS: Q-mode only active during FRT (WECC: also active outside FRT) ((2))                                                                                               | T2 (Q step while pRef=1 already)      |
+| 32  | 2         | IEC CLS: Q-mode only active during FRT (WECC: also active outside FRT) ((2))                                                                                               | T2 (Q step while pRef=1 already)      |
 | 33  |           | IEC CLS: when subtracting the prioritized quantity, explicitly makes sure that I_cmd doesn't exceed VDL ((1))                                                              |         
 | 17  |           | WECC additionally has Thld2, which holds current limit Ipmax at during-fault-value for Thld2 seconds after fault clearing. |    | 
 
