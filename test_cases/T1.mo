@@ -1,9 +1,9 @@
-model test000
+model T1
   Dynawo.Electrical.Wind.IEC.WT4ACurrentSource wT4ACurrentSource(BesPu = 0, DPMaxP4APu = 1, DPRefMax4APu = 100, DPRefMin4APu = -100, DUdb1Pu = -0.1, DUdb2Pu = 0.1, DfMaxPu = 1, DipMaxPu = 1, DiqMaxPu = 100, DiqMinPu = -100, GesPu = 0, IGsIm0Pu = 0, IGsRe0Pu = 1, IMaxDipPu = 1.1, IMaxPu = 1.1, IpMax0Pu = 1.2, IqH1Pu = 1.1, IqMax0Pu = 0.4, IqMaxPu = 1.1, IqMin0Pu = -0.4, IqMinPu = -1.1, IqPostPu = 0, Kipaw = 100, Kiq = 2.25, Kiqaw = 100, Kiu = 10, Kpaw = 1000, Kpq = 1.1, Kpqu = 20, Kpu = 2, Kpufrt = 2, Kqv = 2, MdfsLim = false, MpUScale = false, MqG = 1, Mqfrt = 1, Mqpri = true, P0Pu = -1, PaG0Pu = 1, Q0Pu = 0, QMax0Pu = 0.4, QMaxPu = 0.8, QMin0Pu = -0.4, QMinPu = -0.8, QlConst = true, RDropPu = 0, ResPu = 0, SNom = 100, U0Pu = 1, UGsIm0Pu = 0, UGsRe0Pu = 1, UMaxPu = 1.1, UMinPu = 0.9, UOverPu = 999, UPhase0 = 0, UPll1Pu = 999, UPll2Pu = 0.13, URef0Pu = 0, UUnderPu = 1e-3, UpDipPu = 0, UpquMaxPu = 1.1, UqDipPu = 0.9, UqRisePu = 1.1, XDropPu = 0, XWT0Pu = 0, XesPu = 0, fOverPu = 999, fUnderPu = 1e-3, i0Pu = Complex(1, 0), tG = 0.01, tIFilt = 0.01, tPFilt = 0.01, tPOrdP4A = 0.1, tPWTRef4A = 0.00000001, tPll = 0.000000001, tPost = 0.1, tQFilt = 0.000001, tQord = 0.05, tS = 0.001, tUFilt = 0.01, tUss = 30, tfFilt = 0.01, u0Pu = Complex(1, 0)) annotation(
     Placement(visible = true, transformation(origin = {-48, 28}, extent = {{-16, -16}, {16, 16}}, rotation = 0)));
   Dynawo.Electrical.Lines.Line line_IEC(BPu = 0, GPu = 0, RPu = 0, XPu = 0.0001) annotation(
     Placement(visible = true, transformation(origin = {-12, 28}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Blocks.Sources.Step pWTrefPu(height = 0, offset = 1, startTime = 0) annotation(
+  Modelica.Blocks.Sources.Step pWTrefPu(height = -0.5, offset = 1, startTime = 1) annotation(
     Placement(visible = true, transformation(origin = {-106, 36}, extent = {{-6, -6}, {6, 6}}, rotation = 0)));
   Modelica.Blocks.Sources.Step xWTrefPu(height = 0, offset = 0, startTime = 0) annotation(
     Placement(visible = true, transformation(origin = {-106, 16}, extent = {{-6, -6}, {6, 6}}, rotation = 0)));
@@ -55,4 +55,4 @@ equation
     __OpenModelica_simulationFlags(lv = "LOG_STATS", s = "dassl", variableFilter = ".*"),
     Diagram(coordinateSystem(extent = {{-100, -100}, {100, 100}})),
     version = "");
-end test000;
+end T1;
