@@ -15,13 +15,9 @@ model T5_Tuss
     Placement(visible = true, transformation(origin = {-126, 54}, extent = {{-6, -6}, {6, 6}}, rotation = 0)));
   Dynawo.Electrical.Wind.WECC.WTG4BCurrentSource_noWP WECC_WT4B(DDn = 20, DPMax = 100, DPMin = -100, DUp = 0, Dbd = 0.05, Dbd1 = -0.1, Dbd2 = 0.1, EMax = 0.01, EMin = -0.01, FDbd1 = 0.01, FDbd2 = 0.01, FEMax = 0.05, FEMin = -0.05, FreqFlag = false, HoldIpMax (displayUnit = "ks")= 0, HoldIq = -0.1, IMaxPu = 1.1, Id0Pu = 1, Iq0Pu = 0, IqFrzPu = 0, Iqh1Pu = 1.1, Iql1Pu = -1.1, IqrMaxPu = 100, IqrMinPu = -100, Kc = 2, Ki = 1, Kig = 1, Kp = 1, Kpg = 1, Kqi = 2.25, Kqp = 1.1, Kqv = 2, Kvi = 10, Kvp = 2, Lvplsw = false, P0Pu = -1, PF0 = 1, PFlag = true, PInj0Pu = 1, PMaxPu = 1, PMinPu = 0, PPriority = false, PfFlag = false, Q0Pu = 0, QFlag = true, QInj0Pu = 0, QMaxPu = 1, QMinPu = -1, RPu = 0, RateFlag = false, RefFlag = false, Rrpwr = 1, SNom = 100, Tiq = 0.05, U0Pu = 1, UInj0Pu = 1, UMaxPu = 1.1, UMinPu = 0.9, UPhaseInj0 = 0, VCompFlag = false, VDLIp11 = 0.9, VDLIp12 = 1.1, VDLIp21 = 1.1, VDLIp22 = 1.1, VDLIp31 = 1.11, VDLIp32 = 1.1, VDLIp41 = 1.12, VDLIp42 = 1.1, VDLIq11 = 0.9, VDLIq12 = 1.1, VDLIq21 = 1.1, VDLIq22 = 1.1, VDLIq31 = 1.11, VDLIq32 = 1.1, VDLIq41 = 1.12, VDLIq42 = 1.1, VFlag = true, VFrz = 0.9, VMaxPu = 1.1, VMinPu = 0.9, VRef0Pu = 1, VRef1Pu = 0, XPu = 0.0, brkpt = 1, i0Pu = Complex(1, 0), iInj0Pu = Complex(1, 0), lvpl1 = 1, s0Pu = Complex(1, 0), tFilterGC = 0.01, tFilterPC = 0.01, tFt = 0.01, tFv = 0.01, tG = 0.007, tLag = 0.01, tP = 0.01, tPord = 0.1, tRv = 0.01, u0Pu = Complex(1, 0), uInj0Pu = Complex(1, 0), zerox = 0) annotation(
     Placement(visible = true, transformation(origin = {-50, -27}, extent = {{-17, -17}, {17, 17}}, rotation = 0)));
-  Dynawo.Electrical.Events.NodeFault fault_WECC(RPu = 0, XPu = 0.2, tBegin = 2, tEnd = 2.15) annotation(
-    Placement(visible = true, transformation(origin = {-16, -66}, extent = {{-10, -10}, {10, 10}}, rotation = 180)));
-  Dynawo.Electrical.Events.NodeFault fault_IEC(RPu = 0, XPu = 0.2, tBegin = 2, tEnd = 2.15) annotation(
-    Placement(visible = true, transformation(origin = {-16, 8}, extent = {{-10, -10}, {10, 10}}, rotation = 180)));
-  Dynawo.Electrical.Buses.InfiniteBusWithVariations bus_IEC(U0Pu = 1.005, UEvtPu = 0.85, UPhase = 0, omega0Pu = 1, omegaEvtPu = 1, tOmegaEvtEnd = 101, tOmegaEvtStart = 100, tUEvtEnd = 20, tUEvtStart = 0.1)  annotation(
+  Dynawo.Electrical.Buses.InfiniteBusWithVariations bus_IEC(U0Pu = 1.005, UEvtPu = 0.86, UPhase = 0, omega0Pu = 1, omegaEvtPu = 1, tOmegaEvtEnd = 101, tOmegaEvtStart = 100, tUEvtEnd = 60, tUEvtStart = 1)  annotation(
     Placement(visible = true, transformation(origin = {20, 28}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
-  Dynawo.Electrical.Buses.InfiniteBusWithVariations bus_WECC(U0Pu = 1.005, UEvtPu = 0.85, UPhase = 0, omega0Pu = 1, omegaEvtPu = 1, tOmegaEvtEnd = 101, tOmegaEvtStart = 100, tUEvtEnd = 20, tUEvtStart = 0.1) annotation(
+  Dynawo.Electrical.Buses.InfiniteBusWithVariations bus_WECC(U0Pu = 1.005, UEvtPu = 0.86, UPhase = 0, omega0Pu = 1, omegaEvtPu = 1, tOmegaEvtEnd = 101, tOmegaEvtStart = 100, tUEvtEnd = 60, tUEvtStart = 1) annotation(
     Placement(visible = true, transformation(origin = {20, -26}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
 equation
   line_IEC.switchOffSignal1.value = false;
@@ -48,10 +44,6 @@ equation
     Line(points = {{-69, -17}, {-88, -17}, {-88, 36}, {-100, 36}}, color = {0, 0, 127}));
   connect(WECC_WT4B.QRefPu, xWTrefPu.y) annotation(
     Line(points = {{-69, -27}, {-92, -27}, {-92, 16}, {-100, 16}}, color = {0, 0, 127}));
-  connect(fault_WECC.terminal, WECC_WT4B.terminal) annotation(
-    Line(points = {{-16, -66}, {-14, -66}, {-14, -40}, {-30, -40}, {-30, -26}, {-32, -26}}, color = {0, 0, 255}));
-  connect(fault_IEC.terminal, wT4ACurrentSource.terminal) annotation(
-    Line(points = {{-16, 8}, {-16, 22}, {-28, 22}, {-28, 28}, {-30, 28}}, color = {0, 0, 255}));
   connect(line_WECC.terminal2, bus_WECC.terminal) annotation(
     Line(points = {{-4, -26}, {20, -26}}, color = {0, 0, 255}));
   connect(line_IEC.terminal2, bus_IEC.terminal) annotation(
