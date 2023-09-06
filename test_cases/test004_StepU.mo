@@ -5,7 +5,7 @@ model test004_StepU
     Placement(visible = true, transformation(origin = {-10, 28}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Step pWTrefPu(height = 0, offset = 0, startTime = 0) annotation(
     Placement(visible = true, transformation(origin = {-128, 30}, extent = {{-6, -6}, {6, 6}}, rotation = 0)));
-  Modelica.Blocks.Sources.Step xWTrefPu(height = 0. + 1, offset = 1, startTime = 1) annotation(
+  Modelica.Blocks.Sources.Step xWTrefPu(height = 0.1, offset = 1, startTime = 1) annotation(
     Placement(visible = true, transformation(origin = {-126, -8}, extent = {{-6, -6}, {6, 6}}, rotation = 0)));
   Modelica.Blocks.Sources.Step omegaRefPu(height = 0, offset = 1, startTime = 0) annotation(
     Placement(visible = true, transformation(origin = {-126, 74}, extent = {{-6, -6}, {6, 6}}, rotation = 0)));
