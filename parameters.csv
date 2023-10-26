@@ -1,83 +1,83 @@
-﻿WECCparam; WECCval; IECparam; IECval
-SNom;100 MVA;Snom;100 MVA
-RPu;0;ResPu;0
-XPu;0;XesPu;0
-n.a.;n.a.;GesPu;0
-n.a.;n.a.;BesPu;0
-VDLIp11, VDLIp12, VDLIp21, VDLIp22, VDLIp31, VDLIp32, VDLIp41, VDLIp42 ;0.9, 1.1, 1.1, 1.1, 1.11, 1.1, 1.12, 1.1;TableIpMaxUwt;(straight line at i=1.1 pu)
-VDLIq11, VDLIq12, VDLIq21, VDLIq22, VDLIq31, VDLIq32, VDLIq41, VDLIq42 ;0.9, 1.1, 1.1, 1.1, 1.11, 1.1, 1.12, 1.1;TableIqMaxUwt;(straight line at i=1.1 pu)
-VRef1Pu (Vref1);0;URef0Pu (u_ref0);0
-HoldIpMax (Thld2);0;n.a.;n.a.
-abs(HoldIq) (abs(Thld));0,1;tPost (T_post);0,1
-sign(holdIq) (sign(Thld));-1;Mqfrt (M_qFRT);1
-IqFrzPu (iqfrz);0;IqPostPu (i_qpost);0
-PFlag;0;n.a.;n.a.
-P0Pu;-0,005;P0Pu;-0,5
-n.a.;n.a.;PaG0Pu;0,5
-Q0Pu;0;Q0Pu;0
-U0Pu;1;U0Pu;1
-u0Pu;Complex(1,0);u0Pu;Complex(1,0)
-s0Pu;Complex(0.5,0);n.a.;n.a.
-i0Pu;Complex(0.5,0);i0Pu;Complex(0.5,0)
-iInj0Pu;Complex(0.5, 0);n.a.;n.a.
-uInj0Pu;Complex(1, 0);n.a.;n.a.
-UPhaseInj0;0;n.a.;n.a.
-PInj0Pu;0,5;n.a.;n.a.
-QInj0Pu;0;n.a.;n.a.
-UInj0Pu;1;n.a.;n.a.
-PF0;1;n.a.;n.a.
-Id0Pu;0,5;n.a.;n.a.
-Iq0Pu;0;n.a.;n.a.
-Qflag, VFlag, PfFlag;1, 1, 0;Mqg (M_qG);1
-PPriority (Pqflag);1;Mqpri (M_qpri);0
-n.a.;n.a.;Kpqu;20
-n.a.;n.a.;UpquMaxPu;999
-n.a.;n.a.;MdfsLim;false
-UMinPu (Vdip);0,9;UqDipPu (u_qdip);0,9
-UMaxPu (Vup);1,1;UqRisePu (u_qrise);1,1
-Vref0Pu (Vref0);1;n.a.;n.a.
-Dbd1 (dbd1);-0,1;DUdb1Pu (deltau_db1);-0,1
-Dbd2 (dbd2);0,1;DUdb2Pu (deltau_db2);0,1
-Kqv;2;Kqv (K_qv);2
-Iqh1Pu (iqh1);1,1;IqH1Pu (i_qh1);1,1
-Iql1Pu (iql1);-1,1;n.a.;n.a.
-n.a.;n.a.;IqMaxPu (i_qmax);1,1
-n.a.;n.a.;IqMinPu (I_qmin);-1,1
-Kqp;1,1;Kpq (K_Pq);1,1
-Kqi;2,25;Kiq (K_Iq);2,25
-VmaxPu (Vmax);1,1;UMaxPu (u_max);1,1
-VminPu (Vmin);0,9;UMinPu (u_min);0,9
-n.a.;n.a.;Kpufrt;2
-Kvp;2;Kpu (K_Pu);2
-Kvi;10;Kiu (K_Iu);10
-Tiq;0,05;tQord (T_qord);0,05
-tPord (Tpord);0,1;tPOrdP4A (T_pord4A/4B);0,1
-n.a.;n.a.;tPWTRef4A;0,00000001
-DPmax (dPmax);100;DPRefMax4APu (dp_refmax4A/4B);100
-DPmin (dPmin);-100;DPRefMin4APU (dp_refmin4A/4B);-100
-n.a.;n.a.;DPMaxP4APu (dp_max4A);1
-IMaxPu (Imax);1,1;IMaxPu (i_max);1,1
-n.a.;n.a.;IMaxDipPu;1,1
-QMaxPu;0,4;QMaxPu;0,4
-QMinPu;-0,4;QMinPu;-0,4
-n.a.;n.a.;QlConst;True
-n.a.;n.a.;Kpaw;1000
-n.a.;n.a.;MpUScale;false
-n.a.;n.a.;UpDipPu;0
-n.a.;n.a.;RDropPu;0
-n.a.;n.a.;XDropPu;0
-n.a.;n.a.;tUss;30
-tG;0,01;tG;0,01
-tFilterGC (Tfltr);0,01;n.a.;n.a.
-IqrMinPu (Iqrmin);-100;DiqMinPu;-100
-IqrMaxPu (Iqrmax);100;DiqMaxPu;100
-Rrpwr (rrpwr);1;DipMaxPu;1
-RateFlag;0;n.a.;n.a.
-n.a.;n.a.;Kipaw;100
-n.a.;n.a.;Kiqaw;100
-Trv;0,01;tUFilt;0,01
-tP (Tp);0,01;tPfilt (T_pfilt);0,01
-n.a.;n.a.;tQfilt;0,000001
-n.a.;n.a.;tPll;0,000001
-n.a.;n.a.;UPll1Pu;999
-n.a.;n.a.;UPll2Pu;0,13
+OM WECC;value;OM IEC;value;;;;;;;;;
+SNom;100 MVA;Snom;100 MVA;;;;;;;;;
+RPu;0;ResPu;0;;;;;;;;;
+XPu;0;XesPu;0;;;;;;;;;
+n.a.;n.a.;GesPu;0;;;;;;;;;
+n.a.;n.a.;BesPu;0;;;;;;;;;
+VDLIp11, VDLIp12, VDLIp21, VDLIp22, VDLIp31, VDLIp32, VDLIp41, VDLIp42 ;0.9, 1.1, 1.1, 1.1, 1.11, 1.1, 1.12, 1.1;TableIpMaxUwt;(straight line at i=1.1 p. u.);;;;;;;;;
+VDLIq11, VDLIq12, VDLIq21, VDLIq22, VDLIq31, VDLIq32, VDLIq41, VDLIq42 ;0.9, 1.1, 1.1, 1.1, 1.11, 1.1, 1.12, 1.1;TableIqMaxUwt;(straight line at i=1.1 p. u.);;;;;;;;;
+VRef1Pu;0;URef0Pu;0;;;;;;;;;
+HoldIpMax=Thld2;0;n.a.;n.a.;;;;;;;;;
+abs(HoldIq)=abs(Thld);0,1;tPost;0,1;;;;;;;;;
+sign(holdIq)=sign(Thld);-1;Mqfrt;1;;;;;;;;;
+IqFrzPu;0;IqPostPu;0;;;;;;;;;
+PFlag;0;n.a.;n.a.;;;;;;;;;
+P0Pu;-1;P0Pu;-1;;;;;;;;;
+n.a.;n.a.;PaG0Pu;1;;;;;;;;;
+Q0Pu;0;Q0Pu;0;;;;;;;;;
+U0Pu;1;U0Pu;1;;;;;;;;;
+u0Pu;Complex(1,0);u0Pu;Complex(1,0);;;;;;;;;
+s0Pu;Complex(1,0);n.a.;n.a.;;;;;;;;;
+i0Pu;Complex(1,0);i0Pu;Complex(1,0);;;;;;;;;
+iInj0Pu;Complex(1,0);n.a.;n.a.;;;;;;;;;
+uInj0Pu;Complex(1, 0);n.a.;n.a.;;;;;;;;;
+UPhaseInj0;0;n.a.;n.a.;;;;;;;;;
+PInj0Pu;1;n.a.;n.a.;;;;;;;;;
+QInj0Pu;0;n.a.;n.a.;;;;;;;;;
+UInj0Pu;1;n.a.;n.a.;;;;;;;;;
+PF0;1;n.a.;n.a.;;;;;;;;;
+Id0Pu;1;n.a.;n.a.;;;;;;;;;
+Iq0Pu;0;n.a.;n.a.;;;;;;;;;
+Qflag, VFlag, PfFlag;1, 1, 0;Mqg;1;;;;;;;;;
+Ppriority=Pqflag;1;Mqpri;0;;;;;;;;;
+n.a.;n.a.;Kpqu;20;;;;;;;;;
+n.a.;n.a.;UpquMaxPu;999;;;;;;;;;
+n.a.;n.a.;MdfsLim;false;;;;;;;;;
+UMinPu=Vdip;0,9;UqDipPu;0,9;;;;;;;;;
+UMaxPu=Vup;1,1;UqRisePu;1,1;;;;;;;;;
+Vref0Pu;1;n.a.;n.a.;;;;;;;;;
+Dbd1;-0,1;DUdb1Pu=deltau_db1;-0,1;;;;;;;;;
+Dbd2;0,1;DUdb2Pu=deltau_db2;0,1;;;;;;;;;
+Kqv;2;Kqv;2;;;;;;;;;
+Iqh1Pu;1,1;IqH1Pu;1,1;;;;;;;;;
+Iql1Pu;-1,1;n.a.;n.a.;;;;;;;;;
+n.a.;n.a.;IqMaxPu;1,1;;;;;;;;;
+n.a.;n.a.;IqMinPu;-1,1;;;;;;;;;
+Kqp;1,1;Kpq;1,1;;;;;;;;;
+Kqi;2,25;Kiq;2,25;;;;;;;;;
+VmaxPu;1,1;UMaxPu;1,1;;;;;;;;;
+VminPu;0,9;UMinPu;0,9;;;;;;;;;
+n.a.;n.a.;Kpufrt;2;;;;;;;;;
+Kvp;2;Kpu;2;;;;;;;;;
+Kvi;10;Kiu;10;;;;;;;;;
+Tiq;0,05;tQord;0,05;;;;;;;;;
+tPord;0,1;tPOrdP4A;0,1;;;;;;;;;
+n.a.;n.a.;tPWTRef4A;1,00E-09;;;;;;;;;
+Dpmax;100;DPRefMax4APu;100;;;;;;;;;
+Dpmin;-100;DPRefMin4APU;-100;;;;;;;;;
+n.a.;n.a.;DPMaxP4APu;1;;;;;;;;;
+IMaxPu;1,1;IMaxPu;1,1;;;;;;;;;
+n.a.;n.a.;IMaxDipPu;1,1;;;;;;;;;
+QMaxPu;0,4;QMaxPu;0,4;;;;;;;;;
+QMinPu;-0,4;QMinPu;-0,4;;;;;;;;;
+n.a.;n.a.;QlConst;true;;;;;;;;;
+n.a.;n.a.;Kpaw;1000;;;;;;;;;
+n.a.;n.a.;MpUScale;false;;;;;;;;;
+n.a.;n.a.;UpDipPu;0;;;;;;;;;
+n.a.;n.a.;RDropPu;0;;;;;;;;;
+n.a.;n.a.;XDropPu;0;;;;;;;;;
+n.a.;n.a.;tUss;30;;;;;;;;;
+tG;0,007;tG;0,007;;;;;;;;;
+tFilterGC=Tfltr;0,01;n.a.;n.a.;;;;;;;;;
+IqrMinPu;-100;DiqMinPu;-100;;;;;;;;;
+IqrMaxPu;100;DiqMaxPu;100;;;;;;;;;
+Rrpwr;1;DipMaxPu;1;;;;;;;;;
+RateFlag;0;n.a.;n.a.;;;;;;;;;
+n.a.;n.a.;Kipaw;100;;;;;;;;;
+n.a.;n.a.;Kiqaw;100;;;;;;;;;
+Trv;0,01;tUFilt;0,01;;;;;;;;;
+tP;0,01;tPfilt;0,01;;;;;;;;;
+n.a.;n.a.;tQfilt;1,00E-09;;;;;;;;;
+n.a.;n.a.;tPll;1,00E-09;;;;;;;;;
+n.a.;n.a.;UPll1Pu;999;;;;;;;;;
+n.a.;n.a.;UPll2Pu;0,13;;;;;;;;;
