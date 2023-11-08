@@ -24,40 +24,42 @@ Relevance:
 - 1 ... relevant
 - 2 ... very relevant
 
-## Wind Turbine Q Control (WT_Q)
-
-| No. | Relevance | Description                                                                                                                                                                                             | Test case                                        |
-| --- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------ |
-| 1   | 1         | WECC: Qmax/min is a parameter; IEC: q_WTmax/min taken from Q lim block                                                                                                                                  | (mentined in paper)                              |
-| 2   |           | WECC: has extra min limit for reactive current during FRT (iql1); IEC uses minimum limit from normal path                                                                                               |                                                  |
-| 3   | 0         | IEC has local voltage drop compensation (WECC REEC_A doesn't) [added in WECC version REEC_D]                                                                                                            | (mentioned in paper)                             |
-| 4   |           | IEC: Q control voltage drop compensation current measurement has a ground admittance element. i_gs can be larger than i_WT. (WECC: i_gs=i_WT)                                                           |                                                  |
-| 5   |           | IEC: U-PI-Controller Limits seperately on proportional and integral Part; WECC: one common limit on output of PI controller                                                                             |                                                  |
-| 6   |           | IEC: Q-PI-controller limit on integral part and on PI controller output; WECC: Q-PI-Controller limit only on PI Controller output.                                                                      |                                                  |
-| 7   |           | IEC: Qwtmax/min from Q limiting block; [redundant with 1?]                                                                                                                                              |                                                  |
-| 8   |           | Mode 2: IEC: 1st order lag before current calculation (WECC: after current calculation)                                                                                                                 |                                                  |
-| 9   |           | IEC: tan(phi) as parameter; WECC: phi as input signal                                                                                                                                                   |                                                  |
-| 10  | 2         | IEC: defines post-fault state (F_FRT=2) only in case of under-voltage events; WECC: for over-voltage events as well                                                                                     | (mentioned in paper)                             |
-| 11  | 2         | IEC: different delta u sign in fast current injection (!)                                                                                                                                               | (mentioned in paper)                             |
-| 12  | 2         | IEC: pre-fault voltage calculated by HPF; WECC: by subtraction of Vref0                                                                                                                                 | T5_Tuss (mentioned in paper)                     |
-| 13  | 1         | WECC: Iql1, Iqh1 are fast-injected current limits (i_qvhook); IEC: iqh1, iqmin are limits for total injected current (i_qcmd) during FRT.                                                               | (mentined in paper)                              |
-| 14  | 0         | IEC uses filtered voltage u_WTCfilt for FRT mode detecion; WECC uses unfiltered u_WTC [changed in WECC version REEC_D]                                                                                  | 003 iqCmdPu, see #29 (mentioned in paper)        |
-| 15  |           | WECC: uses CLS value Iqmax, Iqmin in Voltage PI controller; IEC: uses constants                                                                                                                         |                                                  |
-| 16  | 1         | IEC: during FRT, gain of voltage PI-controller can be adapted to K_PuFRT and output limiter removed.                                                                                                    | (mentioned in paper)                             |
 
 ## Wind Turbine P Control (WT_P)
 
-| No. | Relevance | Description                                                                                                                                                                                             | Test case                                        |
-| --- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------ |
-| 17  | 1         | IEC: PT1 not frozen during FRT (P scaling with different threshold u_pdip instead)                                                                                                                      | (mentioned in paper)                             |
-| 18  | 1         | IEC: second PT1 element; WECC: no additional PT1 (T_pWTrefA)                                                                                                                                            | (mentioned in paper)                             |
-| 19  | 1         | IEC: additional positive ramp rate limit dpmax4A in PT1                                                                                                                                                 | (mentioned in paper)                             |
-| 20  | 2         | IEC: uses product of (dynamic) CLS value ipmax and voltage u_WTC for PT1 limit; WECC: uses constants Pmax, Pmin; connected to difference 18 and to pos. ramp limits and lags                            | T5, T5_noramp (mentioned in paper)               |
-| 21  |           | IEC: no negative limit in second PT1                                                                                                                                                                    |                                                  |
-| 22  |           | IEC has p_aero output                                                                                                                                                                                   |                                                  |
-| 23  | 1         | IEC has low-voltage P scaling option (M_pUscale=1) to reduce pref by voltage-p.u. during voltage dip                                                                                                    | (mentioned in paper)                             |
-| 24  |           | IEC has rate limiter after omega multiplication                                                                                                                                                         |                                                  |
-| 25  |           | WECC has lower limit Pmin                                                                                                                                                                               |                                                  |
+| No. | Relevance | Description                                                                                                                                                                 | Test case                          |
+| --- | --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------- |
+| 1   | 1         | IEC: PT1 not frozen during FRT (P scaling with different threshold u_pdip instead)                                                                                          | (mentioned in paper)               |
+| 2   | 1         | IEC: second PT1 element; WECC: no additional PT1 (T_pWTrefA)                                                                                                                | (mentioned in paper)               |
+| 3   | 1         | IEC: additional positive ramp rate limit dpmax4A in PT1                                                                                                                     | (mentioned in paper)               |
+| 4   | 2         | IEC: uses product of (dynamic) CLS value ipmax and voltage u_WTC for PT1 limit; WECC: uses constants Pmax, Pmin; connected to difference 2 and to pos. ramp limits and lags | T5, T5_noramp (mentioned in paper) |
+| 5   |           | IEC: no negative limit in second PT1                                                                                                                                        |                                    |
+| 6   |           | IEC has p_aero output                                                                                                                                                       |                                    |
+| 7   | 1         | IEC has low-voltage P scaling option (M_pUscale=1) to reduce pref by voltage-p.u. during voltage dip                                                                        | (mentioned in paper)               |
+| 8   |           | IEC has rate limiter after omega multiplication                                                                                                                             |                                    |
+| 9   |           | WECC has lower limit Pmin                                                                                                                                                   |                                    |
+
+## Wind Turbine Q Control (WT_Q)
+
+| No. | Relevance | Description                                                                                                                                   | Test case                                 |
+| --- | --------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------- |
+| 10  | 1         | WECC: Qmax/min is a parameter; IEC: q_WTmax/min taken from Q lim block                                                                        | (mentined in paper)                       |
+| 11  |           | WECC: has extra min limit for reactive current during FRT (iql1); IEC uses minimum limit from normal path                                     |                                           |
+| 12  | 0         | IEC has local voltage drop compensation (WECC REEC_A doesn't) [added in WECC version REEC_D]                                                  | (mentioned in paper)                      |
+| 13  |           | IEC: Q control voltage drop compensation current measurement has a ground admittance element. i_gs can be larger than i_WT. (WECC: i_gs=i_WT) |                                           |
+| 14  |           | IEC: U-PI-Controller Limits seperately on proportional and integral Part; WECC: one common limit on output of PI controller                   |                                           |
+| 15  |           | IEC: Q-PI-controller limit on integral part and on PI controller output; WECC: Q-PI-Controller limit only on PI Controller output.            |                                           |
+| 16  |           | IEC: Qwtmax/min from Q limiting block; [redundant with 1?]                                                                                    |                                           |
+| 17  |           | Mode 2: IEC: 1st order lag before current calculation (WECC: after current calculation)                                                       |                                           |
+| 18  |           | IEC: tan(phi) as parameter; WECC: phi as input signal                                                                                         |                                           |
+| 19  | 2         | IEC: defines post-fault state (F_FRT=2) only in case of under-voltage events; WECC: for over-voltage events as well                           | (mentioned in paper)                      |
+| 20  | 2         | IEC: different delta u sign in fast current injection (!)                                                                                     | (mentioned in paper)                      |
+| 21  | 2         | IEC: pre-fault voltage calculated by HPF; WECC: by subtraction of Vref0                                                                       | T5_Tuss (mentioned in paper)              |
+| 22  | 1         | WECC: Iql1, Iqh1 are fast-injected current limits (i_qvhook); IEC: iqh1, iqmin are limits for total injected current (i_qcmd) during FRT.     | (mentined in paper)                       |
+| 23  | 0         | IEC uses filtered voltage u_WTCfilt for FRT mode detecion; WECC uses unfiltered u_WTC [changed in WECC version REEC_D]                        | 003 iqCmdPu, see #29 (mentioned in paper) |
+| 24  |           | WECC: uses CLS value Iqmax, Iqmin in Voltage PI controller; IEC: uses constants                                                               |                                           |
+| 25  | 1         | IEC: during FRT, gain of voltage PI-controller can be adapted to K_PuFRT and output limiter removed.                                          | (mentioned in paper)                      |
+
 
 ## Current Limitation System (WT_CLS)
 
