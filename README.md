@@ -15,7 +15,9 @@ is the first test case with IEC and WECC running in parallel.
 - test003_SolidFault consists in a solid fault (R = 0, X= 0.0001 pu) at the turbine terminal from t = 5 to t = 5.1 s
 - test004_StepU consists in a step on URef at the turbine.
 
-# Collection and elaboration of relevant differences
+# Collection and elaboration of relevant differences (Outdated!)
+Please note: List is outdated. Maintained version is in [report document](https://www.overleaf.com/project/65490a7bffa6d573977569f5).
+
 
 Working document: Relevances to be updated during the investigations.
 
@@ -41,8 +43,8 @@ Relevance:
 
 | No. | Relevance | Description                                                                                                                                   | Test case                                 |
 | --- | --------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------- |
-| 8  | 1         | IEC: $q_{WTmax\|min}$ from Q limitation block; WECC: constants Qmax, Qmin.                                                                    | (mentined in paper)                       |
-| 9  |           | WECC: has extra min limit for reactive current during FRT (iql1); IEC uses minimum limit from normal path                                     |                                           |
+| 8   | 1         | IEC: $q_{WTmax\|min}$ from Q limitation block; WECC: constants Qmax, Qmin.                                                                    | (mentined in paper)                       |
+| 9   |           | WECC: has extra min limit for reactive current during FRT (iql1); IEC uses minimum limit from normal path                                     |                                           |
 | 10  | 0         | IEC has local voltage drop compensation (WECC REEC_A doesn't) [added in WECC version REEC_D]                                                  | (mentioned in paper)                      |
 | 11  |           | IEC: Q control voltage drop compensation current measurement has a ground admittance element. i_gs can be larger than i_WT. (WECC: i_gs=i_WT) |                                           |
 | 12  |           | IEC: U-PI-Controller Limits seperately on proportional and integral Part; WECC: one common limit on output of PI controller                   |                                           |
