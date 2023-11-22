@@ -19,9 +19,9 @@ model T5_kpqu
     Placement(visible = true, transformation(origin = {16, 28}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
   Dynawo.Electrical.Buses.InfiniteBus bus_WECC(UPhase = 0, UPu = 1.005) annotation(
     Placement(visible = true, transformation(origin = {18, -26}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
-  Dynawo.Electrical.Events.NodeFault fault_WECC(RPu = 0, XPu = 0.2, tBegin = 1, tEnd = 1.15) annotation(
+  Dynawo.Electrical.Events.NodeFault fault_WECC(RPu = 0, XPu = 0.05, tBegin = 1, tEnd = 1.15) annotation(
     Placement(visible = true, transformation(origin = {-16, -66}, extent = {{-10, -10}, {10, 10}}, rotation = 180)));
-  Dynawo.Electrical.Events.NodeFault fault_IEC(RPu = 0, XPu = 0.2, tBegin = 1, tEnd = 1.15) annotation(
+  Dynawo.Electrical.Events.NodeFault fault_IEC(RPu = 0, XPu = 0.05, tBegin = 1, tEnd = 1.15) annotation(
     Placement(visible = true, transformation(origin = {-16, 8}, extent = {{-10, -10}, {10, 10}}, rotation = 180)));
 equation
   line_IEC.switchOffSignal1.value = false;
