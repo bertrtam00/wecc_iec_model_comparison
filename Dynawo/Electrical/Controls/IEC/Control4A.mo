@@ -214,8 +214,10 @@ equation
     Line(points = {{42, 100}, {170, 100}}, color = {0, 0, 127}));
   connect(qControl.iqCmdPu, iqCmdPu) annotation(
     Line(points = {{42, -84}, {60, -84}, {60, -80}, {170, -80}}, color = {0, 0, 127}));
+  connect(UWTCPu, currentLimiter.UWTCPu) annotation(
+    Line(points = {{-180, 100}, {-38, 100}, {-38, 36}, {84, 36}, {84, 22}}, color = {0, 0, 127}));
   annotation(
     preferredView = "diagram",
-    Icon(coordinateSystem(grid = {1, 1}, initialScale = 0.1), graphics = {Rectangle(fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, extent = {{-100, -100}, {100, 100}}), Text(origin = {-16, 31}, extent = {{-76, -18}, {92, 28}}, textString = "IEC WT 4A"), Text(origin = {-11, -34}, extent = {{-77, -16}, {100, 30}}, textString = "Generator Control")}),
-    Diagram(coordinateSystem(extent = {{-160, -160}, {160, 160}})));
+    Icon(coordinateSystem(grid = {1, 1}, initialScale = 0.1, extent = {{-100, -100}, {100, 100}}), graphics = {Rectangle(fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, extent = {{-100, -100}, {100, 100}}), Text(origin = {-16, 31}, extent = {{-76, -18}, {92, 28}}, textString = "IEC WT 4A"), Text(origin = {-11, -34}, extent = {{-77, -16}, {100, 30}}, textString = "Generator Control")}),
+    Diagram(coordinateSystem(extent = {{-160, -160}, {160, 160}}), graphics = {Text(origin = {273, 74}, textColor = {255, 0, 0}, extent = {{63, -14}, {-63, 14}}, textString = "input unfiltered voltage, for test purposes")}));
 end Control4A;
